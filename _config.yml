@@ -1,0 +1,68 @@
+
+title: Text Machine Blog
+description: Machine Learning, NLP, and more
+show_downloads: true
+google_analytics:
+theme: jekyll-theme-architect
+baseurl: ""
+encoding: "utf-8"
+markdown_ext: "markdown,mkdown,mkdn,mkd,md"
+repository: "text-machine-lab/blog"
+url: "https://text-machine-lab.github.io/blog"
+
+exclude:
+  - .sass-cache
+  - Gemfile
+  - node_modules
+  - vendor
+  - Gemfile.lock
+  - LICENSE
+  - README.md
+  - Rakefile
+
+scholar:
+  # more options: https://pages.lip6.fr/Pascal.Poizat/blog/posts/2016/02/01/jekyll-and-bibtex/
+  style: _bibliography/apa_modified.csl
+  sort_by: author, year
+  order: descending
+  bibliography_template: bib
+  use_raw_bibtex_entry: true # to enable {{...}} inside bibtex
+  source: ./_bibliography
+  bibliography: references.bib
+  bibliography_template: ""
+  query: "@*"
+
+jekyll-archives:
+  enabled: ['year', 'tags']
+  layout: archive
+  permalinks:
+    year: '/:year/'
+    tag: '/tag/:name/'
+##Archive settings
+  layouts:
+    tag: tags
+#  category_archive:
+#    type: liquid #jekyll-archives
+#    path: /categories/
+#  tag_archive:
+#    type: liquid #jekyll-archives
+#    path: /tags/
+
+#plugins_dir: ./_plugins
+#jekyll_get:
+#  data: github
+#  json: 'https://api.github.com/orgs/text-machine-lab/repos'
+#  cache: false
+
+
+permalink: /:year/:title/
+paginate: 5 # amount of posts to show
+paginate_path: /page:num/
+timezone: America/New_York # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+
+#plugins:
+#  - jekyll-scholar
+#  - jekyll-archives
+#  - jekyll-paginate
+#  - jekyll-sitemap
+#  - jekyll-redirect-from

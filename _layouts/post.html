@@ -1,0 +1,42 @@
+---
+layout: default
+---
+{% include mathjax.html %}
+
+<h1>{{ page.title }}</h1>
+
+<span class="post-date">{{ page.date | date_to_string }} • </span>
+<img src="{{site.baseurl}}/assets/images/time-button.jpg" class="read-time"></img>
+<span class="reading-time" title="Estimated read time">
+  {% assign words = content | number_of_words %}
+  {% if words < 360 %}
+    1 min
+  {% else %}
+    {{ words | divided_by:180 }} mins
+  {% endif %}
+</span>
+
+{% include page__taxonomy.html %}
+
+{% assign author = site.data.authors[page.author] %}
+<!--p class="post-author">Author: {{author.name}}</p-->
+  {% if author.bio %}
+      {% include author_bio.html %}
+  {% endif %}
+
+{{content}}
+
+<!-- LikeBtn.com BEGIN -->
+<!--span class="likebtn-wrapper" data-theme="custom" data-btn_size="40" data-f_size="14" data-icon_size="30" data-icon_l_c="#159031" data-icon_l_c_v="#1405fb" data-icon_d_c="#f40d20" data-icon_d_c_v="#1405fb" data-identifier="item_1" data-show_like_label="false" data-counter_frmt="km"></span>
+<script>(function(d,e,s){if(d.getElementById("likebtn_wjs"))return;a=d.createElement(e);m=d.getElementsByTagName(e)[0];a.async=1;a.id="likebtn_wjs";a.src=s;m.parentNode.insertBefore(a, m)})(document,"script","//w.likebtn.com/js/w/widget.js");</script-->
+<!-- LikeBtn.com END -->
+
+<script src="https://utteranc.es/client.js"
+        repo="text-machine-lab/blog"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+

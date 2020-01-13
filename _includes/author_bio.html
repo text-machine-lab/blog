@@ -1,0 +1,24 @@
+<hr>
+<span>
+
+<div class="author-container">
+        {% if author.image %}
+            <img src="{{author.image}}" class="author-img">
+        {% endif %}
+    <div class="author-text">
+        <span class="author-name"> {{author.name}} &nbsp;</span>
+           {% if author.url %}
+              <a href="{{author.url}}"><span class="label"><i class="fa fa-home"></i> Profile</span></a>
+           {% endif %}
+           {% if author.twitter %}
+              <a href="http://twitter.com/{{author.twitter}}"><span class="label"><i class="fa fa-twitter"></i> Twitter</span></a>
+            {% endif %}
+           {% if author.blog %}
+              <a href="{{author.blog}}" > <span class="label"> <i class="fa fa-pencil"></i> Blog</span></a>
+           {% endif %}
+           {% if author.bio %}
+           <br/> <i class="fa id-badge"></i> <i>{{ author.bio }}</i>
+           {% endif %}
+    </div>
+</div>
+

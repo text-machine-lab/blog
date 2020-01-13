@@ -1,0 +1,25 @@
+language: ruby
+cache: bundler
+os: linux
+rvm:
+- 2.3.1
+install:
+- bundle install
+branches:
+  only:
+      - gh-pages
+script:
+  - JEKYLL_ENV=production bundle exec jekyll build --destination _site
+deploy:
+  provider: pages
+  email: deploy@travis-ci.org
+  name: Deployment Bot
+  cleanup: false
+#  keep_history: true
+#  allow_empty_commit: true
+  token: $GITHUB_TOKEN
+  local_dir: _site
+  target_branch: master
+  on:
+    branch: gh-pages
+
