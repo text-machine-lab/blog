@@ -11,7 +11,7 @@ branches:
       - gh-pages
 script:
   - JEKYLL_ENV=production bundle exec jekyll build --destination _site
-  - ./deploy.sh
+  - bash deploy.sh
 deploy:
   provider: pages
   email: deploy@travis-ci.org
