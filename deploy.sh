@@ -74,7 +74,7 @@ parse_args() {
 	deploy_branch=gh-pages
 
 	#if no user identity is already set in the current git environment, use this:
-	default_username=Deploy Script
+	default_username=deploy-script
 	default_email=deploy@travis-ci.org
 
 	#repository to deploy to. must be readable and writable.
