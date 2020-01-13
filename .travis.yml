@@ -7,7 +7,7 @@ install:
 - bundle install
 branches:
   only:
-      - gh-pages
+      - master
 script:
   - JEKYLL_ENV=production bundle exec jekyll build --destination _site
 deploy:
@@ -19,7 +19,7 @@ deploy:
 #  allow_empty_commit: true
   token: $GITHUB_TOKEN
   local_dir: _site
-  target_branch: master
+  target_branch: gh-pages
   on:
-    branch: gh-pages
+    branch: master
 
