@@ -8,8 +8,8 @@ install:
 branches:
   only:
       - master
-script:
-  - JEKYLL_ENV=production bundle exec jekyll build --destination _site
+#script:
+#  - JEKYLL_ENV=production bundle exec jekyll build --destination _site
 deploy:
   provider: pages
   email: deploy@travis-ci.org
