@@ -20,6 +20,9 @@ exclude:
   - README.md
   - Rakefile
 
+include:
+  - _sass
+
 scholar:
   # more options: https://pages.lip6.fr/Pascal.Poizat/blog/posts/2016/02/01/jekyll-and-bibtex/
   style: _bibliography/apa_modified.csl
