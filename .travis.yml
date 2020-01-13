@@ -12,16 +12,16 @@ branches:
 script:
   - JEKYLL_ENV=production bundle exec jekyll build --destination _site
   - bash deploy.sh
-deploy:
-  provider: pages
-  email: deploy@travis-ci.org
-  name: Deployment Bot
-  cleanup: false
-  keep_history: true
-  allow_empty_commit: true
-  github_token: $GITHUB_TOKEN
-  local_dir: ./_site
-  target_branch: gh-pages
-  on:
-    branch: master
+#deploy:
+#  provider: pages
+#  email: deploy@travis-ci.org
+#  name: Deployment Bot
+#  cleanup: false
+#  keep_history: true
+#  allow_empty_commit: true
+#  github_token: $GITHUB_TOKEN
+#  local_dir: ./_site
+#  target_branch: gh-pages
+#  on:
+#    branch: master
 
