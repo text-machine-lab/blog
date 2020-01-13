@@ -17,7 +17,7 @@ deploy:
   cleanup: false
 #  keep_history: true
 #  allow_empty_commit: true
-  token: $GITHUB_TOKEN
+  github_token: $GITHUB_TOKEN
   local_dir: _site
   target_branch: gh-pages
   on:
