@@ -7,8 +7,8 @@
     <!--link rel="stylesheet" href="/_sass/jekyll-theme-architect.scss" media="screen" type="text/css">
     <link rel="stylesheet" href="/_sass/normalize.scss" media="screen" type="text/css">
     <link rel="stylesheet" href="/_sass/rouge-github.scss" media="screen" type="text/css"-->
-    <link rel="stylesheet" href="/assets/css/style.css?v=" media="screen" type="text/css">
-    <link rel="stylesheet" href="/assets/css/print.css" media="print" type="text/css">
+    <link rel="stylesheet" href="/blog/assets/css/style.css?v=" media="screen" type="text/css">
+    <link rel="stylesheet" href="/blog/assets/css/print.css" media="print" type="text/css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" type="text/css">
 
     <!--[if lt IE 9]-->
@@ -55,8 +55,8 @@ alt="Web Analytics"></a></div></noscript>
     <header>
         <div class="nav-menu">
             <ul>
-              <li><a href="/tags"><i class="fa fa-hashtag"></i> Tag index</a></li>
-              <li><a href="/years"><i class="fa fa-list"></i> All posts</a></li>
+              <li><a href="/blog/tags"><i class="fa fa-hashtag"></i> Tag index</a></li>
+              <li><a href="/blog/years"><i class="fa fa-list"></i> All posts</a></li>
               <li><a href="https://github.com/text-machine-lab/"> <i class="fa fa-github"></i> GitHub</a></li>
               <li><a href="http://text-machine.cs.uml.edu/"><i class="fa fa-home"></i> About us</a></li>
             </ul>
@@ -64,7 +64,7 @@ alt="Web Analytics"></a></div></noscript>
 
       <div class="inner">
           <div>
-            <a href="http://text-machine.cs.uml.edu/"><img src="/assets/images/text-machine-logo-transparent.png" alt="Text Machine logo" class="logo"></a>
+            <a href="http://text-machine.cs.uml.edu/"><img src="/blog/assets/images/text-machine-logo-transparent.png" alt="Text Machine logo" class="logo"></a>
           </div>
         <div>
         <a href="https://text-machine-lab.github.io/blog/">
@@ -84,7 +84,7 @@ alt="Web Analytics"></a></div></noscript>
 <h1>The Dark Secrets of BERT</h1>
 
 <span class="post-date">07 Jan 2020 • </span>
-<img src="/assets/images/time-button.jpg" class="read-time"></img>
+<img src="/blog/assets/images/time-button.jpg" class="read-time"></img>
 <span class="reading-time" title="Estimated read time">
   
   
@@ -111,7 +111,7 @@ alt="Web Analytics"></a></div></noscript>
 
 <div class="author-container">
         
-            <img src="/assets/images/aro.jpg" class="author-img">
+            <img src="/blog/assets/images/aro.jpg" class="author-img">
         
     <div class="author-text">
         <span class="author-name"> Anna Rogers &nbsp;</span>
@@ -168,7 +168,7 @@ alt="Web Analytics"></a></div></noscript>
 <p>So what are the patterns of the self-attention in BERT? We found five, as shown below:</p>
 
 <figure>
-	<img src="/assets/images/bert-attn-types.png" /> 
+	<img src="/blog/assets/images/bert-attn-types.png" /> 
 	<figcaption>Fig. 1. Types of self-attention patterns in BERT. Both axes on every image represent BERT tokens of an input example, and colors denote absolute attention weights (darker colors stand for greater weights).
 	</figcaption>
 </figure>
@@ -183,7 +183,7 @@ alt="Web Analytics"></a></div></noscript>
 <p>And here are the ratios of these five types of attention in BERT fine-tuned on seven GLUE tasks (with each column representing 100% of all heads in all layers):</p>
 
 <figure>
-	<img src="/assets/images/bert-attn-ratios.png" /> 	
+	<img src="/blog/assets/images/bert-attn-ratios.png" /> 	
 	<figcaption>Fig. 2. Ratios of self-attention map types for BERT fine-tuned on the selected GLUE tasks.
 	</figcaption>
 </figure>
@@ -199,7 +199,7 @@ alt="Web Analytics"></a></div></noscript>
 <p>Our next question was what actually changes during the fine-tuning of BERT. The heatmap below shows the cosine similarities between flattened self-attention map matrices in each head and each layer, before and after fine-tuning. Darker colors indicate more differences in the representation. For all GLUE tasks the fine-tuning was done for 3 epochs.</p>
 
 <figure>
-	<img src="/assets/images/bert-finetune-diff.png" /> 		
+	<img src="/blog/assets/images/bert-finetune-diff.png" /> 		
 	<figcaption>Fig. 3. Cosine similarity between flattened self-attention maps, per head in pre-trained and fine-tuned BERT. Darker colors indicate greater differences.
 	</figcaption>
 </figure>
@@ -207,7 +207,7 @@ alt="Web Analytics"></a></div></noscript>
 <p>We see that most attention weights do not change all that much, and for most tasks, the last two layers show the most change. These changes do not appear to favor any specific types of meaningful attention patterns. Instead, we find that the model basically learns to rely more on the vertical attention pattern. In the SST example below the thicker vertical attention patterns in the last layers are due to the joint attention to the final [SEP] and the punctuation tokens preceding it, which we observed to be another frequent target for the vertical attention pattern.</p>
 
 <figure>
-	<img src="/assets/images/bert-sst-heads.png" /> 			
+	<img src="/blog/assets/images/bert-sst-heads.png" /> 			
 	<figcaption>Fig. 4. Self-attention maps for an individual example, with BERT fine-tuned on SST.
 	</figcaption>
 </figure>
@@ -317,7 +317,7 @@ alt="Web Analytics"></a></div></noscript>
 <p>We obtained representations of these sentences by pre-trained BERT, calculating the maximum weights between token pairs corresponding to the annotated frame semantic relations. Fig. 5 represents the averages of these scores for all examples in our FrameNet dataset. We found two heads (head 2 in layer 1, head 6 in layer 7) that attended to these frame semantic relations more than the other heads.</p>
 
 <figure>
-	<img src="/assets/images/bert-frames.png" /> 				
+	<img src="/blog/assets/images/bert-frames.png" /> 				
 	<figcaption>Fig. 5. The heads of pre-trained BERT that appear to encode the information correlated to semantic links in the input text.
 	</figcaption>
 </figure>
@@ -329,7 +329,7 @@ alt="Web Analytics"></a></div></noscript>
 <p>To see whether the two heads we identified as useful for encoding frame semantic relations actually get used by fine-tuned BERT, we performed an ablation study, disabling one head at a time (i.e. replacing the learned attention weights with uniform attention). Fig. 6 shows a heatmap for all GLUE tasks in our sample, with each cell indicating the overall performance when a given head was switched off. It is clear that while the overall pattern varies between tasks, on average we are better off removing a random head - including those that we identified as encoding meaningful information that should be relevant for most tasks. Many of the heads can also be switched off without any effect on performance, again pointing at the fact that even the base BERT is severely overparametrized.</p>
 
 <figure>
-	<img src="/assets/images/bert-ablate-heads.png" /> 			
+	<img src="/blog/assets/images/bert-ablate-heads.png" /> 			
 	<figcaption>Fig. 6. Performance of the model while disabling one head at a time. The orange line indicates the baseline performance with no disabled heads. Darker colors correspond to greater performance scores.
 	</figcaption>
 </figure>
@@ -337,8 +337,7 @@ alt="Web Analytics"></a></div></noscript>
 <p>Similar conclusions were reached independently for machine translation task, with zeroing attention weights rather than replacing them with uniform attention <a class="citation" href="#MichelLevyEtAl_2019_Are_Sixteen_Heads_Really_Better_than_One">(Michel, Levy, &amp; Neubig, 2019)</a>. We further show that this observations extends not to just heads, but whole layers: depending on the task, a whole layer may be detrimental to the model performance!</p>
 
 <figure>
-	<img src="/assets/images/bert-ablate-layers.png" /> 
-	<img src="/assets/images/bert-ablate-layers.png" /> 			
+	<img src="/blog/assets/images/bert-ablate-layers.png" /> 			
 	<figcaption>Fig. 7. Performance of the model while disabling one layer at a time.
 	</figcaption>
 </figure>
