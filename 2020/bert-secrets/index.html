@@ -32,16 +32,16 @@ alt="Web Analytics"></a></div></noscript>
 <!-- End of Statcounter Code -->
 
 <!-- Twitter metadata -->
-<meta name="twitter:card" content="">
+<meta name="twitter:card" content="https://text-machine-lab.github.io/blog/assets/images/bert-secrets-header-square.png">
 <meta name="twitter:site" content="">
 <meta name="twitter:title" content="The Dark Secrets of BERT">
 
   <meta name="twitter:description"
-    content="">
+    content="BERT and its Transformer-based cousins are still ahead on all NLP leaderboards. But how much do they actually understand about language?">
 
 <!-- end of Twitter metadata -->
 
-<meta name="og:image" content="/blog/assets/images/text-machine-logo-transparent.png">
+<meta name="og:image" content="https://text-machine-lab.github.io/blog/assets/images/text-machine-card-square.png">
 
 <!-- Begin Jekyll SEO tag v2.6.1 -->
 <title>The Dark Secrets of BERT | Text Machine Blog</title>
@@ -353,21 +353,19 @@ alt="Web Analytics"></a></div></noscript>
 	</figcaption>
 </figure>
 
-<h2 id="so-how-does-this-thing-work">So how does this thing work?</h2>
+<h2 id="discussion">Discussion</h2>
 
-<p>To sum up, this work showed that even base BERT is severely overparametrized, which explains why model distillation turned out to be so productive.</p>
+<p>Our key contribution is that while most studies of BERT focused on probing the pre-trained model, we raised the question of what happens in fine-tuning, and just how meaningful the representations obtained with the self-attention mechanism are. So far, we were unable to find evidence of linguistically meaningful self-attention maps being crucial for the performance of fine-tuned BERT.</p>
 
-<p>Our key contribution is that while most studies of BERT focused on probing the pre-trained model, we raised the question of what happens in fine-tuning, and just how meaningful the representations obtained with the self-attention mechanism are. We were unable to find evidence of linguistically meaningful self-attention maps being crucial for the performance of fine-tuned BERT.</p>
+<p>Our results contribute to the ongoing discussion about the properties of Transformer-based models in the following directions:</p>
 
-<p>These results could be interpreted in the following ways:</p>
+<p>a) <strong>BERT is heavily overparametrized</strong>. In our experiments we disabled only one head at a time, and the fact that in most cases the model performance did not suffer suggests that many heads have functional duplicates, i.e. disabling one head would not harm the model because the same information is available elsewhere. This result points at overparametrization and explains the success of the smaller BERTs like AlBERT and TinyBERT.</p>
 
-<p>a) <strong>BERT is overparametrized</strong>: Since we switch off only one head at a time, it may be possible that some heads are functional duplicates, and removing one head would not harm the model because the same information is available elsewhere. That would again point at overparametrization and importance of model distillation: with a large model, it is not feasible to test this hypothesis by switching off all possible combinations of heads. Promising results for the base Transformer were reported in a contemporaneous study, which identified the “important” heads by fine-tuning the model with a regularized objective that had the pruning effect (missing reference).</p>
+<p>Such overparametrization means that BERT may have some highly important heads with linguistically meaningful self-attention patterns after all, but to prove that we would have to try disabling all possible head combinations (which is not feasible). A promising alternative was suggested in a contemporaneous study: <a class="citation" href="#VoitaTalbotEtAl_2019_Analyzing_Multi-Head_Self-Attention_Specialized_Heads_Do_Heavy_Lifting_Rest_Can_Be_Pruned">(Voita, Talbot, Moiseev, Sennrich, &amp; Titov, 2019)</a> identified the “important” heads of the base Trasnformer by fine-tuning the model with a regularized objective that had a pruning effect.</p>
 
-<p>b) <strong>BERT’s success is due to <del>black magic</del> something other than self-attention maps</strong>: The information we as humans deem important for solving a verbal reasoning task may genuinely be not needed by the model, as it performs some deeper reasoning we are not able to comprehend or interpret (perhaps relying on some other component than the interpretable self-attention maps). Our results also contribute to the ongoing discussion about the value of attention maps for explaining model predictions (missing reference).</p>
+<p>b) <strong>BERT does not need to be all that smart for these tasks.</strong> The fact that BERT can do so well on most GLUE tasks <em>without pre-training</em> suggests that to a large degree they can be solved without much of language knowledge. Instead of verbal reasoning, it may learn to rely on various shortcuts, biases and artifacts in the datasets to arrive at the correct prediction. In that case its self-attention maps do not necessarily have to be meaningful to us. This finding supports the recent discoveries of problems with many current datasets <a class="citation" href="#GururanganSwayamdiptaEtAl_2018_Annotation_Artifacts_in_Natural_Language_Inference_Data">(Gururangan et al., 2018; McCoy, Pavlick, &amp; Linzen, 2019)</a>.</p>
 
-<p>c) <strong>BERT does not need to be all that smart for these tasks</strong>: The model does not actually solve the verbal reasoning task, but learns to rely on various shortcuts, biases and artifacts in the datasets to arrive at the correct prediction, and therefore does not need the attention maps to be particularly informative.</p>
-
-<p>Sll three of the above factors are probably playing a role. However, given our findings about how well a randomly initialized BERT does on most GLUE tasks, and the recent discoveries of problems with many current datasets <a class="citation" href="#GururanganSwayamdiptaEtAl_2018_Annotation_Artifacts_in_Natural_Language_Inference_Data">(Gururangan et al., 2018; McCoy, Pavlick, &amp; Linzen, 2019)</a>, the easy dataset factor seems to be very likely.</p>
+<p>An alternative explanation is that <strong>BERT’s success is due to <del>black magic</del> something other than self-attention.</strong> For instance, the high amount of attention to punctuation after fine-tuning could mean that the model actually learned to rely on some other component, or there is some deep pattern we cannot comprehend. Also, the degree to which attention can be used to explain model predictions <em>in principle</em> is currently being debated <a class="citation" href="#JainWallace_2019_Attention_is_not_Explanation">(Jain &amp; Wallace, 2019; Wiegreffe &amp; Pinter, 2019)</a>.</p>
 
 
 
@@ -431,6 +429,39 @@ http://arxiv.org/abs/1609.08144
     
 </div></li>
 <li><div class="text-justify">
+    <span id="WiegreffePinter_2019_Attention_is_not_not_Explanation">Wiegreffe, S., &amp; Pinter, Y. (2019). Attention Is Not Not Explanation. <i>Proceedings of the 2019 Conference on Empirical Methods in Natural Language Processing and the 9th International Joint Conference on Natural Language Processing (EMNLP-IJCNLP)</i>, 11–20. https://doi.org/10.18653/v1/D19-1002</span>
+
+    
+    
+
+    <!--button class="btn--info" onclick="showBibtex('WiegreffePinter_2019_Attention_is')">BibTex</button-->
+    
+    <a href="https://www.aclweb.org/anthology/D19-1002">[PDF]</a>
+    
+<!--div class="bibtex" id='WiegreffePinter_2019_Attention_is'><pre>@inproceedings{WiegreffePinter_2019_Attention_is_not_not_Explanation,
+  title = {Attention Is Not Not {{Explanation}}},
+  booktitle = {Proceedings of the 2019 {{Conference}} on {{Empirical Methods}} in {{Natural Language Processing}} and the 9th {{International Joint Conference}} on {{Natural Language Processing}} ({{EMNLP}}-{{IJCNLP}})},
+  author = {Wiegreffe, Sarah and Pinter, Yuval},
+  year = {2019},
+  month = nov,
+  pages = {11--20},
+  publisher = {{Association for Computational Linguistics}},
+  address = {{Hong Kong, China}},
+  doi = {10.18653/v1/D19-1002},
+  url = {https://www.aclweb.org/anthology/D19-1002},
+  urldate = {2020-01-14}
+}
+</pre>
+https://www.aclweb.org/anthology/D19-1002
+</div-->
+</div>
+
+
+
+<div>
+    
+</div></li>
+<li><div class="text-justify">
     <span id="WangSinghEtAl_2018_GLUE_A_Multi-Task_Benchmark_and_Analysis_Platform_for_Natural_Language_Understanding">Wang, A., Singh, A., Michael, J., Hill, F., Levy, O., &amp; Bowman, S. R. (2018). GLUE: A Multi-Task Benchmark and Analysis Platform for Natural Language Understanding. <i>Proceedings of the 2018 EMNLP Workshop BlackboxNLP: Analyzing and Interpreting Neural Networks for NLP</i>, 353–355. Brussels, Belgium: Association for Computational Linguistics.</span>
 
     
@@ -454,6 +485,40 @@ http://arxiv.org/abs/1609.08144
 }
 </pre>
 http://aclweb.org/anthology/W18-5446
+</div-->
+</div>
+
+
+
+<div>
+    
+</div></li>
+<li><div class="text-justify">
+    <span id="VoitaTalbotEtAl_2019_Analyzing_Multi-Head_Self-Attention_Specialized_Heads_Do_Heavy_Lifting_Rest_Can_Be_Pruned">Voita, E., Talbot, D., Moiseev, F., Sennrich, R., &amp; Titov, I. (2019). Analyzing Multi-Head Self-Attention: Specialized Heads Do the Heavy Lifting, the Rest Can Be Pruned. <i>Proceedings of the 57th Annual Meeting of the Association for Computational Linguistics</i>, 5797–5808. https://doi.org/10.18653/v1/P19-1580</span>
+
+    
+    
+
+    <!--button class="btn--info" onclick="showBibtex('VoitaTalbotEtAl_2019_Analyzing_Multi-Head')">BibTex</button-->
+    
+    <a href="https://www.aclweb.org/anthology/P19-1580">[PDF]</a>
+    
+<!--div class="bibtex" id='VoitaTalbotEtAl_2019_Analyzing_Multi-Head'><pre>@inproceedings{VoitaTalbotEtAl_2019_Analyzing_Multi-Head_Self-Attention_Specialized_Heads_Do_Heavy_Lifting_Rest_Can_Be_Pruned,
+  title = {Analyzing {{Multi}}-{{Head Self}}-{{Attention}}: {{Specialized Heads Do}} the {{Heavy Lifting}}, the {{Rest Can Be Pruned}}},
+  shorttitle = {Analyzing {{Multi}}-{{Head Self}}-{{Attention}}},
+  booktitle = {Proceedings of the 57th {{Annual Meeting}} of the {{Association}} for {{Computational Linguistics}}},
+  author = {Voita, Elena and Talbot, David and Moiseev, Fedor and Sennrich, Rico and Titov, Ivan},
+  year = {2019},
+  month = jul,
+  pages = {5797--5808},
+  publisher = {{Association for Computational Linguistics}},
+  address = {{Florence, Italy}},
+  doi = {10.18653/v1/P19-1580},
+  url = {https://www.aclweb.org/anthology/P19-1580},
+  urldate = {2019-10-18}
+}
+</pre>
+https://www.aclweb.org/anthology/P19-1580
 </div-->
 </div>
 
@@ -669,6 +734,37 @@ https://www.aclweb.org/anthology/P19-1356.pdf
     
 </div></li>
 <li><div class="text-justify">
+    <span id="JainWallace_2019_Attention_is_not_Explanation">Jain, S., &amp; Wallace, B. C. (2019). Attention Is Not Explanation. <i>Proceedings of the 2019 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies, Volume 1 (Long and Short Papers)</i>, 3543–3556.</span>
+
+    
+    
+
+    <!--button class="btn--info" onclick="showBibtex('JainWallace_2019_Attention_is')">BibTex</button-->
+    
+    <a href="https://aclweb.org/anthology/papers/N/N19/N19-1357/">[PDF]</a>
+    
+<!--div class="bibtex" id='JainWallace_2019_Attention_is'><pre>@inproceedings{JainWallace_2019_Attention_is_not_Explanation,
+  title = {Attention Is Not {{Explanation}}},
+  booktitle = {Proceedings of the 2019 {{Conference}} of the {{North American Chapter}} of the {{Association}} for {{Computational Linguistics}}: {{Human Language Technologies}}, {{Volume}} 1 ({{Long}} and {{Short Papers}})},
+  author = {Jain, Sarthak and Wallace, Byron C.},
+  year = {2019},
+  month = jun,
+  pages = {3543--3556},
+  url = {https://aclweb.org/anthology/papers/N/N19/N19-1357/},
+  urldate = {2019-07-07},
+  language = {en-us}
+}
+</pre>
+https://aclweb.org/anthology/papers/N/N19/N19-1357/
+</div-->
+</div>
+
+
+
+<div>
+    
+</div></li>
+<li><div class="text-justify">
     <span id="HewittManning_2019_Structural_Probe_for_Finding_Syntax_in_Word_Representations">Hewitt, J., &amp; Manning, C. D. (2019). A Structural Probe for Finding Syntax in Word Representations. <i>Proceedings of the 2019 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies, Volume 1 (Long and Short Papers)</i>, 4129–4138.</span>
 
     
@@ -861,7 +957,7 @@ https://www.aclweb.org/anthology/C98-1013/
       <li><a href="#how-much-difference-does-fine-tuning-make">How much difference does fine-tuning make?</a></li>
       <li><a href="#are-there-any-linguistically-interpretable-self-attention-heads">Are there any linguistically interpretable self-attention heads?</a></li>
       <li><a href="#but-what-information-actually-gets-used-at-inference-time">But… what information actually gets used at inference time?</a></li>
-      <li><a href="#so-how-does-this-thing-work">So how does this thing work?</a></li>
+      <li><a href="#discussion">Discussion</a></li>
       <li><a href="#"> References </a></li>
     </ul>
   </li>
