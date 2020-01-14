@@ -31,21 +31,23 @@ src="https://c.statcounter.com/12176921/0/e9a6e2dd/1/"
 alt="Web Analytics"></a></div></noscript>
 <!-- End of Statcounter Code -->
 
-<!-- Twitter metadata -->
+<!-- Twitter metadata>
 <meta name="twitter:card" content="{{ page.summary_image | absolute_url }}">
 
 <meta name="twitter:title" content="{{ page.title }}">
-{% if page.excerpt %}
-  <meta name="twitter:description"
-    content="{{ page.excerpt }}">
-{% else %}
-  <meta name="twitter:description"
-    content="{{ page.content | strip_html | xml_escape
-      | truncate: 200 }}">
-{% endif %}
+
 <!-- end of Twitter metadata -->
 
 <meta name="og:image" content="{{'/assets/images/text-machine-card-square.png' | absolute_url }}">
+
+{% if page.excerpt %}
+  <meta name="og:description"
+    content="{{ page.excerpt }}">
+{% else %}
+  <meta name="og:description"
+    content="{{ page.content | strip_html | xml_escape
+      | truncate: 200 }}">
+{% endif %}
 
 {% seo %}
   </head>
