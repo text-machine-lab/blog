@@ -118,3 +118,19 @@ ul.toc li {
   font-size: initial;
   margin-top: 1em;
 }
+
+@media only screen and (max-device-width: 630px) {
+
+  .logo {
+    display:none;
+  }
+  .nav-menu {
+    padding: 1em;
+  }
+  .tagline {
+    display: none;}
+
+  header {
+    padding: 0;
+  }
+}
