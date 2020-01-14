@@ -43,7 +43,7 @@ Let us note here that the exact way the "adaptation" is supposed to work is not 
 So what are the patterns of the self-attention in BERT? We found five, as shown below:
 
 <figure>
-	<img src="/assets/images/bert-attn-types.png"> 
+	<img src="{{'/assets/images/bert-attn-types.png' | relative_url }}"> 
 	<figcaption>Fig. 1. Types of self-attention patterns in BERT. Both axes on every image represent BERT tokens of an input example, and colors denote absolute attention weights (darker colors stand for greater weights).
 	</figcaption>
 </figure>
@@ -56,7 +56,7 @@ So what are the patterns of the self-attention in BERT? We found five, as shown 
 And here are the ratios of these five types of attention in BERT fine-tuned on seven GLUE tasks (with each column representing 100% of all heads in all layers):  
 
 <figure>
-	<img src="/assets/images/bert-attn-ratios.png"> 
+	<img src="{{'/assets/images/bert-attn-ratios.png' | relative_url }}"> 	
 	<figcaption>Fig. 2. Ratios of self-attention map types for BERT fine-tuned on the selected GLUE tasks.
 	</figcaption>
 </figure>
@@ -72,7 +72,7 @@ Such reliance on [SEP] and [CLS] tokens could also suggest that either they some
 Our next question was what actually changes during the fine-tuning of BERT. The heatmap below shows the cosine similarities between flattened self-attention map matrices in each head and each layer, before and after fine-tuning. Darker colors indicate more differences in the representation. For all GLUE tasks the fine-tuning was done for 3 epochs.
 
 <figure>
-	<img src="/assets/images/bert-finetune-diff.png"> 
+	<img src="{{'/assets/images/bert-finetune-diff.png' | relative_url }}"> 		
 	<figcaption>Fig. 3. Cosine similarity between flattened self-attention maps, per head in pre-trained and fine-tuned BERT. Darker colors indicate greater differences.
 	</figcaption>
 </figure>
@@ -80,7 +80,7 @@ Our next question was what actually changes during the fine-tuning of BERT. The 
  We see that most attention weights do not change all that much, and for most tasks, the last two layers show the most change. These changes do not appear to favor any specific types of meaningful attention patterns. Instead, we find that the model basically learns to rely more on the vertical attention pattern. In the SST example below the thicker vertical attention patterns in the last layers are due to the joint attention to the final [SEP] and the punctuation tokens preceding it, which we observed to be another frequent target for the vertical attention pattern.
  
  <figure>
-	<img src="/assets/images/bert-sst-heads.png"> 
+	<img src="{{'/assets/images/bert-sst-heads.png' | relative_url }}"> 			
 	<figcaption>Fig. 4. Self-attention maps for an individual example, with BERT fine-tuned on SST.
 	</figcaption>
 </figure>
@@ -126,7 +126,7 @@ Several studies at this point tried to locate self-attention heads that encode s
 We obtained representations of these sentences by pre-trained BERT, calculating the maximum weights between token pairs corresponding to the annotated frame semantic relations. Fig. 5 represents the averages of these scores for all examples in our FrameNet dataset. We found two heads (head 2 in layer 1, head 6 in layer 7) that attended to these frame semantic relations more than the other heads.
 
 <figure>
-	<img src="/assets/images/bert-frames.png"> 
+	<img src="{{'/assets/images/bert-frames.png' | relative_url }}"> 				
 	<figcaption>Fig. 5. The heads of pre-trained BERT that appear to encode the information correlated to semantic links in the input text.
 	</figcaption>
 </figure>
@@ -138,7 +138,7 @@ We believe it would be too rash to conclude from probes of pre-trained BERT weig
 To see whether the two heads we identified as useful for encoding frame semantic relations actually get used by fine-tuned BERT, we performed an ablation study, disabling one head at a time (i.e. replacing the learned attention weights with uniform attention). Fig. 6 shows a heatmap for all GLUE tasks in our sample, with each cell indicating the overall performance when a given head was switched off. It is clear that while the overall pattern varies between tasks, on average we are better off removing a random head - including those that we identified as encoding meaningful information that should be relevant for most tasks. Many of the heads can also be switched off without any effect on performance, again pointing at the fact that even the base BERT is severely overparametrized.
 
 <figure>
-	<img src="/assets/images/bert-ablate-heads.png"> 
+	<img src="{{'/assets/images/bert-ablate-heads.png' | relative_url }}"> 			
 	<figcaption>Fig. 6. Performance of the model while disabling one head at a time. The orange line indicates the baseline performance with no disabled heads. Darker colors correspond to greater performance scores.
 	</figcaption>
 </figure>
@@ -147,6 +147,7 @@ Similar conclusions were reached independently for machine translation task, wit
 
 <figure>
 	<img src="/assets/images/bert-ablate-layers.png"> 
+	<img src="{{'/assets/images/bert-ablate-layers.png' | relative_url }}"> 			
 	<figcaption>Fig. 7. Performance of the model while disabling one layer at a time.
 	</figcaption>
 </figure>

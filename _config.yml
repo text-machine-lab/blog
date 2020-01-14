@@ -4,11 +4,11 @@ description: Machine Learning, NLP, and more
 show_downloads: true
 google_analytics:
 theme: jekyll-theme-architect
-baseurl: ""
+baseurl: "/blog"
 encoding: "utf-8"
 markdown_ext: "markdown,mkdown,mkdn,mkd,md"
 repository: "text-machine-lab/blog"
-url: "https://text-machine-lab.github.io/blog"
+url: "https://text-machine-lab.github.io"
 
 exclude:
   - .sass-cache
