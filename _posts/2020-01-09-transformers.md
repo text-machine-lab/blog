@@ -8,7 +8,7 @@ tags: transformers
 mathjax: false
 toc: true
 excerpt: "BERT and its Transformer-based cousins are still ahead on all NLP leaderboards. But how much do they actually understand about language?"
-image: /assets/images/bert-secrets-header.png
+summary_image: /assets/images/bert-secrets-header.png 
 ---
 
 > This blog post summarizes our EMNLP 2019 paper "Revealing the Dark Secrets of BERT" {% cite KovalevaRomanovEtAl_2019_Revealing_Dark_Secrets_of_BERT %}. Paper PDF: [https://www.aclweb.org/anthology/D19-1445.pdf](https://www.aclweb.org/anthology/D19-1445.pdf) 
@@ -154,16 +154,15 @@ Similar conclusions were reached independently for machine translation task, wit
 
 To sum up, this work showed that even base BERT is severely overparametrized, which explains why model distillation turned out to be so productive. 
 
-Our key contribution is that while most studies of BERT focused on probing the pre-trained model, we raised the question of what happens in fine-tuning, and just how meaningful the representations obtained with the self-attention mechanism are. We were unable to find any evidence of linguistically meaningful self-attention maps being crucial for the performance of fine-tuned BERT.
+Our key contribution is that while most studies of BERT focused on probing the pre-trained model, we raised the question of what happens in fine-tuning, and just how meaningful the representations obtained with the self-attention mechanism are. We were unable to find evidence of linguistically meaningful self-attention maps being crucial for the performance of fine-tuned BERT.
 
 These results could be interpreted in the following ways:
 
- a) **BERT is overparametrized**: Since we switch off only one head at a time, it may be possible that some heads are functional duplicates, and removing one head would not harm the model because the same information is available elsewhere. That would again point at overparametrization and importance of model distillation: with a large model, it is not feasible to test this hypothesis by switching off all possible combinations of heads. 
+ a) **BERT is overparametrized**: Since we switch off only one head at a time, it may be possible that some heads are functional duplicates, and removing one head would not harm the model because the same information is available elsewhere. That would again point at overparametrization and importance of model distillation: with a large model, it is not feasible to test this hypothesis by switching off all possible combinations of heads. Promising results for the base Transformer were reported in a contemporaneous study, which identified the "important" heads by fine-tuning the model with a regularized objective that had the pruning effect {% cite @VoitaTalbotEtAl_2019_Analyzing_Multi-Head_Self-Attention_Specialized_Heads_Do_Heavy_Lifting_Rest_Can_Be_Pruned %}.
  
- b) **BERT's success is due to ~~black magic~~ something other than self-attention maps**: The information we as humans deem important for solving a verbal reasoning task may genuinely be not needed by the model, as it performs some deeper reasoning we are not able to comprehend or interpret (perhaps relying on some other component than the interpretable self-attention maps).
+ b) **BERT's success is due to ~~black magic~~ something other than self-attention maps**: The information we as humans deem important for solving a verbal reasoning task may genuinely be not needed by the model, as it performs some deeper reasoning we are not able to comprehend or interpret (perhaps relying on some other component than the interpretable self-attention maps). Our results also contribute to the ongoing discussion about the value of attention maps for explaining model predictions {% cite JainWallace_2019_Attention_is_not_Explanation @WiegreffePinter_2019_Attention_is_not_not_Explanation %}.
  
  c) **BERT does not need to be all that smart for these tasks**: The model does not actually solve the verbal reasoning task, but learns to rely on various shortcuts, biases and artifacts in the datasets to arrive at the correct prediction, and therefore does not need the attention maps to be particularly informative. 
 
-It is possible that all three of the above factors are playing a role. However, given our findings about how well a randomly initialized BERT does on most GLUE tasks, and the recent discoveries of problems with many current datasets{% cite GururanganSwayamdiptaEtAl_2018_Annotation_Artifacts_in_Natural_Language_Inference_Data McCoyPavlickEtAl_2019_Right_for_Wrong_Reasons_Diagnosing_Syntactic_Heuristics_in_Natural_Language_Inference %}, the easy dataset factor seems to be very likely.
+Sll three of the above factors are probably playing a role. However, given our findings about how well a randomly initialized BERT does on most GLUE tasks, and the recent discoveries of problems with many current datasets {% cite GururanganSwayamdiptaEtAl_2018_Annotation_Artifacts_in_Natural_Language_Inference_Data McCoyPavlickEtAl_2019_Right_for_Wrong_Reasons_Diagnosing_Syntactic_Heuristics_in_Natural_Language_Inference %}, the easy dataset factor seems to be very likely.
 
-{% include bib_footer.markdown %}
