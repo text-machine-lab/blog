@@ -5,24 +5,7 @@
 
     {% assign simpleKey = entry.key | split: "_" | slice:0, 4 %}
     {% assign simpleKey = simpleKey | join: "_" %}
-
-    <!--button class="btn--info" onclick="showBibtex('{{ simpleKey }}')">BibTex</button-->
     {% if entry.url %}
     <a href="{{ entry.url}}">[PDF]</a>
-    {% endif %}
-<!--div class="bibtex" id='{{ simpleKey }}'><pre>{{ entry.bibtex }}</pre>
-{{ entry.url }}
-</div-->
-</div>
-
-{% if entry.note %}
-<!--div>
-    <em>{{ entry.note }}</em>
-</div-->
-{% endif %}
-
-<div>
-    {% if entry.pdf %}
-    <span><a href="{{ entry.pdf }}">pdf</a></span>
     {% endif %}
 </div>
