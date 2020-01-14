@@ -31,17 +31,19 @@ src="https://c.statcounter.com/12176921/0/e9a6e2dd/1/"
 alt="Web Analytics"></a></div></noscript>
 <!-- End of Statcounter Code -->
 
-<!-- Twitter metadata -->
+<!-- Twitter metadata>
 <meta name="twitter:card" content="https://text-machine-lab.github.io/blog/assets/images/bert-secrets-header-square.png">
 
 <meta name="twitter:title" content="The Dark Secrets of BERT">
 
-  <meta name="twitter:description"
-    content="BERT and its Transformer-based cousins are still ahead on all NLP leaderboards. But how much do they actually understand about language?">
-
 <!-- end of Twitter metadata -->
 
 <meta name="og:image" content="https://text-machine-lab.github.io/blog/assets/images/text-machine-card-square.png">
+
+
+  <meta name="og:description"
+    content="BERT and its Transformer-based cousins are still ahead on all NLP leaderboards. But how much do they actually understand about language?">
+
 
 <!-- Begin Jekyll SEO tag v2.6.1 -->
 <title>The Dark Secrets of BERT | Text Machine Blog</title>
@@ -361,11 +363,11 @@ alt="Web Analytics"></a></div></noscript>
 
 <p>a) <strong>BERT is heavily overparametrized</strong>. In our experiments we disabled only one head at a time, and the fact that in most cases the model performance did not suffer suggests that many heads have functional duplicates, i.e. disabling one head would not harm the model because the same information is available elsewhere. This result points at overparametrization and explains the success of the smaller BERTs like AlBERT and TinyBERT.</p>
 
-<p>Such overparametrization means that BERT may have some highly important heads with linguistically meaningful self-attention patterns after all, but to prove that we would have to try disabling all possible head combinations (which is not feasible). A promising alternative was suggested in a contemporaneous study: <a class="citation" href="#VoitaTalbotEtAl_2019_Analyzing_Multi-Head_Self-Attention_Specialized_Heads_Do_Heavy_Lifting_Rest_Can_Be_Pruned">(Voita, Talbot, Moiseev, Sennrich, &amp; Titov, 2019)</a> identified the “important” heads of the base Trasnformer by fine-tuning the model with a regularized objective that had a pruning effect.</p>
+<p>Such overparametrization means that BERT may have some highly important heads with linguistically meaningful self-attention patterns after all, but to prove that, we would have to try disabling all possible head combinations (which is not feasible). A promising alternative was suggested in a contemporaneous study: <a class="citation" href="#VoitaTalbotEtAl_2019_Analyzing_Multi-Head_Self-Attention_Specialized_Heads_Do_Heavy_Lifting_Rest_Can_Be_Pruned">(Voita, Talbot, Moiseev, Sennrich, &amp; Titov, 2019)</a> identified the “important” heads of the base Transformer by fine-tuning the model with a regularized objective that had a pruning effect.</p>
 
 <p>b) <strong>BERT does not need to be all that smart for these tasks.</strong> The fact that BERT can do so well on most GLUE tasks <em>without pre-training</em> suggests that to a large degree they can be solved without much of language knowledge. Instead of verbal reasoning, it may learn to rely on various shortcuts, biases and artifacts in the datasets to arrive at the correct prediction. In that case its self-attention maps do not necessarily have to be meaningful to us. This finding supports the recent discoveries of problems with many current datasets <a class="citation" href="#GururanganSwayamdiptaEtAl_2018_Annotation_Artifacts_in_Natural_Language_Inference_Data">(Gururangan et al., 2018; McCoy, Pavlick, &amp; Linzen, 2019)</a>.</p>
 
-<p>An alternative explanation is that <strong>BERT’s success is due to <del>black magic</del> something other than self-attention.</strong> For instance, the high amount of attention to punctuation after fine-tuning could mean that the model actually learned to rely on some other component, or there is some deep pattern we cannot comprehend. Also, the degree to which attention can be used to explain model predictions <em>in principle</em> is currently being debated <a class="citation" href="#JainWallace_2019_Attention_is_not_Explanation">(Jain &amp; Wallace, 2019; Wiegreffe &amp; Pinter, 2019)</a>.</p>
+<p>An alternative explanation is that <strong>BERT’s success is due to <span style="color:darkred"><del>black magic</del></span> something other than self-attention.</strong> For instance, the high amount of attention to punctuation after fine-tuning could mean that the model actually learned to rely on some other component, or there is some deep pattern we cannot comprehend. Also, the degree to which attention can be used to explain model predictions <em>in principle</em> is currently being debated <a class="citation" href="#JainWallace_2019_Attention_is_not_Explanation">(Jain &amp; Wallace, 2019; Wiegreffe &amp; Pinter, 2019)</a>.</p>
 
 
 
