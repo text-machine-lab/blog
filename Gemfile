@@ -12,7 +12,7 @@ gem 'unicode_utils', require: false unless RUBY_VERSION >= '2.4'
 # gem "json"
 # gem "hash-joiner"
 
-# gem 'faraday', '0.17.3'
+gem 'faraday', '0.17.3'
 # gem 'faraday', "<= 0.15.4"
 
 
