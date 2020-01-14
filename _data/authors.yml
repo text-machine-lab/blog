@@ -8,7 +8,7 @@ arogers:
   url: http://www.cs.uml.edu/~arogers/
   blog: http://hackingsemantics.xyz/
   twitter: annargrs
-  image: /assets/images/aro.jpg
+  image: {{'/assets/images/aro.jpg' | relative_url }}
   bio: Anna Rogers is a computational linguist working on meaning representations for NLP, social NLP, and question answering. She was a post-doctoral associate in the Text Machine Lab in 2017-2019.
 
 arumshisky:
@@ -16,31 +16,31 @@ arumshisky:
     email: arum@cs.uml.edu
     twitter: arumshisky
     url: https://www.cs.uml.edu/~arum/
-    image: /assets/images/arum.jpg
+    image: {{'/assets/images/arum.jpg' | relative_url }}
     bio: Anna Rumshisky is an Associate Professor at the Dept. of Computer Science at University of Massachusetts Lowell and the head of the Text Machine Lab. Her research focuses on X, Y, and Z.
 
 ddonahue:
     name: David Donahue
     email: david_donahue@student.uml.edu
     bio: David is a M.Sc. student at the University of Massachusetts (Lowell), working with Anna Rumshisky. His research focuses on Generative Adversarial Network models to plan and generate natural language.
-    image: /assets/images/ddonahue.jpg
+    image: {{'/assets/images/ddonahue.jpg' | relative_url }}
 
 mdowney:
     name: Matthew Downey
     email: matthew_downey@student.uml.edu
     bio: Matt is an undergraduate student at the University of Massachusetts (Lowell) and an active member of the Text Machine lab. His NLP work focuses on question answering and dialogue.
-    image: /assets/images/matt.jpg
+    image: {{'/assets/images/matt.jpg' | relative_url }}
 
 okovaleva:
     name: Olga Kovaleva
     email: olga_kovaleva@student.uml.edu
     bio: Olga is a Ph.D. student at the University of Massachusetts (Lowell), working with Anna Rumshisky. Her research focuses on analysis of deep learning models for NLP, question answering and clinical NLP.
-    image: /assets/images/olga.jpg
+    image: {{'/assets/images/olga.jpg' | relative_url }}
 
 vlialin:
     name: Vlad Lialin
     email: lialin
-    bio: Vlad is a Ph.D. student at the University of Massachusetts (Lowell), working with Anna Rumshisky. His research focuses on X and Y.
-    image: /assets/images/vlad.jpg
+    bio: Vlad is a Ph.D. student at the University of Massachusetts (Lowell), working with Anna Rumshisky. His research focuses on dialogue models, self-supervised learning, and reinforcement learning.
+    image: {{'/assets/images/vlad.jpg' | relative_url }}
 
 

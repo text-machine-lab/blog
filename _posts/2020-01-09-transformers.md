@@ -146,7 +146,6 @@ To see whether the two heads we identified as useful for encoding frame semantic
 Similar conclusions were reached independently for machine translation task, with zeroing attention weights rather than replacing them with uniform attention {% cite MichelLevyEtAl_2019_Are_Sixteen_Heads_Really_Better_than_One %}. We further show that this observations extends not to just heads, but whole layers: depending on the task, a whole layer may be detrimental to the model performance! 
 
 <figure>
-	<img src="/assets/images/bert-ablate-layers.png"> 
 	<img src="{{'/assets/images/bert-ablate-layers.png' | relative_url }}"> 			
 	<figcaption>Fig. 7. Performance of the model while disabling one layer at a time.
 	</figcaption>
