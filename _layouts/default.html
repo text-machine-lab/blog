@@ -39,8 +39,8 @@ alt="Web Analytics"></a></div></noscript>
     <header>
         <div class="nav-menu">
             <ul>
-              <li><a href="/blog/tags/"><i class="fa fa-hashtag"></i> Tag index</a></li>
-              <li><a href="/blog/years/"><i class="fa fa-list"></i> All posts</a></li>
+              <li><a href="{{'/tags' | relative_url }}"><i class="fa fa-hashtag"></i> Tag index</a></li>
+              <li><a href="{{'/years' | relative_url }}"><i class="fa fa-list"></i> All posts</a></li>
               <li><a href="https://github.com/text-machine-lab/"> <i class="fa fa-github"></i> GitHub</a></li>
               <li><a href="http://text-machine.cs.uml.edu/"><i class="fa fa-home"></i> About us</a></li>
             </ul>
@@ -48,7 +48,7 @@ alt="Web Analytics"></a></div></noscript>
 
       <div class="inner">
           <div>
-            <a href="http://text-machine.cs.uml.edu/"><img src="/assets/images/text-machine-logo-transparent.png" alt="Text Machine logo" class="logo"></a>
+            <a href="http://text-machine.cs.uml.edu/"><img src="{{'/assets/images/text-machine-logo-transparent.png' | relative_url }}" alt="Text Machine logo" class="logo"></a>
           </div>
         <div>
         <a href="{{ '/' | absolute_url }}">
