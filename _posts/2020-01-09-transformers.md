@@ -150,19 +150,19 @@ Similar conclusions were reached independently for machine translation task, wit
 	</figcaption>
 </figure>
 
-## So how does this thing work?
+## Discussion
 
-To sum up, this work showed that even base BERT is severely overparametrized, which explains why model distillation turned out to be so productive. 
+Our key contribution is that while most studies of BERT focused on probing the pre-trained model, we raised the question of what happens in fine-tuning, and just how meaningful the representations obtained with the self-attention mechanism are. So far, we were unable to find evidence of linguistically meaningful self-attention maps being crucial for the performance of fine-tuned BERT.
 
-Our key contribution is that while most studies of BERT focused on probing the pre-trained model, we raised the question of what happens in fine-tuning, and just how meaningful the representations obtained with the self-attention mechanism are. We were unable to find evidence of linguistically meaningful self-attention maps being crucial for the performance of fine-tuned BERT.
+Our results contribute to the ongoing discussion about the properties of Transformer-based models in the following directions:
 
-These results could be interpreted in the following ways:
-
- a) **BERT is overparametrized**: Since we switch off only one head at a time, it may be possible that some heads are functional duplicates, and removing one head would not harm the model because the same information is available elsewhere. That would again point at overparametrization and importance of model distillation: with a large model, it is not feasible to test this hypothesis by switching off all possible combinations of heads. Promising results for the base Transformer were reported in a contemporaneous study, which identified the "important" heads by fine-tuning the model with a regularized objective that had the pruning effect {% cite @VoitaTalbotEtAl_2019_Analyzing_Multi-Head_Self-Attention_Specialized_Heads_Do_Heavy_Lifting_Rest_Can_Be_Pruned %}.
+ a) **BERT is heavily overparametrized**. In our experiments we disabled only one head at a time, and the fact that in most cases the model performance did not suffer suggests that many heads have functional duplicates, i.e. disabling one head would not harm the model because the same information is available elsewhere. This result points at overparametrization and explains the success of the smaller BERTs like AlBERT and TinyBERT. 
  
- b) **BERT's success is due to ~~black magic~~ something other than self-attention maps**: The information we as humans deem important for solving a verbal reasoning task may genuinely be not needed by the model, as it performs some deeper reasoning we are not able to comprehend or interpret (perhaps relying on some other component than the interpretable self-attention maps). Our results also contribute to the ongoing discussion about the value of attention maps for explaining model predictions {% cite JainWallace_2019_Attention_is_not_Explanation @WiegreffePinter_2019_Attention_is_not_not_Explanation %}.
+ Such overparametrization means that BERT may have some highly important heads with linguistically meaningful self-attention patterns after all, but to prove that we would have to try disabling all possible head combinations (which is not feasible). A promising alternative was suggested in a contemporaneous study: {% cite VoitaTalbotEtAl_2019_Analyzing_Multi-Head_Self-Attention_Specialized_Heads_Do_Heavy_Lifting_Rest_Can_Be_Pruned --suppress-author %} identified the "important" heads of the base Trasnformer by fine-tuning the model with a regularized objective that had a pruning effect.
  
- c) **BERT does not need to be all that smart for these tasks**: The model does not actually solve the verbal reasoning task, but learns to rely on various shortcuts, biases and artifacts in the datasets to arrive at the correct prediction, and therefore does not need the attention maps to be particularly informative. 
+ b) **BERT does not need to be all that smart for these tasks.** The fact that BERT can do so well on most GLUE tasks *without pre-training* suggests that to a large degree they can be solved without much of language knowledge. Instead of verbal reasoning, it may learn to rely on various shortcuts, biases and artifacts in the datasets to arrive at the correct prediction. In that case its self-attention maps do not necessarily have to be meaningful to us. This finding supports the recent discoveries of problems with many current datasets {% cite GururanganSwayamdiptaEtAl_2018_Annotation_Artifacts_in_Natural_Language_Inference_Data McCoyPavlickEtAl_2019_Right_for_Wrong_Reasons_Diagnosing_Syntactic_Heuristics_in_Natural_Language_Inference %}.
 
-Sll three of the above factors are probably playing a role. However, given our findings about how well a randomly initialized BERT does on most GLUE tasks, and the recent discoveries of problems with many current datasets {% cite GururanganSwayamdiptaEtAl_2018_Annotation_Artifacts_in_Natural_Language_Inference_Data McCoyPavlickEtAl_2019_Right_for_Wrong_Reasons_Diagnosing_Syntactic_Heuristics_in_Natural_Language_Inference %}, the easy dataset factor seems to be very likely.
-
+ An alternative explanation is that **BERT's success is due to ~~black magic~~ something other than self-attention.** For instance, the high amount of attention to punctuation after fine-tuning could mean that the model actually learned to rely on some other component, or there is some deep pattern we cannot comprehend. Also, the degree to which attention can be used to explain model predictions *in principle* is currently being debated {% cite JainWallace_2019_Attention_is_not_Explanation WiegreffePinter_2019_Attention_is_not_not_Explanation %}.
+ 
+ 
+ 
