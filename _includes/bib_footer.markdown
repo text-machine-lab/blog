@@ -1,3 +1,3 @@
-<h2> References </h2>
+## References
 
 {% bibliography --cited %}
