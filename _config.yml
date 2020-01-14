@@ -32,8 +32,10 @@ scholar:
   use_raw_bibtex_entry: true # to enable {{...}} inside bibtex
   source: ./_bibliography
   bibliography: references.bib
-  bibliography_template: ""
   query: "@*"
+#  bibtex_filters:
+#    - latex
+#    - markdown
 
 jekyll-archives:
   enabled: ['year', 'tags']
