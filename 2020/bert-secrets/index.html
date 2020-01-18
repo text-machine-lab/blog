@@ -106,7 +106,7 @@ alt="Web Analytics"></a></div></noscript>
 <span class="reading-time" title="Estimated read time">
   
   
-    14 mins
+    15 mins
   
 </span>
 
@@ -328,6 +328,11 @@ alt="Web Analytics"></a></div></noscript>
 
 <p>While it is clear that pretraining + fine-tuning setup yields the highest results, the <strong>random + fine-tuned BERT is doing disturbingly well on all tasks except textual similarity</strong>. Indeed, for sentiment analysis it appears that one could get 80% accuracy with randomly initialized and fine-tuned BERT, without any pre-training. Given the scale of the large pre-trained Transformers, this raises serious questions about whether the expensive pre-training yields enough bang for the buck. It also raises serious questions about the NLP datasets that apparently can be solved without much task-independent linguistic knowledge that the pre-training + fine-tuning setup was supposed to deliver.</p>
 
+<blockquote>
+  <p><em>Update 18.01.2020</em>: Thanks to Sam Bowman for pointing out that the random BERT results are overall comparable with pre-Transformer GLUE baselines, and are best interpreted as a reminder of the degree to which these tasks are solvable without deep linguistic knowledge. NLP community needs much more work on harder datasets that actually require such knowledge, and in the interim we should at least switch to SuperGLUE. <br /> 
+  Note that GLUE baselines and most published results on these tasks use word embeddings or count-based word vectors as inputs, while our random BERT was fully random. Thus direct comparison is not entirely fair. However, for SST in particular such comparison can be made with the original Recursive Neural Tensor Network <a class="citation" href="#SocherPerelyginEtAl_2013_Recursive_deep_models_for_semantic_compositionality_over_sentiment_treebank">(Socher et al., 2013)</a>. This 2013 model is tiny in comparison and also takes random vectors as input representations, but it beats our random+fine-tuned BERT by 7 points on binary classification.</p>
+</blockquote>
+
 <h2 id="are-there-any-linguistically-interpretable-self-attention-heads">Are there any linguistically interpretable self-attention heads?</h2>
 
 <p>Several studies at this point tried to locate self-attention heads that encode specific types of information, but most of them focused on syntax. We conducted an experiment focusing on frame semantic elements: we extracted from FrameNet 1.7 <a class="citation" href="#BakerFillmoreEtAl_1998_Berkeley_Framenet_project">(Baker, Fillmore, &amp; Lowe, 1998)</a> 473 sentences which were at most 12 tokens in length (to reduce the number of sentences evoking multiple frames), and which had a core frame element at a distance of at least 2 tokens from the target word (irrespective of its syntactic function). In the example below, it is the relation between the Experiencer and the participle “agitated” that evokes the Emotion_directed frame. Arguably, such relations are indeed core to understanding the situation described by a given sentence, and any mechanism claiming to provide linguistically informative self-attention maps should reflect them (possibly among many other relations).</p>
@@ -455,6 +460,16 @@ alt="Web Analytics"></a></div></noscript>
     
     
     <a href="http://papers.nips.cc/paper/7181-attention-is-all-you-need">[PDF]</a>
+    
+</div>
+</li>
+<li><div class="text-justify">
+    <span id="SocherPerelyginEtAl_2013_Recursive_deep_models_for_semantic_compositionality_over_sentiment_treebank">Socher, R., Perelygin, A., Wu, J., Chuang, J., Manning, C. D., Ng, A., &amp; Potts, C. (2013). Recursive Deep Models for Semantic Compositionality over a Sentiment Treebank. <i>Proceedings of the 2013 Conference on Empirical Methods in Natural Language Processing</i>, 1631–1642.</span>
+
+    
+    
+    
+    <a href="http://www.aclweb.org/anthology/D13-1170">[PDF]</a>
     
 </div>
 </li>
