@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!--link rel="stylesheet" href="/_sass/jekyll-theme-architect.scss" media="screen" type="text/css">
+    <link rel="stylesheet" href="/_sass/normalize.scss" media="screen" type="text/css">
+    <link rel="stylesheet" href="/_sass/rouge-github.scss" media="screen" type="text/css"-->
+    <link rel="stylesheet" href="/blog/assets/css/style.css?v=" media="screen" type="text/css">
+    <link rel="stylesheet" href="/blog/assets/css/print.css" media="print" type="text/css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" type="text/css">
+
+    <!--[if lt IE 9]-->
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+
+<!-- Default Statcounter code for Text-machine Blog
+https://text-machine-lab.github.io/blog/ -->
+<script type="text/javascript">
+var sc_project=12176921;
+var sc_invisible=1;
+var sc_security="e9a6e2dd";
+</script>
+<script type="text/javascript"
+src="https://www.statcounter.com/counter/counter.js"
+async></script>
+<noscript><div class="statcounter"><a title="Web Analytics"
+href="https://statcounter.com/" target="_blank"><img
+class="statcounter"
+src="https://c.statcounter.com/12176921/0/e9a6e2dd/1/"
+alt="Web Analytics"></a></div></noscript>
+<!-- End of Statcounter Code -->
+
+<!--Twitter metadata-->
+
+<meta name="twitter:title" content="Question Answering for Artificial Intelligence (QuAIL)">
+
+<!-- end of Twitter metadata -->
+
+
+  <meta name="twitter:image" content="https://text-machine-lab.github.io/blog/assets/images/quail-card-square.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="og:image" content="https://text-machine-lab.github.io/blog/assets/images/quail-card-square.jpg">
+
+
+
+  <meta name="og:description"
+    content="QuAIL is a new challenging NLP benchmark that combines reading comprehension and commonsense reasoning.">
+  <meta name="twitter:description"
+    content="QuAIL is a new challenging NLP benchmark that combines reading comprehension and commonsense reasoning.">
+
+
+<!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Question Answering for Artificial Intelligence (QuAIL) | Text Machine Blog</title>
+<meta name="generator" content="Jekyll v3.7.4" />
+<meta property="og:title" content="Question Answering for Artificial Intelligence (QuAIL)" />
+<meta name="author" content="Anna Rogers" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="QuAIL is a new challenging NLP benchmark that combines reading comprehension and commonsense reasoning." />
+<meta property="og:description" content="QuAIL is a new challenging NLP benchmark that combines reading comprehension and commonsense reasoning." />
+<link rel="canonical" href="https://text-machine-lab.github.io/blog/2020/quail/" />
+<meta property="og:url" content="https://text-machine-lab.github.io/blog/2020/quail/" />
+<meta property="og:site_name" content="Text Machine Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-02-27T16:07:47-05:00" />
+<script type="application/ld+json">
+{"description":"QuAIL is a new challenging NLP benchmark that combines reading comprehension and commonsense reasoning.","author":{"@type":"Person","name":"Anna Rogers"},"@type":"BlogPosting","url":"https://text-machine-lab.github.io/blog/2020/quail/","headline":"Question Answering for Artificial Intelligence (QuAIL)","dateModified":"2020-02-27T16:07:47-05:00","datePublished":"2020-02-27T16:07:47-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://text-machine-lab.github.io/blog/2020/quail/"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+  </head>
+
+  <body>
+    <header>
+        <div class="nav-menu">
+            <ul>
+              <li><a href="/blog/tags"><i class="fa fa-hashtag"></i> Tag index</a></li>
+              <li><a href="/blog/years"><i class="fa fa-list"></i> All posts</a></li>
+              <li><a href="https://github.com/text-machine-lab/"> <i class="fa fa-github"></i> GitHub</a></li>
+              <li><a href="http://text-machine.cs.uml.edu/"><i class="fa fa-home"></i> About us</a></li>
+            </ul>
+        </div>
+
+      <div class="inner">
+          <div>
+            <a href="http://text-machine.cs.uml.edu/"><img src="/blog/assets/images/text-machine-logo-transparent.png" alt="Text Machine logo" class="logo"></a>
+          </div>
+        <div>
+        <a href="https://text-machine-lab.github.io/blog/">
+          <h1>Text Machine Blog</h1>
+        </a>
+        <h2 class="tagline">Machine Learning, NLP, and more</h2>
+        </div>
+      </div>
+
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          
+
+<h1>Question Answering for Artificial Intelligence (QuAIL)</h1>
+
+<span class="post-date">27 Feb 2020 • </span>
+<img src="/blog/assets/images/time-button.jpg" class="read-time"></img>
+<span class="reading-time" title="Estimated read time">
+  
+  
+    21 mins
+  
+</span>
+
+<p><strong>Tags:</strong>
+  <span>
+  
+    
+    <a href="/tag/QA,"><code class="highligher-rouge"><nobr>QA,</nobr></code>&nbsp;</a>
+  
+    
+    <a href="/tag/transformers"><code class="highligher-rouge"><nobr>transformers</nobr></code>&nbsp;</a>
+  
+   </span>
+
+</p>
+
+
+
+<!--p class="post-author">Author: Anna Rogers</p-->
+  
+      <hr>
+<span>
+
+<div class="author-container">
+        
+            <img src="/blog/assets/images/aro.jpg" class="author-img">
+        
+    <div class="author-text">
+        <span class="author-name"> Anna Rogers &nbsp;</span>
+           
+              <a href="http://www.cs.uml.edu/~arogers/"><span class="label"><i class="fa fa-home"></i> Profile</span></a>
+           
+           
+              <a href="http://twitter.com/annargrs"><span class="label"><i class="fa fa-twitter"></i> Twitter</span></a>
+            
+           
+              <a href="http://hackingsemantics.xyz/" > <span class="label"> <i class="fa fa-pencil"></i> Blog</span></a>
+           
+           
+           <br/> <i class="fa id-badge"></i> <i>Anna Rogers is a computational linguist working on meaning representations for NLP, social NLP, and question answering. She was a post-doctoral associate in the Text Machine Lab in 2017-2019.</i>
+           
+    </div>
+</div>
+
+
+  
+
+<blockquote>
+  <p>This blog post summarizes our AAAI 2020 paper “Getting Closer to AI-complete Question Answering: A Set of Prerequisite Real Tasks” <a class="citation" href="#RogersKovalevaEtAl_2020_Getting_Closer_to_AI_Complete_Question_Answering_Set_of_Prerequisite_Real_Tasks">(Rogers, Kovaleva, Downey, &amp; Rumshisky, 2020)</a>. <br /> 
+The leaderboard for the QuAIL benchmark can be found <a href="http://text-machine.cs.uml.edu/lab2/projects/quail/">here.</a> <br />
+We thank the anonymous reviewers for their insightful comments. The first author is also grateful for the opportunities to discuss this work at an invited talk at AI2 and a keynote at Meta-Eval workshop. Among many people whose comments made this post better are Noah Smith, Matt Gardner, Daniel Khashabi, Ronan Le Bras (AI2), Chris Welty, Lora Aroyo, and Praveen Paritosh (Google Research).</p>
+</blockquote>
+
+<p>Since 2018 there was an explosion of new datasets for high-level verbal reasoning tasks, such as reading comprehension, commonsense reasoning, and natural language inference. However, many new datasets get “solved” almost immediately, prompting concerns about data artifacts and biases. Our models get fooled by superficial cues <a class="citation" href="#JiaLiang_2017_Adversarial_Examples_for_Evaluating_Reading_Comprehension_Systems">(Jia &amp; Liang, 2017; McCoy, Pavlick, &amp; Linzen, 2019)</a> and so may achieve seemingly super-human accuracy without any real verbal reasoning skills.</p>
+
+<p>One of the top reasons for the datasets being so easy is poor diversity of data. Deep learning requires large training sets, which typically are generated by crowd workers provided with minimal instructions. This may result in large portions of data exhibiting spurious patterns that the model learns to associate with a particular label. For example, the word “never” is strongly predictive of the contradiction label in SNLI <a class="citation" href="#GururanganSwayamdiptaEtAl_2018_Annotation_Artifacts_in_Natural_Language_Inference_Data">(Gururangan et al., 2018)</a>, simply because negating was an easy strategy for the crowd workers to generate contradictory statements. If a few such patterns cover large portions of the data, we have a problem.</p>
+
+<p>To avoid this, fundamentally we need to reduce the amount of spurious correlations with predicted labels, which would hopefully force our models to learn generalizable patterns rather than dataset-specific “shortcuts”. The solution to this problem that we explored in QuAIL is <strong>balancing different types of data within one dataset</strong>. This does not guarantee the absence of any biases, but it should decrease the likelihood of a single bias affecting a large portion of data. In particular, we experiment with 4x9 design: 4 domains by 9 question types, each with approximately the same number of questions.</p>
+
+<p>In addition to reducing biases, this approach should also enable diagnostics of both the models and the data: finding what the model can and cannot do, and whether any parts of data look suspiciously easy. When we started working on QuAIL, the only other reading comprehension dataset with annotation for question types was the original bAbI <a class="citation" href="#WestonBordesEtAl_2015_Towards_AI-complete_question_answering_A_set_of_prerequisite_toy_tasks">(Weston et al., 2016)</a>, which consisted of toy tasks with synthetic data.</p>
+
+<p>It turns out, there are very good reasons why this approach has not been explored before. We have learned a lot from this project, and here are the main takeaways:</p>
+
+<blockquote>
+  <ul>
+    <li>it is possible to crowdsource a RC dataset balanced by question types and domains;</li>
+    <li>balanced design is great for model and data diagnostics;</li>
+    <li>reasoning over the full spectrum of uncertainty is harder for humans than for machines;</li>
+    <li>paraphrasing hurts even BERT.</li>
+  </ul>
+</blockquote>
+
+<h2 id="balanced-and-diverse-data-is-great">Balanced and diverse data is great!</h2>
+
+<p>QuAIL is a multi-domain RC dataset featuring news, blogs, fiction and user stories. Each domain is represented by 200 texts, which gives us a 4-way data split. The texts are 300-350 word excerpts from CC-licensed texts that were hand-picked so as to make sense to human readers without larger context. Domain diversity mitigates the issue of possible overlap between training and test data of large pre-trained models, which the current SOTA systems are based on. For instance, BERT is trained on Wikipedia + BookCorpus, and was tested on Wikipedia-based SQuAD <a class="citation" href="#DevlinChangEtAl_2019_BERT_Pre-training_of_Deep_Bidirectional_Transformers_for_Language_Understanding">(Devlin, Chang, Lee, &amp; Toutanova, 2019)</a>.</p>
+
+<p>In addition to balancing the domains, we balance the number of questions across 9 question types:</p>
+
+<blockquote>
+  <ul>
+    <li><strong>text-based questions</strong> (the information should be found in the text):
+      <ul>
+        <li>reasoning about factual information in the text (e.g. <em>What did John do?</em>);</li>
+        <li>temporal order of events (e.g. <em>When did X happen - before, after, or during Y?</em>);</li>
+        <li>character identity (e.g. <em>Who ate the cake?</em>);</li>
+      </ul>
+    </li>
+    <li><strong>world knowledge questions</strong> (rely on some kind of inference about characters and events, based on information in the text and world knowledge):
+      <ul>
+        <li>causality (e.g. <em>Why did John eat the cake?</em>);</li>
+        <li>properties and qualities of characters (e.g. <em>What kind of food does John probably like?</em>);</li>
+        <li>belief states (e.g. <em>What does John think about Mary?</em>);</li>
+        <li>subsequent state after the narrated events (e.g. <em>What does John do next?</em>);</li>
+        <li>duration of the narrated events (e.g. <em>How long did it probably take John to eat the cake?</em>);</li>
+      </ul>
+    </li>
+    <li><strong>unanswerable questions</strong> are questions for which the information is not found in the text, and all answer options are equally likely (e.g. <em>What is John’s brother’s name?</em>)</li>
+  </ul>
+</blockquote>
+
+<p>In terms of the format, QuAIL is a multi-choice dataset where all questions have 3 answer options, as well as “not enough information” (NEI) option, which is the correct answer for the unanswerable questions. The data looks as follows.</p>
+
+<figure>
+	<img src="/blog/assets/images/quail-sample.png" /> 	
+	<figcaption>Fig. 1. QuAIL data sample.
+	</figcaption>
+</figure>
+
+<p>Overall, the above design gives us the total of 4 x 9 balanced subsets of the data, which are all labeled for question types and domains. The labels can be used for diagnosing both the models (what they can and can’t do) and the data (finding the sections that are suspiciously easy).</p>
+
+<p>So, how do our models do with this data? This is the place in the paper where you usually get a table with the results of a few baselines. If the dataset is partitioned like QuAIL, you get a larger table that tells you how successful your model was on different types of questions – and that might tell you something useful about how it works. We experimented with a simple heuristic baseline (picking the longest answer), a classic PMI solver that should prefer the answers with significant lexical overlap with the text, a biLSTM baseline using word embeddings, BERT <a class="citation" href="#DevlinChangEtAl_2019_BERT_Pre-training_of_Deep_Bidirectional_Transformers_for_Language_Understanding">(Devlin, Chang, Lee, &amp; Toutanova, 2019)</a>, and TriAN - a ConceptNet-based system that won SemEval2018-Task11 <a class="citation" href="#wang-etal-2018-yuanfudao">(Wang, Sun, Zhao, Shen, &amp; Liu, 2018)</a>. The random guess accuracy is 25%.</p>
+
+<div class="table-wrapper">
+
+  <table>
+    <thead>
+      <tr>
+        <th>Question type</th>
+        <th>LongChoice</th>
+        <th>LSTM</th>
+        <th>PMI</th>
+        <th>TriAN</th>
+        <th>BERT</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Temporal order</td>
+        <td>36.3</td>
+        <td>37</td>
+        <td>42.5</td>
+        <td><strong>55.5</strong></td>
+        <td>52.9</td>
+      </tr>
+      <tr>
+        <td>Character identity</td>
+        <td>32.3</td>
+        <td>32.4</td>
+        <td>48.3</td>
+        <td><strong>53.1</strong></td>
+        <td>46.2</td>
+      </tr>
+      <tr>
+        <td>Causality</td>
+        <td>46.8</td>
+        <td>38.5</td>
+        <td>57.8</td>
+        <td>60.1</td>
+        <td><strong>67.1</strong></td>
+      </tr>
+      <tr>
+        <td>Factual</td>
+        <td>35.9</td>
+        <td>20.2</td>
+        <td><strong>57.5</strong></td>
+        <td>55</td>
+        <td>55.8</td>
+      </tr>
+      <tr>
+        <td>Subsequent state</td>
+        <td>29.5</td>
+        <td>36.8</td>
+        <td>32.9</td>
+        <td>47.5</td>
+        <td><strong>56.7</strong></td>
+      </tr>
+      <tr>
+        <td>Event duration</td>
+        <td>33.6</td>
+        <td>43.6</td>
+        <td>37</td>
+        <td>56.9</td>
+        <td><strong>63.8</strong></td>
+      </tr>
+      <tr>
+        <td>Entity properties</td>
+        <td>35</td>
+        <td>30.8</td>
+        <td>33.7</td>
+        <td>45.8</td>
+        <td><strong>48.8</strong></td>
+      </tr>
+      <tr>
+        <td>Belief states</td>
+        <td>30.9</td>
+        <td>34.7</td>
+        <td>37.5</td>
+        <td>43.3</td>
+        <td><strong>55.0</strong></td>
+      </tr>
+      <tr>
+        <td>Unanswerable questions</td>
+        <td>12.2</td>
+        <td>51.8</td>
+        <td>23.3</td>
+        <td>65</td>
+        <td>54.2</td>
+      </tr>
+      <tr>
+        <td>All questions</td>
+        <td>35.6</td>
+        <td>37.2</td>
+        <td>41.8</td>
+        <td>54.7</td>
+        <td><strong>55.9</strong></td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+
+<p>The first fun fact is that on world knowledge questions BERT beats a ConceptNet-based system made specifically for this kind of multi-choice QA, which suggests either that it contains more of world knowledge than ConceptNet, or its world knowledge is more relevant to QuAIL.</p>
+
+<p>The most difficult question type for BERT is character identity, which often involves coreference resolution. Although both coreference and temporal order questions involve reasoning over longer dependencies, the former appears to be more difficult. In both cases, it loses to TriAN.</p>
+
+<p>Surprisingly, simple PMI beats BERT on factual questions (e.g. <em>What did John eat?</em>). Note that this is the most prevalent type in most other RC datasets. If simple lexical matching provides such a strong signal, then training on such data would teach a model to rely on it, and we will show further that this is what happens to BERT too.</p>
+
+<p>Finally, note how heuristic baselines are helpful for finding suspiciously easy sections of partitioned data. Our LongChoice heuristic is very successful on causality questions, which suggests that the Turkers mostly wrote the long causal explanations for the correct answers but not distractors. Since causality is also the easiest category for BERT, it is possible that this bias helps it as well. The partitioning methodology enables the dataset authors to locate the problematic parts and fix them, e.g. to release a more difficult version of the dataset.</p>
+
+<p>Partitioning across domains is helpful as well. Consider the following breakdown of BERT results:</p>
+
+<div class="table-wrapper">
+
+  <table>
+    <thead>
+      <tr>
+        <th>Question category</th>
+        <th>Fiction</th>
+        <th>News</th>
+        <th>Blogs</th>
+        <th>User stories</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Text-based</td>
+        <td>45.5</td>
+        <td>38.8</td>
+        <td>60.5</td>
+        <td><strong>61.6</strong></td>
+      </tr>
+      <tr>
+        <td>World knowledge</td>
+        <td><strong>61</strong></td>
+        <td>58</td>
+        <td>58.3</td>
+        <td>55.6</td>
+      </tr>
+      <tr>
+        <td>Unanswerable</td>
+        <td>58.3</td>
+        <td><strong>68.3</strong></td>
+        <td>40</td>
+        <td>50</td>
+      </tr>
+      <tr>
+        <td>All questions</td>
+        <td>55.5</td>
+        <td>52.7</td>
+        <td><strong>57</strong></td>
+        <td><strong>57</strong></td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+
+<p>BERT does suspiciously well on unanswerable questions in the news, but not in blogs. This could be due to the fact that news style and vocabulary are quite far from everyday speech, making the crowdworkers’ distractor options easier to detect.</p>
+
+<h2 id="crowdsourcing-specific-question-types-is-hard-but-not-impossible">Crowdsourcing specific question types is hard (but not impossible)</h2>
+
+<p>So if partitioning datasets in sections by question types and domains is so great, why is nobody doing it?</p>
+
+<p>Well, it’s very difficult.</p>
+
+<p>First, not all texts are suitable for all question types: for example, you wouldn’t be able to do much for coreference or causality given a description of a landscape. One of the most frequent questions we got from reviewers and the audience was how we chose the question types and texts. The answer is, we chose them together by much trial and error, to maximize the number of possible questions for the same text. The domain options were also limited to non-specialized texts that could be processed by crowd workers.</p>
+
+<p>Second, the crowd workers really do not want to write diverse questions. Most other studies that did not control for question types while they were generated provide a breakdown by the first word of the question (which is very crude, as causality, factual, world knowledge questions could all start with <em>what</em>), or an analysis of a small sample that they manually annotated. The reported distributions tend to be unbalanced, usually with factoid questions making the bulk of the data and a long tail of other question types. For example, in NarrativeQA <a class="citation" href="#KociskySchwarzEtAl_2018_NarrativeQA_Reading_Comprehension_Challenge">(Kocisky et al., 2018)</a> 25% of questions are about descriptions, 10% - about locations (both corresponding to our “factual” category, since the answers are supposed to be found in the narrative), 31% of questions are on character identity, about 10% causality, and less than 2% for event duration.</p>
+
+<p>This is what we found as well: the easiest questions to generate are simple factoid questions (“John ate a cake” -&gt; “What did John eat?”). Our form showed the text and sections corresponding to different question types, with different examples and instructions for each type. Even with the examples, the most frequent kind of error would be factoid questions instead of any other question type. Also, unanswerable questions could be of any type, but what we got was mostly factoid.</p>
+
+<figure>
+	<img src="/blog/assets/images/quail-HIT.png" /> 	
+	<figcaption>Fig. 2. HIT layout for QuAIL data collection. The examples shown to crowd workers were adapted to each domain.
+	</figcaption>
+</figure>
+
+<p>So, how do you ensure question diversity? In this work we experimented with two strategies:</p>
+
+<p>1) <strong>Crowd-assisted writing</strong>: the crowdsourced questions were checked by additional student annotators, who were asked to correct any language errors, any ambiguous or incorrect answers, and also rewrite the questions of the wrong type.</p>
+
+<p>2) <strong>Crowdsourcing with automatic keyword-based validation</strong>: the crowd workers had the same interface to work with, but now they got automatic feedback if their questions did not match our lists of relevant keywords (e.g. “because”, “reason” for causality questions).</p>
+
+<p>Based on our experience, we recommend the latter workflow, as it is much faster and comparable in terms of data quality. In a manually annotated sample, 11.1% questions in workflow (1) had answer problems vs 16.7% for workflow (2), and 6.7% questions were of the wrong type, vs 11.7% for workflow (2).</p>
+
+<p>Workflow (1) has the advantage of reducing language errors: many Turkers were clearly not native speakers, although we limited the HIT to workers from the US and Canada with at least 1000 accepted HITs and 97% approval. However, we found that (1) also introduced extra question type biases. In our sample 25% questions in our sample that were of the entity properties type, according to the annotator, were in fact on causality. None of the Turkers made this type of error. This is likely due to the recently pointed out annotator bias problem <a class="citation" href="#GevaGoldbergEtAl_2019_Are_We_Modeling_Task_or_Annotator_Investigation_of_Annotator_Bias_in_Natural_Language_Understanding_Datasets">(Geva, Goldberg, &amp; Berant, 2019)</a>: people processing large amounts of data are likely to develop their own heuristics for dealing with it. If a few annotators are processing a lot of crowdsourced data, the same effect can be expected. While completely relying on multiple Turkers increases the likelihood of noise, it also increases diversity.</p>
+
+<p>The good news is that automatic keyword-based validation produces the <a href="https://en.wikipedia.org/wiki/Hawthorne_effect">Hawthorne effect</a> on the crowd workers. Similarly to <a href="https://www.staff.ncl.ac.uk/daniel.nettle/PowellRobertsNettle.pdf">people making more donations to charities when they perceived they were being watched</a>, our checks decreased the number of people who simply copy-pasted example questions or contributed nonsensical data.</p>
+
+<h2 id="world-knowledge--text-based--unanswerable-questions--trouble">World knowledge + text-based + unanswerable questions = trouble</h2>
+
+<p>To recap, QuAIL is the first verbal reasoning benchmark that attempted to combine text-based questions, world knowledge questions, and unanswerable questions. For the former, the answer is directly in the text. In world knowledge questions the system needs to combine the facts of the specific context with external knowledge, which makes one of the proposed answer options more likely than the others. In unanswerable questions, we asked the crowd workers to specify answer options that were are equally likely. All QuAIL questions have 3 human-generated answer options and “not enough information” option, which is the correct one for unanswerable questions.</p>
+
+<p>Our rationale for trying this text-based + world knowledge + unanswerable question setup was that humans in everyday life are demonstrably able to perform reasoning across the full spectrum of uncertainty. A brief example:</p>
+
+<blockquote>
+  <p>Suppose you want to buy a new laptop, and are considering several options. You will probably want to know how much RAM you can get, and you know where to find the answer to that question (in the model description). That’s a perfect-information, <em>text-based</em> question. Now, say you also want to know whether the video calls will feature your nostrils. You know that you can’t just google for this information, but you can look at the photo and use your <em>external knowledge</em> (of optics, in this case) to deduce the answer. Finally, you probably also want to know how the keyboard feels - but this question is <em>unanswerable</em>, the only way is tell is to try typing on that keyboard yourself.</p>
+</blockquote>
+
+<p>So, in real life humans are able to reason under all three uncertainty settings. But they don’t want to! When we presented our student volunteers with a sample of QuAIL data (180 questions, 10 texts, 2 questions of each type per text), the agreement with the Turkers was only .6 (Kripperndorff’s alpha). However, when we split the same questions into text-based+unanswerable questions (≈ SQuAD 2.0 setup) and world knowledge questions (≈ SWAG setup), the agreement was considerably higher - even though the questions were exactly the same!</p>
+
+<figure>
+	<img src="/blog/assets/images/quail-human-eval.png" /> 	
+	<figcaption>Fig. 3. Human evaluation for QuAIL (student volunteers, 180 questions in each setup).
+	</figcaption>
+</figure>
+
+<p>This is an interesting result in “machine learning psychology” (© Chris Welty, discussion at <a href="http://eval.how/aaai-2020/">Meta-Eval workshop</a>) which deserves further investigation. One of the reasons for the stark difference between all-questions, SQuAD and SWAG setups could be that humans are uncomfortable admitting that they don’t know something, and so in the unanswerable questions they may opt to make a guess rather than select the “not enough information option”. Another possibility is that borderline cases of uncertainty estimation are mentally taxing, and humans are not good at performing this at scale. When there is not a clear reason to prefer one option over the other, we may take a long time even deciding which restaurant to go to, or just pick one randomly.</p>
+
+<p>Note however that the systems we evaluated do NOT have this problem when evaluated in all-questions setup:</p>
+
+<div class="table-wrapper">
+
+  <table>
+    <thead>
+      <tr>
+        <th>Question type</th>
+        <th>Human: <br />all <br /> questions</th>
+        <th>Human: <br />text+ <br />unanswerable</th>
+        <th>Human: <br />world <br /> knowledge</th>
+        <th>TriAN</th>
+        <th>BERT</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Temp. order</td>
+        <td>0.66</td>
+        <td>0.67</td>
+        <td>–</td>
+        <td>55.5</td>
+        <td>52.9</td>
+      </tr>
+      <tr>
+        <td>Coreference</td>
+        <td>0.7</td>
+        <td>0.79</td>
+        <td>–</td>
+        <td>53.1</td>
+        <td>46.2</td>
+      </tr>
+      <tr>
+        <td>Factual</td>
+        <td>0.75</td>
+        <td>0.82</td>
+        <td>–</td>
+        <td>55</td>
+        <td>55.8</td>
+      </tr>
+      <tr>
+        <td>Causality</td>
+        <td>0.76</td>
+        <td>–</td>
+        <td>0.86</td>
+        <td>60.1</td>
+        <td>67.1</td>
+      </tr>
+      <tr>
+        <td>Subsequent</td>
+        <td>0.53</td>
+        <td>–</td>
+        <td>0.62</td>
+        <td>47.5</td>
+        <td>56.7</td>
+      </tr>
+      <tr>
+        <td>Duration</td>
+        <td>0.32</td>
+        <td>–</td>
+        <td>0.37</td>
+        <td>56.9</td>
+        <td>63.8</td>
+      </tr>
+      <tr>
+        <td>Properties</td>
+        <td>0.67</td>
+        <td>–</td>
+        <td>0.78</td>
+        <td>45.8</td>
+        <td>48.8</td>
+      </tr>
+      <tr>
+        <td>Beliefs</td>
+        <td>0.62</td>
+        <td>–</td>
+        <td>0.85</td>
+        <td>43.3</td>
+        <td>55.0</td>
+      </tr>
+      <tr>
+        <td>Unanswerable</td>
+        <td>0.25</td>
+        <td>0.83</td>
+        <td>–</td>
+        <td>65</td>
+        <td>54.2</td>
+      </tr>
+      <tr>
+        <td>Total</td>
+        <td>0.6</td>
+        <td>0.78</td>
+        <td>0.7</td>
+        <td>54.7</td>
+        <td>55.9</td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+
+<p>On many categories BERT is close to humans in the all-questions setup, in which the humans perform worse, but it does not struggle with unanswerable questions like they do. Manual analysis suggests that most unanswerable questions resemble factual questions (e.g. “What did John eat?”), so the success is not due to the model just learning to distinguish the unanswerable questions from other types. Some of the success is due to the above-mentioned problem with unanswerable questions in the news, but if there are no other major problems we did not notice, this may be a real case of “superhuman” performance on a verbal reasoning task, by virtue of machines not getting mentally tired the way we do.</p>
+
+<p>Finally, note that the duration questions are consistently difficult for humans in both all-questions and world-knowledge setups, but not particularly difficult for BERT. It is possible that the high model performance is due to the fact that people tend to use only a few typical duration units (e.g. “five minutes” rather than “six” or “four”), and that collocation information provides good hints (e.g. “life” is more associated with “years” than “hours”). Low human performance indicates either a higher rate of genuine disagreements about expected event durations, or lower tolerance for guesswork on this topic. In McTaco <a class="citation" href="#ZhouKhashabiEtAl_2019_Going_on_vacation_takes_longer_than_Going_for_walk_Study_of_Temporal_Commonsense_Understanding">(Zhou, Khashabi, Ning, &amp; Roth, 2019)</a> this question type required a lot of filtering out data that humans disagreed on (personal communication).</p>
+
+<h2 id="paraphrasing-hurts">Paraphrasing hurts</h2>
+
+<p>Since many of the questions formulated by crowd workers could be solved with simple cooccurrence counts, we conducted an additional experiment to see how much the performance would be hurt if these surface cues were taken away. The authors created paraphrased versions of questions for 30 fiction texts (556 questions in total), aiming in particular to reduce lexical cooccurrences between the text and the words in the question and the correct answer. Then we trained our baseline models on all non-paraphrased data and tested on this extra test set.</p>
+
+<div class="table-wrapper">
+
+  <table>
+    <thead>
+      <tr>
+        <th>Qtype</th>
+        <th>TriAN</th>
+        <th>BERT</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Temporal</td>
+        <td>0.51 (0.06)</td>
+        <td>0.24 (<strong>-0.25</strong>)</td>
+      </tr>
+      <tr>
+        <td>Coreference</td>
+        <td>0.42 (-0.11)</td>
+        <td>0.31 (-0.13)</td>
+      </tr>
+      <tr>
+        <td>Factual</td>
+        <td>0.32 (<strong>-0.21</strong>)</td>
+        <td>0.4 (<strong>-0.12</strong>)</td>
+      </tr>
+      <tr>
+        <td>Causality</td>
+        <td>0.33 (<strong>-0.2</strong>)</td>
+        <td>0.3 (<strong>-0.27</strong>)</td>
+      </tr>
+      <tr>
+        <td>Subsequent</td>
+        <td>0.23 (-0.12)</td>
+        <td>0.3 (-0.18)</td>
+      </tr>
+      <tr>
+        <td>Duration</td>
+        <td>0.62 (0.0)</td>
+        <td>0.48 (-0.13)</td>
+      </tr>
+      <tr>
+        <td>Properties</td>
+        <td>0.31 (-0.06)</td>
+        <td>0.42 (0.02)</td>
+      </tr>
+      <tr>
+        <td>Belief states</td>
+        <td>0.26 (<strong>-0.27</strong>)</td>
+        <td>0.31 (<strong>-0.39</strong>)</td>
+      </tr>
+      <tr>
+        <td>Unanswerable</td>
+        <td>0.55 (-0.1)</td>
+        <td>0.48 (-0.13)</td>
+      </tr>
+      <tr>
+        <td>All questions</td>
+        <td>0.4 (-0.11)</td>
+        <td>0.36 (-0.17)</td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+
+<p>The drop in performance is stark, even for BERT. With respect to factual questions, this means that it does rely on lexical cooccurrence counts to a large degree. These results complement the evidence of BERT’s susceptibility to shallow heuristics in NLI <a class="citation" href="#McCoyPavlickEtAl_2019_Right_for_Wrong_Reasons_Diagnosing_Syntactic_Heuristics_in_Natural_Language_Inference">(McCoy, Pavlick, &amp; Linzen, 2019)</a>.</p>
+
+<p>For other question types, we interpret our results as suggesting that many of the correct answer options were initially formulated with lexical cues from the text, even for world knowledge questions, whereas the distractors were more often made up, and that made the data easier for the models. In particular, this seems to be true for the causality questions that also had the longest-answer bias.</p>
+
+<h2 id="discussion-other-ways-to-increase-question-diversity">Discussion: other ways to increase question diversity</h2>
+
+<p>Increasing data diversity and avoiding spurious correlations with predicted labels are the fundamental challenges for NLP data methodology. In developing QuAIL, we focused on one possible direction: diversifying data through balanced dataset design and partitioning by question types and domains.</p>
+
+<p>In parallel with our work, the community is exploring adversarial data development. Datasets can be collected with a model-in-the-loop that rejects “easy” entries <a class="citation" href="#DuaWangEtAl_2019_DROP_Reading_Comprehension_Benchmark_Requiring_Discrete_Reasoning_Over_Paragraphs">(Dua et al., 2019)</a>, or filtered post-hoc <a class="citation" href="#BrasSwayamdiptaEtAl_2019_Adversarial_Filters_of_Dataset_Biases">(Bras et al., 2019)</a>. This is very promising, and we intend in particular to experiment with adversarial selection of distractors, since human-written distractors are often easy to detect through text cooccurrence counts.</p>
+
+<p>However, the adversarial approach also has caveats: its success ultimately depends on the hypothesis of a specific model-in-the-loop, which may not generalize to other models. For instance, the authors of PIQA used BERT as the adversary, and in the final dataset it performed worse than GPT-2 <a class="citation" href="#BiskZellersEtAl_2020_PIQA_Reasoning_about_Physical_Commonsense_in_Natural_Language">(Bisk, Zellers, Bras, Gao, &amp; Choi, 2020)</a>, although generally it outperforms GPT-2 on many other benchmarks. There is also recent evidence that stronger adversaries change the question distribution in a way that prevents some weaker models from generalizing to the original distribution <a class="citation" href="#BartoloRobertsEtAl_2020_Beat_AI_Investigating_Adversarial_Human_Annotations_for_Reading_Comprehension">(Bartolo, Roberts, Welbl, Riedel, &amp; Stenetorp, 2020)</a>.</p>
+
+<p>While QuAIL aimed to collect balanced question types for the same texts, the community also started experimenting with <strong>multi-dataset learning</strong> <a class="citation" href="#DuaGottumukkalaEtAl_2019_ORB_Open_Reading_Benchmark_for_Comprehensive_Evaluation_of_Machine_Reading_Comprehension">(Dua, Gottumukkala, Talmor, Gardner, &amp; Singh, 2019)</a>. A model trained on one RC dataset does not necessarily generalize to another <a class="citation" href="#Yatskar_2019_Qualitative_Comparison_of_CoQA_SQuAD_20_and_QuAC">(Yatskar, 2019)</a>, but training on multiple datasets will create more general-purpose systems <a class="citation" href="#TalmorBerant_2019_MultiQA_Empirical_Investigation_of_Generalization_and_Transfer_in_Reading_Comprehension">(Talmor &amp; Berant, 2019)</a>. In MRQA shared task the participants had to train on one set of datasets and generalize to another <a class="citation" href="#FischTalmorEtAl_2019_MRQA_2019_Shared_Task_Evaluating_Generalization_in_Reading_Comprehension">(Fisch et al., 2019)</a>.</p>
+
+<p>Clearly, this approach enables using all the datasets already prepared by the community, and together they offer much more variety than is possible within any one dataset. However, there is also a problem: if the texts are not matched by domain, length and discourse structure, and come with different question distributions, the model could learn what kinds of questions are asked of what texts. In that sense, the QuAIL strategy provides a more general signal because the same kinds of questions are asked of all texts (but, as mentioned above, this limits both the possible question and text types).</p>
+
+<p>Machine language understanding is far from being solved, but it’s fair to say we’re making progress, and the findings from all the above approaches will hopefully fuel a new generation of verbal reasoning benchmarks. Stay tuned for our tutorial at <a href="https://coling2020.org/pages/tutorials">COLING 2020</a>, which will provide both the latest updates in data collection methodology, and the dos and don’ts for the practitioners who don’t want their models to cheat.</p>
+
+
+<!-- AddToAny BEGIN -->
+<script async src="https://static.addtoany.com/menu/page.js"></script>
+<div class="a2a_kit a2a_kit_size_32 a2a_default_style">
+<a class="a2a_button_twitter"></a>
+<a class="a2a_button_reddit"></a>
+<a class="a2a_button_facebook"></a>
+<a class="a2a_button_telegram"></a>
+<a class="a2a_button_hacker_news"></a>
+<a class="a2a_button_email"></a>
+<a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+
+<!-- LikeBtn.com BEGIN -->
+
+<span class="likebtn-wrapper" data-theme="custom" data-btn_size="40" data-f_size="14" data-icon_size="30" data-icon_l_c="#159031" data-icon_l_c_v="#1405fb" data-icon_d_c="#f40d20" data-icon_d_c_v="#1405fb" data-identifier="item_1" data-show_like_label="false" data-counter_frmt="km"></span>
+<script>(function(d,e,s){if(d.getElementById("likebtn_wjs"))return;a=d.createElement(e);m=d.getElementsByTagName(e)[0];a.async=1;a.id="likebtn_wjs";a.src=s;m.parentNode.insertBefore(a, m)})(document,"script","//w.likebtn.com/js/w/widget.js");</script>
+<!-- LikeBtn.com END -->
+
+</div>
+
+<script src="https://utteranc.es/client.js"
+        repo="text-machine-lab/blog"
+        issue-term="title"
+        label="Comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+
+<h2 id="refs"> References </h2>
+
+<ol class="bibliography"><li><div class="text-justify">
+    <span id="ZhouKhashabiEtAl_2019_Going_on_vacation_takes_longer_than_Going_for_walk_Study_of_Temporal_Commonsense_Understanding">Zhou, B., Khashabi, D., Ning, Q., &amp; Roth, D. (2019). “Going on a Vacation” Takes Longer than “Going for a Walk”: A Study of Temporal Commonsense Understanding. <i>Proceedings of the 2019 Conference on Empirical Methods in Natural Language Processing and the 9th International Joint Conference on Natural Language Processing (EMNLP-IJCNLP)</i>, 3361–3367. https://doi.org/10.18653/v1/D19-1332</span>
+
+    
+    
+    
+    <a href="https://www.aclweb.org/anthology/D19-1332">[PDF]</a>
+    
+</div>
+</li>
+<li><div class="text-justify">
+    <span id="Yatskar_2019_Qualitative_Comparison_of_CoQA_SQuAD_20_and_QuAC">Yatskar, M. (2019). A Qualitative Comparison of CoQA, SQuAD 2.0 and QuAC. <i>Proceedings of the 2019 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies, Volume 1 (Long and Short Papers)</i>, 2318–2323.</span>
+
+    
+    
+    
+    <a href="https://www.aclweb.org/anthology/papers/N/N19/N19-1241/">[PDF]</a>
+    
+</div>
+</li>
+<li><div class="text-justify">
+    <span id="WestonBordesEtAl_2015_Towards_AI-complete_question_answering_A_set_of_prerequisite_toy_tasks">Weston, J., Bordes, A., Chopra, S., Rush, A. M., van Merriënboer, B., Joulin, A., &amp; Mikolov, T. (2016). Towards AI-Complete Question Answering: A Set of Prerequisite Toy Tasks. <i>ICLR 2016</i>.</span>
+
+    
+    
+    
+    <a href="https://arxiv.org/abs/1502.05698">[PDF]</a>
+    
+</div>
+</li>
+<li><div class="text-justify">
+    <span id="wang-etal-2018-yuanfudao">Wang, L., Sun, M., Zhao, W., Shen, K., &amp; Liu, J. (2018). Yuanfudao at SemEval-2018 Task 11: Three-way Attention and Relational Knowledge for Commonsense Machine Comprehension. <i>Proceedings of The 12th International Workshop on Semantic Evaluation</i>, 758–762. https://doi.org/10.18653/v1/S18-1120</span>
+
+    
+    
+    
+    <a href="https://www.aclweb.org/anthology/S18-1120">[PDF]</a>
+    
+</div>
+</li>
+<li><div class="text-justify">
+    <span id="TalmorBerant_2019_MultiQA_Empirical_Investigation_of_Generalization_and_Transfer_in_Reading_Comprehension">Talmor, A., &amp; Berant, J. (2019). MultiQA: An Empirical Investigation of Generalization and Transfer in Reading Comprehension. <i>Proceedings of the 57th Annual Meeting of the Association for Computational Linguistics</i>, 4911–4921. https://doi.org/10.18653/v1/P19-1485</span>
+
+    
+    
+    
+    <a href="https://www.aclweb.org/anthology/P19-1485">[PDF]</a>
+    
+</div>
+</li>
+<li><div class="text-justify">
+    <span id="RogersKovalevaEtAl_2020_Getting_Closer_to_AI_Complete_Question_Answering_Set_of_Prerequisite_Real_Tasks">Rogers, A., Kovaleva, O., Downey, M., &amp; Rumshisky, A. (2020). Getting Closer to AI Complete Question Answering: A Set of Prerequisite Real Tasks. <i>AAAI</i>, 11.</span>
+
+    
+    
+    
+    <a href="https://aaai.org/Papers/AAAI/2020GB/AAAI-RogersA.7778.pdf">[PDF]</a>
+    
+</div>
+</li>
+<li><div class="text-justify">
+    <span id="McCoyPavlickEtAl_2019_Right_for_Wrong_Reasons_Diagnosing_Syntactic_Heuristics_in_Natural_Language_Inference">McCoy, T., Pavlick, E., &amp; Linzen, T. (2019). Right for the Wrong Reasons: Diagnosing Syntactic Heuristics in Natural Language Inference. <i>Proceedings of the 57th Annual Meeting of the Association for Computational Linguistics</i>, 3428–3448. https://doi.org/10.18653/v1/P19-1334</span>
+
+    
+    
+    
+    <a href="https://www.aclweb.org/anthology/P19-1334">[PDF]</a>
+    
+</div>
+</li>
+<li><div class="text-justify">
+    <span id="KociskySchwarzEtAl_2018_NarrativeQA_Reading_Comprehension_Challenge">Kocisky, T., Schwarz, J., Blunsom, P., Dyer, C., Hermann, K. M., Melis, G., &amp; Grefenstette, E. (2018). The NarrativeQA Reading Comprehension Challenge. <i>Transactions of the Association for Computational Linguistics</i>, <i>6</i>, 317–328.</span>
+
+    
+    
+    
+    <a href="http://aclweb.org/anthology/Q18-1023">[PDF]</a>
+    
+</div>
+</li>
+<li><div class="text-justify">
+    <span id="JiaLiang_2017_Adversarial_Examples_for_Evaluating_Reading_Comprehension_Systems">Jia, R., &amp; Liang, P. (2017). Adversarial Examples for Evaluating Reading Comprehension Systems. <i>Proceedings of the 2017 Conference on Empirical Methods in Natural Language Processing</i>, 2021–2031. https://doi.org/10.18653/v1/D17-1215</span>
+
+    
+    
+    
+    <a href="http://aclweb.org/anthology/D17-1215">[PDF]</a>
+    
+</div>
+</li>
+<li><div class="text-justify">
+    <span id="GururanganSwayamdiptaEtAl_2018_Annotation_Artifacts_in_Natural_Language_Inference_Data">Gururangan, S., Swayamdipta, S., Levy, O., Schwartz, R., Bowman, S., &amp; Smith, N. A. (2018). Annotation Artifacts in Natural Language Inference Data. <i>Proceedings of the 2018 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies, Volume 2 (Short Papers)</i>, 107–112. https://doi.org/10.18653/v1/N18-2017</span>
+
+    
+    
+    
+    <a href="https://www.aclweb.org/anthology/N18-2017">[PDF]</a>
+    
+</div>
+</li>
+<li><div class="text-justify">
+    <span id="GevaGoldbergEtAl_2019_Are_We_Modeling_Task_or_Annotator_Investigation_of_Annotator_Bias_in_Natural_Language_Understanding_Datasets">Geva, M., Goldberg, Y., &amp; Berant, J. (2019). Are We Modeling the Task or the Annotator? An Investigation of Annotator Bias in Natural Language Understanding Datasets. <i>Proceedings of the 2019 Conference on Empirical Methods in Natural Language Processing and the 9th International Joint Conference on Natural Language Processing (EMNLP-IJCNLP)</i>, 1161–1166. https://doi.org/10.18653/v1/D19-1107</span>
+
+    
+    
+    
+    <a href="https://www.aclweb.org/anthology/D19-1107">[PDF]</a>
+    
+</div>
+</li>
+<li><div class="text-justify">
+    <span id="FischTalmorEtAl_2019_MRQA_2019_Shared_Task_Evaluating_Generalization_in_Reading_Comprehension">Fisch, A., Talmor, A., Jia, R., Seo, M., Choi, E., &amp; Chen, D. (2019). MRQA 2019 Shared Task: Evaluating Generalization in Reading Comprehension. <i>Proceedings of the 2nd Workshop on Machine Reading for Question Answering</i>, 1–13. https://doi.org/10.18653/v1/D19-5801</span>
+
+    
+    
+    
+    <a href="https://www.aclweb.org/anthology/D19-5801">[PDF]</a>
+    
+</div>
+</li>
+<li><div class="text-justify">
+    <span id="DuaWangEtAl_2019_DROP_Reading_Comprehension_Benchmark_Requiring_Discrete_Reasoning_Over_Paragraphs">Dua, D., Wang, Y., Dasigi, P., Stanovsky, G., Singh, S., &amp; Gardner, M. (2019). DROP: A Reading Comprehension Benchmark Requiring Discrete Reasoning Over Paragraphs. <i>Proceedings of the 2019 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies, Volume 1 (Long and Short Papers)</i>, 2368–2378.</span>
+
+    
+    
+    
+    <a href="https://aclweb.org/anthology/papers/N/N19/N19-1246/">[PDF]</a>
+    
+</div>
+</li>
+<li><div class="text-justify">
+    <span id="DuaGottumukkalaEtAl_2019_ORB_Open_Reading_Benchmark_for_Comprehensive_Evaluation_of_Machine_Reading_Comprehension">Dua, D., Gottumukkala, A., Talmor, A., Gardner, M., &amp; Singh, S. (2019). ORB: An Open Reading Benchmark for Comprehensive Evaluation of Machine Reading Comprehension. <i>Proceedings of the 2nd Workshop on Machine Reading for Question Answering</i>, 147–153. https://doi.org/10.18653/v1/D19-5820</span>
+
+    
+    
+    
+    <a href="https://www.aclweb.org/anthology/D19-5820">[PDF]</a>
+    
+</div>
+</li>
+<li><div class="text-justify">
+    <span id="DevlinChangEtAl_2019_BERT_Pre-training_of_Deep_Bidirectional_Transformers_for_Language_Understanding">Devlin, J., Chang, M.-W., Lee, K., &amp; Toutanova, K. (2019). BERT: Pre-Training of Deep Bidirectional Transformers for Language Understanding. <i>Proceedings of the 2019 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies, Volume 1 (Long and Short Papers)</i>, 4171–4186.</span>
+
+    
+    
+    
+    <a href="https://aclweb.org/anthology/papers/N/N19/N19-1423/">[PDF]</a>
+    
+</div>
+</li>
+<li><div class="text-justify">
+    <span id="BrasSwayamdiptaEtAl_2019_Adversarial_Filters_of_Dataset_Biases">Bras, R. L., Swayamdipta, S., Bhagavatula, C., Zellers, R., Peters, M., Sabharwal, A., &amp; Choi, Y. (2019). <i>Adversarial Filters of Dataset Biases</i>.</span>
+
+    
+    
+    
+    <a href="https://openreview.net/forum?id=H1g8p1BYvS">[PDF]</a>
+    
+</div>
+</li>
+<li><div class="text-justify">
+    <span id="BiskZellersEtAl_2020_PIQA_Reasoning_about_Physical_Commonsense_in_Natural_Language">Bisk, Y., Zellers, R., Bras, R. L., Gao, J., &amp; Choi, Y. (2020). PIQA: Reasoning about Physical Commonsense in Natural Language. <i>AAAI</i>.</span>
+
+    
+    
+    
+    <a href="http://arxiv.org/abs/1911.11641">[PDF]</a>
+    
+</div>
+</li>
+<li><div class="text-justify">
+    <span id="BartoloRobertsEtAl_2020_Beat_AI_Investigating_Adversarial_Human_Annotations_for_Reading_Comprehension">Bartolo, M., Roberts, A., Welbl, J., Riedel, S., &amp; Stenetorp, P. (2020). Beat the AI: Investigating Adversarial Human Annotations for Reading Comprehension. <i>ArXiv:2002.00293 [Cs]</i>.</span>
+
+    
+    
+    
+    <a href="http://arxiv.org/abs/2002.00293">[PDF]</a>
+    
+</div>
+</li></ol>
+<!-- AddToAny END -->
+
+
+        </section>
+
+        <aside id="sidebar">
+          
+            <ul class="toc">
+  <li><a href="#">Question Answering for Artificial Intelligence (QuAIL)</a>
+    <ul>
+      <li><a href="#balanced-and-diverse-data-is-great">Balanced and diverse data is great!</a></li>
+      <li><a href="#crowdsourcing-specific-question-types-is-hard-but-not-impossible">Crowdsourcing specific question types is hard (but not impossible)</a></li>
+      <li><a href="#world-knowledge--text-based--unanswerable-questions--trouble">World knowledge + text-based + unanswerable questions = trouble</a></li>
+      <li><a href="#paraphrasing-hurts">Paraphrasing hurts</a></li>
+      <li><a href="#discussion-other-ways-to-increase-question-diversity">Discussion: other ways to increase question diversity</a></li>
+      <li><a href="#refs"> References </a></li>
+    </ul>
+  </li>
+</ul>
+          
+        </aside>
+
+
+      </div>
+    </div>
+
+    
+  </body>
+</html>
