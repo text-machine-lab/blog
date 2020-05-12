@@ -27,7 +27,7 @@ So what kinds of generative models are we using nowadays? And why? In this post,
 
 ## What do we mean by generative modeling?
 
-If we wish to classify whether that picture on your phone is a cat or a dog, we ask the question: which outcome is the most probable? The straightforward way to go about this is to estimate the probability of both outcomes, [this is a cat \| this is a dog] and select the option with the highest probability. This is what we refer to as classification, or a discriminative model. We only care about the most probable outcome.
+If we wish to classify whether that picture on your phone is a cat or a dog, we ask the question: which outcome is the most probable? The straightforward way to go about this is to estimate the probability of both outcomes, [this is a cat \vert  this is a dog] and select the option with the highest probability. This is what we refer to as classification, or a discriminative model. We only care about the most probable outcome.
 
 In contrast, generative modeling wishes to sample different outcomes from the distribution. This is not so useful for dogs and cats, as generating random cat and dog labels according to their distribution is not useful or interesting when you look at your photo. There are clear right and wrong answers. But if we want to generate beautiful paintings, we don’t care about the “most probable” painting. We want a beautiful painting. This is the task: for a dataset of individual paintings x, we want to infer the distribution of all paintings p(x) and then generate new paintings from that distribution.
 
@@ -40,29 +40,25 @@ There are a number of properties we want from generative models, such as:
  * Non-constrained  - is the model constrained to a specific structure?
  * Speed - is this model slower during training or inference?
 
-TODO: add rating for below properties of generative models for each model type
-
 # Modeling Discrete Distributions
 
-TODO: should we find a better discrete modeling task that is not classification? Maybe NLP.
+Many classification models attempt to predict some discrete output $$Y$$ given an input $$X$$. For example, a sentiment analysis system may be fed a fresh tweet and be tasked with predicting its emotion: positive, negative or neutral. This is typically done by learning to represent $$P(Y\vert X)$$, or the probability of different emotions $$Y$$ for a given input tweet $$X$$. The selected sentiment is then
 
-Many classification models attempt to predict some discrete output $$Y$$ given an input $$X$$. For example, a sentiment analysis system may be fed a fresh tweet and be tasked with predicting its emotion: positive, negative or neutral. This is typically done by learning to represent $$P(Y\|X)$$, or the probability of different emotions $$Y$$ for a given input tweet $$X$$. The selected sentiment is then
+$$y* = argmax_{y} P(Y=y \vert X)$$
 
-$$y* = argmax_{y} P(Y=y\|X)$$
+But learning $$P(Y\vert X)$$ can also be seen as a generative task, since we could generate different y’s for a given input tweet $$X$$ according to their probability. So how do we learn a generative model $$Q(Y\vert X)=P(Y\vert X)$$, or if we forget conditioning on $$X$$ for simplicity, how can we learn any model $$Q(Y)$$? Throughout this post, $$P$$ represents the true distribution of data while $$Q$$ represents to model estimate of the distribution which we can sample from. We first represent $$Q(Y)$$ by a neural network $$Q(Y) = f(Y)$$ for some function $$f$$. Ideally, we would like to minimize some loss function which, at convergence, brings together the two distributions $$Q$$ and $$P$$. For this we use KL-divergence measure. KL-divergence is defined as follows for distributions $$Q$$ and $$P$$.
 
-But learning $$P(Y\|X)$$ can also be seen as a generative task, since we could generate different y’s for a given input tweet $$X$$ according to their probability. So how do we learn a generative model $$Q(Y\|X)=P(Y\|X)$$, or if we forget conditioning on $$X$$ for simplicity, how can we learn any model $$Q(Y)$$? Throughout this post, $$P$$ represents the true distribution of data while $$Q$$ represents to model estimate of the distribution which we can sample from. We first represent $$Q(Y)$$ by a neural network $$Q(Y) = f(Y)$$ for some function $$f$$. Ideally, we would like to minimize some loss function which, at convergence, brings together the two distributions $$Q$$ and $$P$$. For this we use KL-divergence measure. KL-divergence is defined as follows for distributions $$Q$$ and $$P$$.
-
-$$D_{KL}(P\|Q)=\sum_{x} P(x) \log\dfrac{P(x)}{Q(x)}$$
+$$D_{KL}(P\| Q)=\sum_{x} P(x) \log\dfrac{P(x)}{Q(x)}$$
 
 Most notably, as we minimize this KL-divergence measure toward zero, our model $$Q$$ converges to the true distribution $$P$$. This is great news, we would have a generative model $$Q(x)=P(x)$$ (at least theoretically) that could be sampled from. We formulate our objective as follows:
 
 $$
-  \begin{align}
-    &L = D_{KL}(P, Q) \\\\
+  \begin{align*}
+    &L = D_{KL}(P \| Q) \\\\
     &L = \sum_{x} P(x) \log\dfrac{P(x)}{Q(x)} \\\\
     &L = \sum_{x} P(x) (\log P(x)-\log Q(x)) \\\\
     &L = \sum_{x} P(x) \log P(x)- \sum_{x} P(x) \log Q(x)
-  \end{align}
+  \end{align*}
 $$
 
 This loss function is minimized with respect to $$Q$$. Since the first term does not depend on Q, it is constant and can be removed:
@@ -75,18 +71,17 @@ And this is the standard cross entropy loss function! If you wished, you could n
 
 One classic example of generating discrete distributions is the task of language modeling. Specifically, the goal is to generate a natural language sequence of words which is realistic; it sounds like something a human would write. We can model this as a probability distribution over all sequences $$P(S)$$ according to how likely it is a human would write that sequence (we can add conditioning on input later). The problem is, there is an almost uncountable number of sequences (exponential in sequence length). It is imperative that we find a way to break down the problem. To do this, we take advantage of the fact that a sequence can be broken down into individual words:
 
-$$ P(S) = P(w_1, w_2, w_3, w_4) $$
+$$
+  P(S) = P(w_1, w_2, w_3, w_4) \\
+$$
 
 Notice that this is a joint distribution over multiple variables, we can factorize the distribution into a series of conditional probabilities to simplify the task:
 
 $$
-  \begin{align}
-    & P(S) = P(w_1, w_2, w_3, w_4) \\
-    & P(S) = P(w_1)P(w_2|w_1)P(w_3|w_2,w_1)P(w_4|w_3,w_2,w_1)
-  \end{align}
+    P(S) = P(w_1)P(w_2|w_1)P(w_3|w_2,w_1)P(w_4|w_3,w_2,w_1)
 $$
 
-Thus, the task now becomes to predict each next word given the previous words. We can model all of these conditional probabilities with a single parameterized model $$Q(w_i\|w_1...w_{i-1})$$, called a recurrent neural network (RNN). For more information on the structure of RNNs, I refer the reader to this wonderful blog post about Long Short-Term Memory networks [here](https://colah.github.io/posts/2015-08-Understanding-LSTMs/) and this more recent post on the novel Transformer architecture [here](https://towardsdatascience.com/transformers-141e32e69591).
+Thus, the task now becomes to predict each next word given the previous words. We can model all of these conditional probabilities with a single parameterized model $$Q(w_i\vert w_1...w_{i-1})$$, called a recurrent neural network (RNN). For more information on the structure of RNNs, I refer the reader to this wonderful blog post about Long Short-Term Memory networks [here](https://colah.github.io/posts/2015-08-Understanding-LSTMs/) and this more recent post on the novel Transformer architecture [here](https://towardsdatascience.com/transformers-141e32e69591).
 
 # Normalizing Flows
 
@@ -99,8 +94,6 @@ solving for the log probability of $$x$$:
 $$\log p(x)= \log p(z) + \log \bigg\rvert \det (\dfrac{\partial g(z)}{\partial z}) \bigg\rvert^{-1} $$
 
 for an invertible transformation $$x = g(z)$$. We can take the log and stack these transformations
-
-$$TODO$$
 
 This formula demonstrates that for a given input distribution of samples to a transformation F, we can compute the output distribution as the input density multiplied by the determinant of that transformation F. The determinant is a measure of how the output space is stretched or compressed in the local neighborhood of x. Normalizing flows then apply a series of layers $$F_i  i = [1..N]$$ to fully transform the input distribution into any output distribution of choice through the learning process. For non-zero determinant, all flow layers must be invertible, and the determinant must also be easy to calculate (this introduces a constraint on model layers). We know the distribution of the input, so we calculate $$q(x)$$ for each sample and minimize KL-divergence to converge to $$p(x)$$. We now have our shiny $$q(x)$$ which models the distribution of samples from our data - how do we sample? Simple sample from the known distribution (Gaussian), and run that sample in reverse through the model layers, which are invertible! The output is a new sample from $$q(x)$$, which could be the beautiful face of a celebrity that doesn’t exist (CelebA).
 
@@ -118,53 +111,44 @@ While normalizing flows involve a very exact and stable training procedure, they
 
 # Variational Autoencoders
 
-The normalizing flow above attempts to maximize the probability of data $$x$$ produced from a latent vector $$z$$. This is an exact method of maximization. Variational Autoencoders (VAEs) do not attempt to maximize the probability of data $$x$$ directly, rather they try to maximize a lower-bound of it. First, we imagine that from a datapoint $$x$$ we can deduce latent variables $$z$$ with a known distribution (e.g. Gaussian) which describe the data. If only we knew the function $$p(x\|z)$$, we could sample latent variables $$z$$ and “decode” them to a new data point $$x$$ - this would be our generative model. Even though our data points $$x$$ may be complex, we have related them to a simpler $$z$$-space where we can represent probability distributions more easily. Variational autoencoders achieve this using a learned encoder to convert from $$x$$ to $$z$$-space, along with a learned decoder to convert from $$z$$-space back to $$x$$-space. Assume that the conversion to these latent variables $$z$$ can be described by the distribution $$p(z\|x)$$ - we wish to model this “prior” distribution using our own “posterior” distribution $$q(z\|x)$$ which we parameterize and learn from the data. As with normalizing flows, we seek to maximize the log probability of the data. The (log) probability of data $$x$$ can be expressed in terms of a lower bound $$L$$ for a positive-valued KL-divergence (dissimilarity) between the prior $$p(z\|x)$$ and our posterior encoder $$q(z\|x)$$.
+The normalizing flow above attempts to maximize the probability of data $$x$$ produced from a latent vector $$z$$. This is an exact method of maximization. Variational Autoencoders (VAEs) do not attempt to maximize the probability of data $$x$$ directly, rather they try to maximize a lower-bound of it {% cite kingma2013auto %}. First, we imagine that from a datapoint $$x$$ we can deduce latent variables $$z$$ with a known distribution (e.g. Gaussian) which describe the data. If only we knew the function $$p(x\vert z)$$, we could sample latent variables $$z$$ and “decode” them to a new data point $$x$$ - this would be our generative model. Even though our data points $$x$$ may be complex, we have related them to a simpler $$z$$-space where we can represent probability distributions more easily. Variational autoencoders achieve this using a learned encoder to convert from $$x$$ to $$z$$-space, along with a learned decoder to convert from $$z$$-space back to $$x$$-space. Assume that the conversion to these latent variables $$z$$ can be described by the distribution $$p(z\vert x)$$ - we wish to model this “prior” distribution using our own “posterior” distribution $$q(z\vert x)$$ which we parameterize and learn from the data. As with normalizing flows, we seek to maximize the log probability of the data. The (log) probability of data $$x$$ can be expressed in terms of a lower bound $$L$$ for a positive-valued KL-divergence (dissimilarity) between the prior $$p(z\vert x)$$ and our posterior encoder $$q(z\vert x)$$.
 
-$$\log p_\theta (x^{(i)}) = D_{KL}(q_\phi (z\|x^{(i)}) \| p_\theta (z\|x^{(i)})) + L(\theta, \phi, x^{(i)})$$
-
-
-
-Notice that if our model $$q(z\|x)$$ perfectly matches $$p(z\|x)$$, then this lower-bound $$L$$ is equal to the true log probability we wish to maximize. We set our known prior $$p(z\|x) = p(x)$$ to be independent of $$x$$ and solve for our lower bound $$L$$ as follows:
+$$\log p_\theta (x^{(i)}) = D_{KL}(q_\phi (z\vert x^{(i)}) \|  p_\theta (z\vert x^{(i)})) + L(\theta, \phi, x^{(i)})$$
 
 
-$$\log p_\theta (x^{(i)}) \geq L(\theta, \phi, x^{(i)}) = E_{\log q_\phi (z\|x)}[-\log q_\phi (z\|x) + \log p_\theta (x, z)]$$
+
+Notice that if our model $$q(z\vert x)$$ perfectly matches $$p(z\vert x)$$, then this lower-bound $$L$$ is equal to the true log probability we wish to maximize. We set our known prior $$p(z\vert x) = p(x)$$ to be independent of $$x$$ and solve for our lower bound $$L$$ as follows:
+
+
+$$\log p_\theta (x^{(i)}) \geq L(\theta, \phi, x^{(i)}) = E_{\log q_\phi (z\vert x)}[-\log q_\phi (z\vert x) + \log p_\theta (x, z)]$$
 
 We then solve for the lower bound:
 
-$$L(\theta, \phi, x^{(i)}) = -D_{KL} (q_\phi (z\|x^{(i)}) \| p_\theta (z)) + E_{q_\phi (z\|x^{(i)})}[\log p_\theta (x^{(i)} \| z)]$$
+$$L(\theta, \phi, x^{(i)}) = -D_{KL} (q_\phi (z\vert x^{(i)}) \|  p_\theta (z)) + E_{q_\phi (z\vert x^{(i)})}[\log p_\theta (x^{(i)} \vert  z)]$$
 
-The variational autoencoder seeks to optimize this objective for encoder $$q(z\|x)$$ and decoder $$p(x\|z)$$. If this objective is fully optimized, then our encoder $$q(z\|x) = p(z)$$ and our decoder $$p(x\|z)$$ has found a relationship between $$z$$ and $$x$$. We then sample a vector $$z$$ from $$p(z)$$ and pass it through our decoder to produce a sample! We have a generative model.
+The variational autoencoder seeks to optimize this objective for encoder $$q(z\vert x)$$ and decoder $$p(x\vert z)$$. If this objective is fully optimized, then our encoder $$q(z\vert x) = p(z)$$ and our decoder $$p(x\vert z)$$ has found a relationship between $$z$$ and $$x$$. We then sample a vector $$z$$ from $$p(z)$$ and pass it through our decoder to produce a sample! We have a generative model.
 
-The reparameterization trick attempts to give a solid form to the prior $$p(z)$$ and posterior $$q(z\|x)$$. The authors choose a multivariate Gaussian with mean zero and standard deviation one along each dimension as the prior. This is simple enough that we can sample when we want to decode an output datapoint $$x$$.
+The reparameterization trick attempts to give a solid form to the prior $$p(z)$$ and posterior $$q(z\vert x)$$. The authors choose a multivariate Gaussian with mean zero and standard deviation one along each dimension as the prior. This is simple enough that we can sample when we want to decode an output datapoint $$x$$.
 
-$$z \sim p(z\|x) = \mathcal{N}(\mu,\sigma^2)$$
+$$z \sim p(z\vert x) = \mathcal{N}(\mu,\sigma^2)$$
 
-Then, the posterior distribution $$q(z\|x)$$ is parameterized by learned mean and standard deviation vectors $$\mu$$ and $$\sigma$$ produced by the encoder. The output of the encoder which represents $$q(z\|x)$$ and sampled as follows:
+Then, the posterior distribution $$q(z\vert x)$$ is parameterized by learned mean and standard deviation vectors $$\mu$$ and $$\sigma$$ produced by the encoder. The output of the encoder which represents $$q(z\vert x)$$ and sampled as follows:
 
 $$z = \mu + \sigma \epsilon$$
 
 where epsilon is sampled from a multivariate normal distribution \mathcal{N}(0,1). The purpose of this parameterization is to express the output of the encoder as a manipulation of a gaussian distribution which can be shaped using $$\mu$$ and $$\sigma$$ produced by the encoder, giving the VAE the ability to represent $$z$$ as a latent distribution.
 
-We add an epsilon noise vector $$\epsilon$$ used such that $$q(z\|x)$$ is not deterministic. While other forms can be chosen, many VAE works follow a similar format of matching means and standard deviations between prior and posterior Gaussian distributions []. These are simple enough that we can calculate the KL-divergence term analytically. Combining the lower bound discussed above and this reparameterization trick, we can derive the exact function we maximize:
+We add an epsilon noise vector $$\epsilon$$ used such that $$q(z\vert x)$$ is not deterministic. While other forms can be chosen, many VAE works follow a similar format of matching means and standard deviations between prior and posterior Gaussian distributions []. These are simple enough that we can calculate the KL-divergence term analytically. Combining the lower bound discussed above and this reparameterization trick, we can derive the exact function we maximize:
 
-$$L(\theta,\phi;x^{(i)}) \simeq \dfrac{1}{2}\sum_{j=1}^{J}(1+\log ((\sigma_j^{(i)})^2)) - (\mu_j^{(i)})^2 - (\sigma_j^{(i)})^2)+\dfrac{1}{L}\sum_{l=1}^L \log p_\theta (x^{(i)}\|z^{(i,l)})$$
+$$L(\theta,\phi;x^{(i)}) \simeq \dfrac{1}{2}\sum_{j=1}^{J}(1+\log ((\sigma_j^{(i)})^2)) - (\mu_j^{(i)})^2 - (\sigma_j^{(i)})^2)+\dfrac{1}{L}\sum_{l=1}^L \log p_\theta (x^{(i)}\vert z^{(i,l)})$$
 
 for $$z^{(i,l)}=\mu^{(i)}+\sigma^{(i)} \odot \epsilon^{(l)}$$ and $$\epsilon^{(l)} \sim \mathcal{N}(0,I)$$
 
-The first term is the KL-loss objective, which converges $$q(z\|x)$$ to $$p(z)$$. The second term is a reconstruction loss which maximizes $$p(x\|z)$$, or the ability to recover the sample $$x$$ from latent $$z$$. At convergence, we have a generative model. We sample from $$p(z)$$ and run this through the decoder $$p(x\|z)$$ to produce a data point. Pretty neat!
+The first term is the KL-loss objective, which converges $$q(z\vert x)$$ to $$p(z)$$. The second term is a reconstruction loss which maximizes $$p(x\vert z)$$, or the ability to recover the sample $$x$$ from latent $$z$$. At convergence, we have a generative model. We sample from $$p(z)$$ and run this through the decoder $$p(x\vert z)$$ to produce a data point. Pretty neat!
 
-The variational autoencoder seems to have some downsides. First, it seems to be impossible to maximize both the KL-loss term and the reconstruction loss at the same time. If we satisfy the KL-divergence loss (first term), then encoder $$q(z\|x) = p(z)$$ and our encoder has lost all information about $$x$$, effectively separating the relationship between $$x$$ and $$z$$ and forcing our decoder to maximize $$p(x\|z) = p(x)$$, a language model. Since our decoder is a deterministic model, we do poorly and are back at the problem of representing $$p(x)$$ without a random variable $$z$$. It is thus desirable to have a balance between the KL-divergence objective and the reconstruction loss, but this reduces reconstruction performance and can cause blurring effects in images or grammar errors in output sentences.
+The variational autoencoder seems to have some downsides. First, it seems to be impossible to maximize both the KL-loss term and the reconstruction loss at the same time. If we satisfy the KL-divergence loss (first term), then encoder $$q(z\vert x) = p(z)$$ and our encoder has lost all information about $$x$$, effectively separating the relationship between $$x$$ and $$z$$ and forcing our decoder to maximize $$p(x\vert z) = p(x)$$, a language model. Since our decoder is a deterministic model, we do poorly and are back at the problem of representing $$p(x)$$ without a random variable $$z$$. It is thus desirable to have a balance between the KL-divergence objective and the reconstruction loss, but this reduces reconstruction performance and can cause blurring effects in images or grammar errors in output sentences. {% cite higgins2017beta %} perform an extensive analysis on the weighting of the weighting between KL-divergence and reconstruction objectives.
 
-Variational autoencoders have been used extensively in a variety of domains. They have found use in modeling semantic sentence spaces, allowing for interpolation between sentences {} [mention beta-vae paper].
-
-Generating Sentences from a Continuous Space
-https://arxiv.org/abs/1511.06349
-
-Auto-Encoding Variational Bayes
-https://arxiv.org/abs/1312.6114
-
-beta-VAE: Learning Basic Visual Concepts with a Constrained Variational Framework
-https://openreview.net/forum?id=Sy2fzU9gl
+Variational autoencoders have been used extensively in a variety of domains. They have found use in modeling semantic sentence spaces, allowing for interpolation between sentences {% cite bowman2015generating %}
 
 # Generative Adversarial Networks
 
@@ -192,15 +176,9 @@ Overall, generative adversarial networks are the most popular model because they
 	</figcaption>
 </figure>
 
-InfoGAN: Interpretable Representation Learning by Information Maximizing Generative Adversarial Nets
-https://arxiv.org/abs/1606.03657
-
-Progressively Growing of GANs for Improved Quality, Stability, and Variation
-https://arxiv.org/abs/1710.10196
-
 
 TODO I may remove this section
-Boltzmann Machine / Deep Belief Network / Energy-based Models
+# Boltzmann Machine / Deep Belief Network / Energy-based Models
 
 Deep Boltzmann Machines
 http://proceedings.mlr.press/v5/salakhutdinov09a/salakhutdinov09a.pdf
@@ -210,9 +188,9 @@ https://www.cs.toronto.edu/~hinton/absps/fastnc.pdf
 
 # Denoising Score Matching
 
-Here we introduce a method of generation that is not well known but still interesting as it takes a different approach to learning data distributions. Denoising score matching (DSM) takes yet another approach to learning the data distribution $$p(x)$$. Instead of learning to represent the density of different samples, DSM attempts to learn the gradient of the probability distribution. Although this method has been used in the past to model distributions, recently {% cite song2019generative %} use DSM to generate natural images by learning the gradient of the distribution at multiple levels of noise. This gradient can be thought of as a compass in data space pointing in the direction of highest probability (toward the data manifold). This gradient can be learned using the denoising score matching objective:
+Here we introduce a method of generation that is not as well known but still interesting as it takes a different perspective on generation. Denoising score matching (DSM) takes yet another approach to learning the data distribution $$p(x)$$. Instead of learning to represent the density of different samples, DSM attempts to learn the gradient of the probability distribution. Although this method has been used in the past to model distributions, recently {% cite song2019generative %} use DSM to generate natural images by learning the gradient of the distribution at multiple levels of noise. This gradient can be thought of as a compass in data space pointing in the direction of highest probability (toward the data manifold). This gradient can be learned using the denoising score matching objective:
 
-$$L = \dfrac{1}{2}E_{q_\sigma (\tilde{x}\|x)p_{data}(x)}[\|s_\theta (\tilde{x}) - \nabla_{\tilde{x}}\log q_\sigma (\tilde{x}\|x)\|^2_2]$$
+$$L = \dfrac{1}{2}E_{q_\sigma (\tilde{x}\vert x)p_{data}(x)}[\vert s_\theta (\tilde{x}) - \nabla_{\tilde{x}}\log q_\sigma (\tilde{x}\vert x)\vert ^2_2]$$
 
 
 
@@ -239,6 +217,8 @@ SCORE MATCHING
 https://arxiv.org/pdf/1910.07762.pdf
 
 # Gaussian Mixture Models
+
+TODO decide whether or not to keep this section
 
 http://www.joclad.ipt.pt/download/5/slides.viroli_(1).pdf
 
