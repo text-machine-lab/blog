@@ -96,7 +96,7 @@ Discrete modeling of probability distributions is vital to the generation of dis
 
 Instead of modeling the probability of any discrete value $$P(x)$$, what if we could instead represent the continuous probability distribution of a real value $$p(x)$$? (lowercase letters for continuous distributions). Then, we could minimize the same KL-divergence measure above between our $$q(x)$$ and $$p(x)$$ to recover $$q(x)=p(x)$$. Once we learn the distribution, we should also be able to sample from it to produce new data!
 
-The problem: how do we represent the probability distribution $$q(x)$$ for an infinite number of values? Here we introduce the normalizing flow {% cite dinh2016density %}, which satisfies this question by producing $$q(x)$$ through a series of transformations on a known continuous distribution. Put simply, we start from say a (multivariate) gaussian distribution, and manipulate it step by step through multiple invertible neural network layers into the distribution of celebrities faces or whatever else we desire to generate. The magic of flows stems from the change of variables formula, which can be used to express one probability distribution in terms of another through a transformation:
+The problem: how do we represent the probability distribution $$q(x)$$ for an infinite number of values? Here we introduce the normalizing flow {% cite dinh2016density %}, which satisfies this question by producing $$q(x)$$ through a series of transformations on a known continuous distribution. Put simply, we bend a distribution we know into the distribution we desire! We start from say a (multivariate) gaussian distribution, and manipulate it step by step through multiple invertible neural network layers into the distribution of celebrities faces or whatever else we wish to generate. The magic of flows stems from the change of variables formula, which can be used to express one probability distribution in terms of another through a transformation:
 
 $$p(x)=p(z) \bigg\rvert \det (\dfrac{\partial g(z)}{\partial z}) \bigg\rvert^{-1} $$
 
@@ -116,7 +116,7 @@ The expression demonstrates that for a given input distribution of samples to a 
 	</figcaption>
 </figure>
 
-For non-zero determinant, all flow layers must be invertible, and the determinant must also be easy to calculate (this introduces a constraint on model layers). We know the distribution of the input, so we calculate $$q(x)$$ for each sample and minimize KL-divergence to converge to $$p(x)$$. We now have our shiny $$q(x)$$ which models the distribution of samples from our data - how do we sample? Just sample from the known distribution $z$ (gaussian), and run that sample in reverse through the model layers, which are invertible! The output is a new sample from $$q(x)$$, which could be the beautiful face of a celebrity that doesn’t exist (CelebA).
+For non-zero determinant, all flow layers must be invertible, and the determinant must also be easy to calculate (this introduces a constraint on model layers). We have samples of the input data, so we calculate $$q(x)$$ for each sample and minimize KL-divergence to converge to $$p(x)$$. We now have our shiny $$q(x)$$ which models the distribution of samples from our data - how do we sample? Just sample from the known distribution $z$ (gaussian), and run that sample in reverse through the model layers, which are invertible! The output is a new sample from $$q(x)$$, which could be the beautiful face of a celebrity that doesn’t exist (CelebA).
 
 {% cite kingma2018glow %} attempt to generate celebrity images using a variant of this very model, the glow model. Their faces often look very realistic:
 
@@ -134,7 +134,7 @@ While normalizing flows involve a very exact and stable training procedure, they
 
 The normalizing flow above attempts to maximize the probability of data $$x$$ produced from a latent vector $$z$$. This is an exact method of maximization. Variational Autoencoders (VAEs) do not attempt to maximize the probability of data $$x$$ directly, rather they try to maximize a lower-bound of it {% cite kingma2013auto %}. First, we imagine that from a datapoint $$x$$ we can deduce some latent variable $$z$$ with a known distribution (e.g. gaussian) which describes the data. This vector $z$ can be thought of as a summary of the data $x$, with a distribution we can sample from.
 
-If only we knew the function $$p(x\vert z)$$, we could sample latent variables $$z$$ and “decode” them to a new data point $$x$$ - this would be our generative model. Even though our data points $$x$$ may be complex, we have related them to a simpler $$z$$-space where we can represent probability distributions more easily. This is very similar to the normalizing flows approach. Variational autoencoders achieve this using a learned probabilistic encoder to convert from $$x$$ to $$z$$-space, along with a learned deterministic decoder to convert from $$z$$-space back to $$x$$-space. Points within the $z$ space are regularized to be similar to a gaussian prior distribution to allow sampling. Thus, the diversity of the output generation is modeled in the $z$ domain, and the decoder deterministically maps each point $z$ to a point $x$ in the data domain. The pipeline looks as follows:
+If only we knew the function $$p(x\vert z)$$, we could sample latent variables $$z$$ and “decode” them to a new data point $$x$$ - this would be our generative model. Even though our data points $$x$$ may be complex, we have related them to a simpler $$z$$-space where we can represent probability distributions more easily. This is very similar to the normalizing flows approach. Variational autoencoders achieve this using a learned probabilistic encoder to convert from $$x$$ to $$z$$-space, along with a learned deterministic decoder to convert from $$z$$-space back to $$x$$-space (reconstruction). Points within the $z$ space are regularized to be similar to a gaussian prior distribution to allow sampling. Thus, the diversity of the output generation is modeled in the $z$ domain, and the decoder deterministically maps each point $z$ to a point $x$ in the data domain. The pipeline looks as follows:
 
 <figure>
 	<img src="{{'/assets/images/vae.png' | relative_url }}"> 			
@@ -160,7 +160,7 @@ $$L(\theta, \phi, x^{(i)}) = -D_{KL} (q_\phi (z\vert x^{(i)}) \|  p (z)) + E_{q_
 
 The variational autoencoder seeks to minimize this objective for encoder $$q(z\vert x)$$ and decoder $$p(x\vert z)$$. If the first term is minimized, then our encoder $$q(z\vert x) = p(z)$$. If the second term is minimized, our decoder $$p(x\vert z)$$ has found a conversion between $$z$$ and $$x$$. We then sample a vector $$z$$ from the prior $$p(z)$$ and pass it through our decoder to produce a sample! We have a generative model.
 
-The reparameterization trick attempts to give a solid form to the prior $$p(z)$$ and posterior $$q(z\vert x)$$. The authors choose a multivariate gaussian with mean zero and standard deviation one along each dimension as the prior. This is simple enough that we can sample when we want to decode an output datapoint $$x$$.
+The **reparameterization trick** attempts to give a solid form to the prior $$p(z)$$ and posterior $$q(z\vert x)$$. The authors choose a multivariate gaussian with mean zero and standard deviation one along each dimension as the prior. This is simple enough that we can sample when we want to decode an output datapoint $$x$$.
 
 $$z \sim p(z\vert x) = \mathcal{N}(\mu,\sigma^2)$$
 
@@ -242,4 +242,4 @@ This sampling technique can be used to generate different samples, the authors o
 
 # Conclusion
 
-In this article we introduced a variety of architectures for generating data samples in different domains such as images and language. Each model has different properties, costs and benefits to consider for your application.
+In this article we introduced a variety of architectures for generating data samples in different domains such as images and language. Each model has different properties, costs and benefits to consider for your application. Good luck!
