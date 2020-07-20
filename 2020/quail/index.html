@@ -106,7 +106,7 @@ alt="Web Analytics"></a></div></noscript>
 <span class="reading-time" title="Estimated read time">
   
   
-    21 mins
+    23 mins
   
 </span>
 
@@ -156,8 +156,12 @@ alt="Web Analytics"></a></div></noscript>
 
 <blockquote>
   <p>This blog post summarizes our AAAI 2020 paper “Getting Closer to AI-complete Question Answering: A Set of Prerequisite Real Tasks” <a class="citation" href="#RogersKovalevaEtAl_2020_Getting_Closer_to_AI_Complete_Question_Answering_Set_of_Prerequisite_Real_Tasks">(Rogers, Kovaleva, Downey, &amp; Rumshisky, 2020)</a>. <br /> 
-The leaderboard for the QuAIL benchmark can be found <a href="http://text-machine.cs.uml.edu/lab2/projects/quail/">here.</a> <br />
+The QuAIL leaderboard is available <a href="http://text-machine.cs.uml.edu/lab2/projects/quail/">here.</a> <br />
 We thank the anonymous reviewers for their insightful comments. The first author is also grateful for the opportunities to discuss this work at an invited talk at AI2 and a keynote at Meta-Eval workshop. Among many people whose comments made this post better are Noah Smith, Matt Gardner, Daniel Khashabi, Ronan Le Bras (AI2), Chris Welty, Lora Aroyo, and Praveen Paritosh (Google Research).</p>
+</blockquote>
+
+<blockquote>
+  <p>Update of 23.04.2020: after the publication of QuAIL we ran additional experiments on stability of BERT. Unless specified otherwise, this post reports our updated estimates of its performance and revisits some of our original analysis.</p>
 </blockquote>
 
 <p>Since 2018 there was an explosion of new datasets for high-level verbal reasoning tasks, such as reading comprehension, commonsense reasoning, and natural language inference. However, many new datasets get “solved” almost immediately, prompting concerns about data artifacts and biases. Our models get fooled by superficial cues <a class="citation" href="#JiaLiang_2017_Adversarial_Examples_for_Evaluating_Reading_Comprehension_Systems">(Jia &amp; Liang, 2017; McCoy, Pavlick, &amp; Linzen, 2019)</a> and so may achieve seemingly super-human accuracy without any real verbal reasoning skills.</p>
@@ -239,7 +243,7 @@ We thank the anonymous reviewers for their insightful comments. The first author
         <td>37</td>
         <td>42.5</td>
         <td><strong>55.5</strong></td>
-        <td>52.9</td>
+        <td>54.58</td>
       </tr>
       <tr>
         <td>Character identity</td>
@@ -247,7 +251,7 @@ We thank the anonymous reviewers for their insightful comments. The first author
         <td>32.4</td>
         <td>48.3</td>
         <td><strong>53.1</strong></td>
-        <td>46.2</td>
+        <td>47.08</td>
       </tr>
       <tr>
         <td>Causality</td>
@@ -255,15 +259,15 @@ We thank the anonymous reviewers for their insightful comments. The first author
         <td>38.5</td>
         <td>57.8</td>
         <td>60.1</td>
-        <td><strong>67.1</strong></td>
+        <td><strong>61.67</strong></td>
       </tr>
       <tr>
         <td>Factual</td>
         <td>35.9</td>
         <td>20.2</td>
-        <td><strong>57.5</strong></td>
-        <td>55</td>
-        <td>55.8</td>
+        <td>57.5</td>
+        <td>55.0</td>
+        <td><strong>59.58</strong></td>
       </tr>
       <tr>
         <td>Subsequent state</td>
@@ -271,7 +275,7 @@ We thank the anonymous reviewers for their insightful comments. The first author
         <td>36.8</td>
         <td>32.9</td>
         <td>47.5</td>
-        <td><strong>56.7</strong></td>
+        <td><strong>51.53</strong></td>
       </tr>
       <tr>
         <td>Event duration</td>
@@ -279,7 +283,7 @@ We thank the anonymous reviewers for their insightful comments. The first author
         <td>43.6</td>
         <td>37</td>
         <td>56.9</td>
-        <td><strong>63.8</strong></td>
+        <td><strong>62.92</strong></td>
       </tr>
       <tr>
         <td>Entity properties</td>
@@ -287,7 +291,7 @@ We thank the anonymous reviewers for their insightful comments. The first author
         <td>30.8</td>
         <td>33.7</td>
         <td>45.8</td>
-        <td><strong>48.8</strong></td>
+        <td><strong>55.0</strong></td>
       </tr>
       <tr>
         <td>Belief states</td>
@@ -295,36 +299,33 @@ We thank the anonymous reviewers for their insightful comments. The first author
         <td>34.7</td>
         <td>37.5</td>
         <td>43.3</td>
-        <td><strong>55.0</strong></td>
+        <td><strong>59.58</strong></td>
       </tr>
       <tr>
         <td>Unanswerable questions</td>
         <td>12.2</td>
         <td>51.8</td>
         <td>23.3</td>
-        <td>65</td>
-        <td>54.2</td>
+        <td><strong>65.0</strong></td>
+        <td><strong>30.83</strong></td>
       </tr>
       <tr>
         <td>All questions</td>
         <td>35.6</td>
         <td>37.2</td>
         <td>41.8</td>
-        <td>54.7</td>
-        <td><strong>55.9</strong></td>
+        <td><strong>54.7</strong></td>
+        <td>53.94</td>
       </tr>
     </tbody>
   </table>
 
 </div>
+<p style="font-size: smaller; font-style: italic;">* BERT results are updated after the paper publication, see below</p>
 
-<p>The first fun fact is that on world knowledge questions BERT beats a ConceptNet-based system made specifically for this kind of multi-choice QA, which suggests either that it contains more of world knowledge than ConceptNet, or its world knowledge is more relevant to QuAIL.</p>
+<p>BERT leads in all categories, including the world knowledge questions where it could be expected to be inferior to TriAN: a ConceptNet-based system made specifically for this kind of multi-choice QA. This suggests either that it contains more of world knowledge than ConceptNet, or its world knowledge is more relevant to QuAIL. However, on average world knowledge questions are more difficult than text-based questions. Note that on factual questions it is only 3 points ahead of PMI.</p>
 
-<p>The most difficult question type for BERT is character identity, which often involves coreference resolution. Although both coreference and temporal order questions involve reasoning over longer dependencies, the former appears to be more difficult. In both cases, it loses to TriAN.</p>
-
-<p>Surprisingly, simple PMI beats BERT on factual questions (e.g. <em>What did John eat?</em>). Note that this is the most prevalent type in most other RC datasets. If simple lexical matching provides such a strong signal, then training on such data would teach a model to rely on it, and we will show further that this is what happens to BERT too.</p>
-
-<p>Finally, note how heuristic baselines are helpful for finding suspiciously easy sections of partitioned data. Our LongChoice heuristic is very successful on causality questions, which suggests that the Turkers mostly wrote the long causal explanations for the correct answers but not distractors. Since causality is also the easiest category for BERT, it is possible that this bias helps it as well. The partitioning methodology enables the dataset authors to locate the problematic parts and fix them, e.g. to release a more difficult version of the dataset.</p>
+<p>A key advantage of categories in QuAIL design is that heuristic baselines are helpful for finding suspiciously easy sections of data. Our LongChoice heuristic is very successful on causality questions, which suggests that the Turkers mostly wrote the long causal explanations for the correct answers but not distractors. Since causality is also the second easiest category for BERT, it is possible that this bias helps it as well. The partitioning methodology enables the dataset authors to locate the problematic parts and fix them, e.g. to release a more difficult version of the dataset.</p>
 
 <p>Partitioning across domains is helpful as well. Consider the following breakdown of BERT results:</p>
 
@@ -374,7 +375,9 @@ We thank the anonymous reviewers for their insightful comments. The first author
 
 </div>
 
-<p>BERT does suspiciously well on unanswerable questions in the news, but not in blogs. This could be due to the fact that news style and vocabulary are quite far from everyday speech, making the crowdworkers’ distractor options easier to detect.</p>
+<p style="font-size: smaller; font-style: italic;">* Results for the original experiment reported in the published paper</p>
+
+<p>Small difference between categories are likely due simply to model instability, but unanswerable questions are suspiciously easy in the news (68% accuracy), but not in blogs (40%). This could be due to the fact that news style and vocabulary are quite far from everyday speech, making the crowdworkers’ distractor options easier to detect.</p>
 
 <h2 id="crowdsourcing-specific-question-types-is-hard-but-not-impossible">Crowdsourcing specific question types is hard (but not impossible)</h2>
 
@@ -402,7 +405,7 @@ We thank the anonymous reviewers for their insightful comments. The first author
 
 <p>Based on our experience, we recommend the latter workflow, as it is much faster and comparable in terms of data quality. In a manually annotated sample, 11.1% questions in workflow (1) had answer problems vs 16.7% for workflow (2), and 6.7% questions were of the wrong type, vs 11.7% for workflow (2).</p>
 
-<p>Workflow (1) has the advantage of reducing language errors: many Turkers were clearly not native speakers, although we limited the HIT to workers from the US and Canada with at least 1000 accepted HITs and 97% approval. However, we found that (1) also introduced extra question type biases. In our sample 25% questions in our sample that were of the entity properties type, according to the annotator, were in fact on causality. None of the Turkers made this type of error. This is likely due to the recently pointed out annotator bias problem <a class="citation" href="#GevaGoldbergEtAl_2019_Are_We_Modeling_Task_or_Annotator_Investigation_of_Annotator_Bias_in_Natural_Language_Understanding_Datasets">(Geva, Goldberg, &amp; Berant, 2019)</a>: people processing large amounts of data are likely to develop their own heuristics for dealing with it. If a few annotators are processing a lot of crowdsourced data, the same effect can be expected. While completely relying on multiple Turkers increases the likelihood of noise, it also increases diversity.</p>
+<p>Workflow (1) has the advantage of reducing language errors: many Turkers were clearly not native speakers, although we followed the common practice of limiting the pool of workers to those from the US and Canada with at least 1000 accepted HITs and 97% approval. However, we found that (1) also introduced extra question type biases. In our sample 25% questions in our sample that were of the entity properties type, according to the annotator, were in fact on causality. None of the Turkers made this type of error. This is likely due to the recently pointed out annotator bias problem <a class="citation" href="#GevaGoldbergEtAl_2019_Are_We_Modeling_Task_or_Annotator_Investigation_of_Annotator_Bias_in_Natural_Language_Understanding_Datasets">(Geva, Goldberg, &amp; Berant, 2019)</a>: people processing large amounts of data are likely to develop their own heuristics for dealing with it. If a few annotators are processing a lot of crowdsourced data, the same effect can be expected. While completely relying on multiple Turkers increases the likelihood of noise, it also increases diversity.</p>
 
 <p>The good news is that automatic keyword-based validation produces the <a href="https://en.wikipedia.org/wiki/Hawthorne_effect">Hawthorne effect</a> on the crowd workers. Similarly to <a href="https://www.staff.ncl.ac.uk/daniel.nettle/PowellRobertsNettle.pdf">people making more donations to charities when they perceived they were being watched</a>, our checks decreased the number of people who simply copy-pasted example questions or contributed nonsensical data.</p>
 
@@ -424,7 +427,7 @@ We thank the anonymous reviewers for their insightful comments. The first author
 	</figcaption>
 </figure>
 
-<p>This is an interesting result in “machine learning psychology” (© Chris Welty, discussion at <a href="http://eval.how/aaai-2020/">Meta-Eval workshop</a>) which deserves further investigation. One of the reasons for the stark difference between all-questions, SQuAD and SWAG setups could be that humans are uncomfortable admitting that they don’t know something, and so in the unanswerable questions they may opt to make a guess rather than select the “not enough information option”. Another possibility is that borderline cases of uncertainty estimation are mentally taxing, and humans are not good at performing this at scale. When there is not a clear reason to prefer one option over the other, we may take a long time even deciding which restaurant to go to, or just pick one randomly.</p>
+<p>This is an interesting result in “machine learning psychology” (© Chris Welty, discussion at <a href="http://eval.how/aaai-2020/">Meta-Eval workshop</a>) which deserves further investigation. One of the reasons for the stark difference between all-questions, SQuAD and SWAG setups could be that humans are uncomfortable admitting that they don’t know something, and so in the unanswerable questions they may opt to make a guess rather than select the “not enough information option”. Another possibility is that borderline cases of uncertainty estimation are mentally taxing, and humans are not good at performing this at scale because of ego depletion <a class="citation" href="#SchmeichelVohsEtAl_2003_Intellectual_performance_and_ego_depletion_role_of_self_in_logical_reasoning_and_other_information_processing">(Schmeichel, Vohs, &amp; Baumeister, 2003)</a>. For example, if we go to the supermarket to get some jam, are faced with too many equally good options, and ruminate over which one to buy, this will leave us less able to make better decisions later that day.</p>
 
 <p>Note however that the systems we evaluated do NOT have this problem when evaluated in all-questions setup:</p>
 
@@ -448,15 +451,15 @@ We thank the anonymous reviewers for their insightful comments. The first author
         <td>0.67</td>
         <td>–</td>
         <td>55.5</td>
-        <td>52.9</td>
+        <td>59.49</td>
       </tr>
       <tr>
-        <td>Coreference</td>
+        <td>Char. identity</td>
         <td>0.7</td>
         <td>0.79</td>
         <td>–</td>
         <td>53.1</td>
-        <td>46.2</td>
+        <td>59.38</td>
       </tr>
       <tr>
         <td>Factual</td>
@@ -464,7 +467,7 @@ We thank the anonymous reviewers for their insightful comments. The first author
         <td>0.82</td>
         <td>–</td>
         <td>55</td>
-        <td>55.8</td>
+        <td>60.23</td>
       </tr>
       <tr>
         <td>Causality</td>
@@ -472,7 +475,7 @@ We thank the anonymous reviewers for their insightful comments. The first author
         <td>–</td>
         <td>0.86</td>
         <td>60.1</td>
-        <td>67.1</td>
+        <td>63.72</td>
       </tr>
       <tr>
         <td>Subsequent</td>
@@ -480,7 +483,7 @@ We thank the anonymous reviewers for their insightful comments. The first author
         <td>–</td>
         <td>0.62</td>
         <td>47.5</td>
-        <td>56.7</td>
+        <td>51.53</td>
       </tr>
       <tr>
         <td>Duration</td>
@@ -488,7 +491,7 @@ We thank the anonymous reviewers for their insightful comments. The first author
         <td>–</td>
         <td>0.37</td>
         <td>56.9</td>
-        <td>63.8</td>
+        <td>60.58</td>
       </tr>
       <tr>
         <td>Properties</td>
@@ -496,7 +499,7 @@ We thank the anonymous reviewers for their insightful comments. The first author
         <td>–</td>
         <td>0.78</td>
         <td>45.8</td>
-        <td>48.8</td>
+        <td>48.94</td>
       </tr>
       <tr>
         <td>Beliefs</td>
@@ -504,7 +507,7 @@ We thank the anonymous reviewers for their insightful comments. The first author
         <td>–</td>
         <td>0.85</td>
         <td>43.3</td>
-        <td>55.0</td>
+        <td>55.65</td>
       </tr>
       <tr>
         <td>Unanswerable</td>
@@ -512,7 +515,7 @@ We thank the anonymous reviewers for their insightful comments. The first author
         <td>0.83</td>
         <td>–</td>
         <td>65</td>
-        <td>54.2</td>
+        <td>69.12</td>
       </tr>
       <tr>
         <td>Total</td>
@@ -520,16 +523,17 @@ We thank the anonymous reviewers for their insightful comments. The first author
         <td>0.78</td>
         <td>0.7</td>
         <td>54.7</td>
-        <td>55.9</td>
+        <td>58.74</td>
       </tr>
     </tbody>
   </table>
 
 </div>
+<p style="font-size: smaller; font-style: italic;">* BERT results are updated after the paper publication, see below</p>
 
 <p>On many categories BERT is close to humans in the all-questions setup, in which the humans perform worse, but it does not struggle with unanswerable questions like they do. Manual analysis suggests that most unanswerable questions resemble factual questions (e.g. “What did John eat?”), so the success is not due to the model just learning to distinguish the unanswerable questions from other types. Some of the success is due to the above-mentioned problem with unanswerable questions in the news, but if there are no other major problems we did not notice, this may be a real case of “superhuman” performance on a verbal reasoning task, by virtue of machines not getting mentally tired the way we do.</p>
 
-<p>Finally, note that the duration questions are consistently difficult for humans in both all-questions and world-knowledge setups, but not particularly difficult for BERT. It is possible that the high model performance is due to the fact that people tend to use only a few typical duration units (e.g. “five minutes” rather than “six” or “four”), and that collocation information provides good hints (e.g. “life” is more associated with “years” than “hours”). Low human performance indicates either a higher rate of genuine disagreements about expected event durations, or lower tolerance for guesswork on this topic. In McTaco <a class="citation" href="#ZhouKhashabiEtAl_2019_Going_on_vacation_takes_longer_than_Going_for_walk_Study_of_Temporal_Commonsense_Understanding">(Zhou, Khashabi, Ning, &amp; Roth, 2019)</a> this question type required a lot of filtering out data that humans disagreed on (personal communication).</p>
+<p>Finally, note that the duration questions are consistently difficult for humans in both all-questions and world-knowledge setups, but not particularly difficult for BERT. It is possible that the high model performance is due to the fact that people tend to use only a few typical duration units (e.g. “five minutes” rather than “six” or “four”), and that collocation information provides good hints (e.g. “life” is more associated with “years” than “hours”). Low human performance indicates either a higher rate of genuine disagreements about expected event durations, or lower tolerance for guesswork on this topic. In McTaco <a class="citation" href="#ZhouKhashabiEtAl_2019_Going_on_vacation_takes_longer_than_Going_for_walk_Study_of_Temporal_Commonsense_Understanding">(Zhou, Khashabi, Ning, &amp; Roth, 2019)</a> this question type required a lot of filtering out data that humans disagreed on (source: personal communication).</p>
 
 <h2 id="paraphrasing-hurts">Paraphrasing hurts</h2>
 
@@ -600,8 +604,9 @@ We thank the anonymous reviewers for their insightful comments. The first author
   </table>
 
 </div>
+<p style="font-size: smaller; font-style: italic;">* BERT results for the original experiment reported in the published paper </p>
 
-<p>The drop in performance is stark, even for BERT. With respect to factual questions, this means that it does rely on lexical cooccurrence counts to a large degree. These results complement the evidence of BERT’s susceptibility to shallow heuristics in NLI <a class="citation" href="#McCoyPavlickEtAl_2019_Right_for_Wrong_Reasons_Diagnosing_Syntactic_Heuristics_in_Natural_Language_Inference">(McCoy, Pavlick, &amp; Linzen, 2019)</a>.</p>
+<p>The drop in performance is clearly significant, even for BERT. With respect to factual questions, this means that it does rely on lexical cooccurrence counts to a large degree. These results complement the evidence of BERT’s susceptibility to shallow heuristics in NLI <a class="citation" href="#McCoyPavlickEtAl_2019_Right_for_Wrong_Reasons_Diagnosing_Syntactic_Heuristics_in_Natural_Language_Inference">(McCoy, Pavlick, &amp; Linzen, 2019)</a>.</p>
 
 <p>For other question types, we interpret our results as suggesting that many of the correct answer options were initially formulated with lexical cues from the text, even for world knowledge questions, whereas the distractors were more often made up, and that made the data easier for the models. In particular, this seems to be true for the causality questions that also had the longest-answer bias.</p>
 
@@ -609,7 +614,7 @@ We thank the anonymous reviewers for their insightful comments. The first author
 
 <p>Increasing data diversity and avoiding spurious correlations with predicted labels are the fundamental challenges for NLP data methodology. In developing QuAIL, we focused on one possible direction: diversifying data through balanced dataset design and partitioning by question types and domains.</p>
 
-<p>In parallel with our work, the community is exploring adversarial data development. Datasets can be collected with a model-in-the-loop that rejects “easy” entries <a class="citation" href="#DuaWangEtAl_2019_DROP_Reading_Comprehension_Benchmark_Requiring_Discrete_Reasoning_Over_Paragraphs">(Dua et al., 2019)</a>, or filtered post-hoc <a class="citation" href="#BrasSwayamdiptaEtAl_2019_Adversarial_Filters_of_Dataset_Biases">(Bras et al., 2019)</a>. This is very promising, and we intend in particular to experiment with adversarial selection of distractors, since human-written distractors are often easy to detect through text cooccurrence counts.</p>
+<p>In parallel with our work, the community has been exploring adversarial data development. Datasets can be collected with a model-in-the-loop that rejects “easy” entries <a class="citation" href="#DuaWangEtAl_2019_DROP_Reading_Comprehension_Benchmark_Requiring_Discrete_Reasoning_Over_Paragraphs">(Dua et al., 2019)</a>, or filtered post-hoc <a class="citation" href="#BrasSwayamdiptaEtAl_2019_Adversarial_Filters_of_Dataset_Biases">(Bras et al., 2019)</a>. This is very promising, and we intend in particular to experiment with adversarial selection of distractors, since human-written distractors are often easy to detect through text cooccurrence counts.</p>
 
 <p>However, the adversarial approach also has caveats: its success ultimately depends on the hypothesis of a specific model-in-the-loop, which may not generalize to other models. For instance, the authors of PIQA used BERT as the adversary, and in the final dataset it performed worse than GPT-2 <a class="citation" href="#BiskZellersEtAl_2020_PIQA_Reasoning_about_Physical_Commonsense_in_Natural_Language">(Bisk, Zellers, Bras, Gao, &amp; Choi, 2020)</a>, although generally it outperforms GPT-2 on many other benchmarks. There is also recent evidence that stronger adversaries change the question distribution in a way that prevents some weaker models from generalizing to the original distribution <a class="citation" href="#BartoloRobertsEtAl_2020_Beat_AI_Investigating_Adversarial_Human_Annotations_for_Reading_Comprehension">(Bartolo, Roberts, Welbl, Riedel, &amp; Stenetorp, 2020)</a>.</p>
 
@@ -618,6 +623,24 @@ We thank the anonymous reviewers for their insightful comments. The first author
 <p>Clearly, this approach enables using all the datasets already prepared by the community, and together they offer much more variety than is possible within any one dataset. However, there is also a problem: if the texts are not matched by domain, length and discourse structure, and come with different question distributions, the model could learn what kinds of questions are asked of what texts. In that sense, the QuAIL strategy provides a more general signal because the same kinds of questions are asked of all texts (but, as mentioned above, this limits both the possible question and text types).</p>
 
 <p>Machine language understanding is far from being solved, but it’s fair to say we’re making progress, and the findings from all the above approaches will hopefully fuel a new generation of verbal reasoning benchmarks. Stay tuned for our tutorial at <a href="https://coling2020.org/pages/tutorials">COLING 2020</a>, which will provide both the latest updates in data collection methodology, and the dos and don’ts for the practitioners who don’t want their models to cheat.</p>
+
+<h2 id="update-fine-tuning-variance">Update: Fine-tuning variance</h2>
+
+<p>After the QuAIL paper was published, NLP community started raising concerns about stability of fine-tuning pre-trained language models <a class="citation" href="#DodgeIlharcoEtAl_2020_Fine-Tuning_Pretrained_Language_Models_Weight_Initializations_Data_Orders_and_Early_Stopping">(Dodge et al., 2020)</a>. We revisited our original experiment with BERT, evaluating 8 random initializations and 8 different train/dev splits. The results are as follows (the error bars indicate standard deviation across runs).</p>
+
+<figure>
+	<img src="/blog/assets/images/bert-quail-stability.png" /> 	
+	<!--figcaption>Fig. 4. BERT performance stability on QuAIL.
+	</figcaption-->
+</figure>
+
+<p>These experiments confirmed that BERT exhibits considerable variation in both conditions. <strong>Random initializations vary within 1-2%, and data splits have 2-5.5% STD.</strong> The least stable categories are causality, unanswerable questions, and event duration. In particular, in our published experiment BERT was apparently very unlucky with character identity and unanswerable questions, and we got the wrong impression of its properties. We hope our experience would serve as a warning on any conclusions about architecture advantages and model properties that are based on single runs. Unfortunately, this includes the results on most of the public NLP leaderboards.</p>
+
+<p>It is not clear at the moment how best to handle the potential variation in the models in the context of NLP competitions and leaderboards, <a href="https://hackingsemantics.xyz/2019/leaderboards/">especially when we also have huge variance in model size, computation budget, and volume of pre-training data</a>. Ideally, we would all be able to run each submission multiple times, and have much larger hidden test sets, but this is not realistic. Barring that, for each submission we should at least estimate the variation due to environment factors and data splits, and not take too seriously any leaderboard gains that fall within that. Topping the leaderboard does <em>not</em> necessarily prove the superiority of architecture.</p>
+
+<p>Our <a href="https://text-machine.cs.uml.edu/lab2/projects/quail">leaderboard</a> has a hidden test set and a standard train/dev sets. We hope that these stability experiments with BERT would provide guidance to what could be expected from other large Transformers.</p>
+
+<p>The discussion of how to design better better reading comprehension tests is far from over, and we hope that QuAIL would be a useful demonstration of the possibility of balanced data design and collection, the gap between machine and human performance in decisions along the uncertainty spectrum, and the difficulties our models have with paraphrased questions. We also hope that it would encourage a more thoughtful approach to benchmarking QA models by providing the domain and question type labels for the dev set, which can be used for analysis and diagnostics of model performance. For the train set we opted to not release these labels, so as to not tempt people to use them as features for training.</p>
 
 
 <!-- AddToAny BEGIN -->
@@ -699,6 +722,14 @@ We thank the anonymous reviewers for their insightful comments. The first author
     
     
     <a href="https://www.aclweb.org/anthology/P19-1485">[PDF]</a>
+    
+</div>
+</li>
+<li><div class="text-justify">
+    <span id="SchmeichelVohsEtAl_2003_Intellectual_performance_and_ego_depletion_role_of_self_in_logical_reasoning_and_other_information_processing">Schmeichel, B. J., Vohs, K. D., &amp; Baumeister, R. F. (2003). Intellectual Performance and Ego Depletion: Role of the Self in Logical Reasoning and Other Information Processing. <i>Journal of Personality and Social Psychology</i>, <i>85</i>(1), 33.</span>
+
+    
+    
     
 </div>
 </li>
@@ -793,6 +824,16 @@ We thank the anonymous reviewers for their insightful comments. The first author
 </div>
 </li>
 <li><div class="text-justify">
+    <span id="DodgeIlharcoEtAl_2020_Fine-Tuning_Pretrained_Language_Models_Weight_Initializations_Data_Orders_and_Early_Stopping">Dodge, J., Ilharco, G., Schwartz, R., Farhadi, A., Hajishirzi, H., &amp; Smith, N. (2020). Fine-Tuning Pretrained Language Models: Weight Initializations, Data Orders, and Early Stopping. <i>ArXiv:2002.06305 [Cs]</i>.</span>
+
+    
+    
+    
+    <a href="http://arxiv.org/abs/2002.06305">[PDF]</a>
+    
+</div>
+</li>
+<li><div class="text-justify">
     <span id="DevlinChangEtAl_2019_BERT_Pre-training_of_Deep_Bidirectional_Transformers_for_Language_Understanding">Devlin, J., Chang, M.-W., Lee, K., &amp; Toutanova, K. (2019). BERT: Pre-Training of Deep Bidirectional Transformers for Language Understanding. <i>Proceedings of the 2019 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies, Volume 1 (Long and Short Papers)</i>, 4171–4186.</span>
 
     
@@ -847,6 +888,7 @@ We thank the anonymous reviewers for their insightful comments. The first author
       <li><a href="#world-knowledge--text-based--unanswerable-questions--trouble">World knowledge + text-based + unanswerable questions = trouble</a></li>
       <li><a href="#paraphrasing-hurts">Paraphrasing hurts</a></li>
       <li><a href="#discussion-other-ways-to-increase-question-diversity">Discussion: other ways to increase question diversity</a></li>
+      <li><a href="#update-fine-tuning-variance">Update: Fine-tuning variance</a></li>
       <li><a href="#refs"> References </a></li>
     </ul>
   </li>
