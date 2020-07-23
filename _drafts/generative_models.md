@@ -3,16 +3,15 @@ layout: post
 slug: generative-models
 author: ddonahue
 title:  "What Types of Generative Models Are There?"
-date:   2020-04-23 13:31:00
+date:   2020-07-20 13:31:00
 tags: generation
 mathjax: true
 toc: true
 excerpt: "The world is filled with data. Can we learn from this data to generate something new?"
+summary_image: /assets/images/gen_photo.png
 ---
 
 ## Introduction
-
-FIX TABLE NUMBERS BEFORE SUBMISSION
 
 Recently, the field of machine learning has seen a surge in generative modeling - the ability to learn from data to generate complex outputs such as images or natural language. The best models have synthesized photo-realistic images of people who have never existed, Google Translate outputs impressive generative translations between hundreds of languages, and new waveform models are responding to your voice commands with voices of their own. Style transfer models answer the question of how Van Gogh would have painted the Golden Gate bridge. Generative models promise to enrich our world by modelling the complexities of data and bringing forth new patterns we could have never imagined.
 
@@ -86,7 +85,7 @@ Thus, the task now becomes to predict each next word given the previous words. W
 
 <figure>
 	<img src="{{'/assets/images/rnn.png' | relative_url }}"> 			
-	<figcaption>Fig. 7. Recurrent neural network processing a sequence.
+	<figcaption>Fig. 1. Recurrent neural network processing a sequence.
 	</figcaption>
 </figure>
 
@@ -112,7 +111,7 @@ The expression demonstrates that for a given input distribution of samples to a 
 
 <figure>
 	<img src="{{'/assets/images/flow.png' | relative_url }}"> 			
-	<figcaption>Fig. 7. Flows are invertible transformations between a simple (gaussian) and complex (face) distribution.
+	<figcaption>Fig. 2. Flows are invertible transformations between a simple (gaussian) and complex (face) distribution.
 	</figcaption>
 </figure>
 
@@ -122,7 +121,7 @@ For non-zero determinant, all flow layers must be invertible, and the determinan
 
 <figure>
 	<img src="{{'/assets/images/glow_faces.png' | relative_url }}"> 			
-	<figcaption>Fig. 7. Faces generated from invertible Glow model after training. Some defects are observed.
+	<figcaption>Fig. 3. Faces generated from invertible Glow model after training. Some defects are observed.
 	</figcaption>
 </figure>
 
@@ -186,7 +185,7 @@ Previous models attempt to maximize either the probability of the data distribut
 
 <figure>
 	<img src="{{'/assets/images/gan_diagram.png' | relative_url }}"> 			
-	<figcaption>Fig. 7. Discriminator receives real and fake data (images) from the dataset and the generator.
+	<figcaption>Fig. 4. Discriminator receives real and fake data (images) from the dataset and the generator.
 	</figcaption>
 </figure>
 
@@ -200,7 +199,7 @@ Through significant compute power, GANs have been trained to do some pretty cool
 
 <figure>
 	<img src="{{'/assets/images/stylegan_photos.png' | relative_url }}"> 			
-	<figcaption>Fig. 7. These humans have never existed, but rather have been generated from scratch by a large GAN. Scary?
+	<figcaption>Fig. 5. These humans have never existed, but rather have been generated from scratch by a large GAN. Scary?
 	</figcaption>
 </figure>
 
@@ -210,7 +209,7 @@ Overall, generative adversarial networks are the most popular model because they
 
 <figure>
 	<img src="{{'/assets/images/horse_zebra.png' | relative_url }}"> 			
-	<figcaption>Fig. 7. A model that converts between pictures of horses and zebras! Notice that for the most part, only textures change.
+	<figcaption>Fig. 6. A model that converts between pictures of horses and zebras! Notice that for the most part, only textures change.
 	</figcaption>
 </figure>
 
