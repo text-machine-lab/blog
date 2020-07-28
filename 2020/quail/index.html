@@ -541,7 +541,7 @@ We thank the anonymous reviewers for their insightful comments. The first author
 
 <h2 id="paraphrasing-hurts">Paraphrasing hurts</h2>
 
-<p>Since many of the questions formulated by crowd workers could be solved with simple cooccurrence counts, we conducted an additional experiment to see how much the performance would be hurt if these surface cues were taken away. The authors created paraphrased versions of questions for 30 fiction texts (556 questions in total), aiming in particular to reduce lexical cooccurrences between the text and the words in the question and the correct answer<sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup>. Then we trained our baseline models on all non-paraphrased data and tested on this extra test set.</p>
+<p>Since many of the questions formulated by crowd workers could be solved with simple cooccurrence counts, we conducted an additional experiment to see how much the performance would be hurt if these surface cues were taken away. The authors created paraphrased versions of questions for 30 fiction texts (556 questions in total), aiming in particular to reduce lexical cooccurrences between the text and the words in the question and the correct answer<sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup>. Then we trained our baseline models on all non-paraphrased data and tested on this extra challenge set.</p>
 
 <p style="text-align: center;">Table 4. Accuracy on paraphrased questions</p>
 
@@ -653,7 +653,7 @@ We thank the anonymous reviewers for their insightful comments. The first author
 <div class="footnotes">
   <ol>
     <li id="fn:1">
-      <p>The principles for paraphrasing different types of questions are outlined in <a href="">this document</a> in the <a href="">project repo</a>. <a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
+      <p>The principles for paraphrasing different types of questions are outlined in <a href="https://github.com/text-machine-lab/quail/blob/master/quail_challenge_set/Paraphrasing.md">this document</a> in the <a href="https://github.com/text-machine-lab/quail">project repo</a>. <a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:2">
       <p>For the train set we opted to not release these labels, so as to not tempt people to use them as features for training. <a href="#fnref:2" class="reversefootnote">&#8617;</a></p>
