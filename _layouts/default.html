@@ -33,14 +33,21 @@ alt="Web Analytics"></a></div></noscript>
 
 <!--Twitter metadata-->
 
+{%- assign page_large_image = page.og_image -%}
+{%- unless page_large_image contains '://' -%}
+  {%- assign page_large_image = page_large_image | absolute_url -%}
+{%- endunless -%}
+{%- assign page_large_image = page_large_image | escape -%}
+
 <meta name="twitter:title" content="{{ page.title }}">
 
 <!-- end of Twitter metadata -->
 
-{% if page.summary_image %}
-  <meta name="twitter:image" content="{{ page.summary_image | absolute_url }}">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="og:image" content="{{ page.summary_image | absolute_url }}">
+{% if page.og_image %}
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="{{ page_large_image }}">
+    <meta name="og:image" content="{{ page_large_image }}">
+
 {% else %}
   <meta name="twitter:image" content="{{ '/assets/images/text-machine-card-square.png' | absolute_url }}">
   <meta name="og:image" content="{{ '/assets/images/text-machine-card-square.png' | absolute_url }}">

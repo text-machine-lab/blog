@@ -8,7 +8,7 @@ tags: transformers
 mathjax: false
 toc: true
 excerpt: "BERT and its Transformer-based cousins are still ahead on all NLP leaderboards. But how much do they actually understand about language?"
-summary_image: /assets/images/bert-secrets-header-square.png 
+og_image: /assets/images/bert-secrets-header-square.png 
 ---
 
 > This blog post summarizes our EMNLP 2019 paper "Revealing the Dark Secrets of BERT" {% cite KovalevaRomanovEtAl_2019_Revealing_Dark_Secrets_of_BERT %}. Paper PDF: [https://www.aclweb.org/anthology/D19-1445.pdf](https://www.aclweb.org/anthology/D19-1445.pdf) 
