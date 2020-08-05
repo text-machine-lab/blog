@@ -11,6 +11,10 @@ excerpt: "The world is filled with data. Can we learn from this data to generate
 summary_image: /assets/images/gen_photo.png
 ---
 
+<figure style="margin-top: 0px; margin-bottom: 0px; margin-right: 0px; margin-left: 0px;">
+	<img src="{{'/assets/images/gen_photo_crop.png' | relative_url }}"> 	
+</figure>
+
 ## Introduction
 
 Recently, the field of machine learning has seen a surge in generative modeling - the ability to learn from data to generate complex outputs such as images or natural language. The best models have synthesized photo-realistic images of people who have never existed, Google Translate outputs impressive generative translations between hundreds of languages, and new waveform models are responding to your voice commands with voices of their own. Style transfer models answer the question of how Van Gogh would have painted the Golden Gate bridge. Generative models promise to enrich our world by modelling the complexities of data and bringing forth new patterns we could have never imagined.
