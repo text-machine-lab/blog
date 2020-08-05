@@ -8,7 +8,7 @@ tags: generation
 mathjax: true
 toc: true
 excerpt: "The world is filled with data. Can we learn from this data to generate something new?"
-summary_image: /assets/images/gen_photo.png
+og_image: /assets/images/gen_photo.png
 ---
 
 <figure style="margin-top: 0px; margin-bottom: 0px; margin-right: 0px; margin-left: 0px;">
