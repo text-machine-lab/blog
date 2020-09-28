@@ -3,7 +3,7 @@ layout: post
 slug: generative-models
 author: ddonahue
 title:  "What Types of Generative Models Are There?"
-date:   2020-07-20 13:31:00
+date:   2020-09-28 13:19:00
 tags: generation
 mathjax: true
 toc: true
