@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!--link rel="stylesheet" href="/_sass/jekyll-theme-architect.scss" media="screen" type="text/css">
+    <link rel="stylesheet" href="/_sass/normalize.scss" media="screen" type="text/css">
+    <link rel="stylesheet" href="/_sass/rouge-github.scss" media="screen" type="text/css"-->
+    <link rel="stylesheet" href="/blog/assets/css/style.css?v=" media="screen" type="text/css">
+    <link rel="stylesheet" href="/blog/assets/css/print.css" media="print" type="text/css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" type="text/css">
+
+    <!--[if lt IE 9]-->
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+
+<!-- Default Statcounter code for Text-machine Blog
+https://text-machine-lab.github.io/blog/ -->
+<script type="text/javascript">
+var sc_project=12176921;
+var sc_invisible=1;
+var sc_security="e9a6e2dd";
+</script>
+<script type="text/javascript"
+src="https://www.statcounter.com/counter/counter.js"
+async></script>
+<noscript><div class="statcounter"><a title="Web Analytics"
+href="https://statcounter.com/" target="_blank"><img
+class="statcounter"
+src="https://c.statcounter.com/12176921/0/e9a6e2dd/1/"
+alt="Web Analytics"></a></div></noscript>
+<!-- End of Statcounter Code -->
+
+<!--Twitter metadata--><meta name="twitter:title" content="What Types of Generative Models Are There?">
+
+<!-- end of Twitter metadata -->
+
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://text-machine-lab.github.io/blog/assets/images/gen_photo.png">
+    <meta name="og:image" content="https://text-machine-lab.github.io/blog/assets/images/gen_photo.png">
+
+
+
+
+  <meta name="og:description"
+    content="The world is filled with data. Can we learn from this data to generate something new?">
+  <meta name="twitter:description"
+    content="The world is filled with data. Can we learn from this data to generate something new?">
+
+
+<!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>What Types of Generative Models Are There? | Text Machine Blog</title>
+<meta name="generator" content="Jekyll v3.7.4" />
+<meta property="og:title" content="What Types of Generative Models Are There?" />
+<meta name="author" content="David Donahue" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="The world is filled with data. Can we learn from this data to generate something new?" />
+<meta property="og:description" content="The world is filled with data. Can we learn from this data to generate something new?" />
+<link rel="canonical" href="https://text-machine-lab.github.io/blog/2020/generative-models/" />
+<meta property="og:url" content="https://text-machine-lab.github.io/blog/2020/generative-models/" />
+<meta property="og:site_name" content="Text Machine Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-09-28T09:19:00-04:00" />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"https://text-machine-lab.github.io/blog/2020/generative-models/"},"@type":"BlogPosting","url":"https://text-machine-lab.github.io/blog/2020/generative-models/","headline":"What Types of Generative Models Are There?","dateModified":"2020-09-28T09:19:00-04:00","datePublished":"2020-09-28T09:19:00-04:00","author":{"@type":"Person","name":"David Donahue"},"description":"The world is filled with data. Can we learn from this data to generate something new?","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+  </head>
+
+  <body>
+    <header>
+        <div class="nav-menu">
+            <ul>
+              <li><a href="/blog/tags"><i class="fa fa-hashtag"></i> Tag index</a></li>
+              <li><a href="/blog/years"><i class="fa fa-list"></i> All posts</a></li>
+              <li><a href="https://github.com/text-machine-lab/"> <i class="fa fa-github"></i> GitHub</a></li>
+              <li><a href="http://text-machine.cs.uml.edu/"><i class="fa fa-home"></i> About us</a></li>
+            </ul>
+        </div>
+
+      <div class="inner">
+          <div>
+            <a href="http://text-machine.cs.uml.edu/"><img src="/blog/assets/images/text-machine-logo-transparent.png" alt="Text Machine logo" class="logo"></a>
+          </div>
+        <div>
+        <a href="https://text-machine-lab.github.io/blog/">
+          <h1>Text Machine Blog</h1>
+        </a>
+        <h2 class="tagline">Machine Learning, NLP, and more</h2>
+        </div>
+      </div>
+
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+>
+</script>
+<script
+  type="text/javascript"
+  charset="utf-8"
+  src="https://vincenttam.github.io/javascripts/MathJaxLocal.js"
+>
+</script>
+
+
+<h1>What Types of Generative Models Are There?</h1>
+
+<span class="post-date">28 Sep 2020 • </span>
+<img src="/blog/assets/images/time-button.jpg" class="read-time"></img>
+<span class="reading-time" title="Estimated read time">
+  
+  
+    26 mins
+  
+</span>
+
+<p><strong>Tags:</strong>
+  <span>
+  
+    
+    <a href="/tag/generation"><code class="highligher-rouge"><nobr>generation</nobr></code>&nbsp;</a>
+  
+   </span>
+
+</p>
+
+
+
+<!--p class="post-author">Author: David Donahue</p-->
+  
+      <hr>
+<span>
+
+<div class="author-container">
+        
+            <img src="/blog/assets/images/ddonahue.jpg" class="author-img">
+        
+    <div class="author-text">
+        <span class="author-name"> David Donahue &nbsp;</span>
+           
+           
+           
+           
+           <br/> <i class="fa id-badge"></i> <i>David is a graduate student at the University of Massachusetts (Lowell), working with Anna Rumshisky. His research focuses on natural language generation.</i>
+           
+    </div>
+</div>
+
+
+  
+
+<figure style="margin-top: 0px; margin-bottom: 0px; margin-right: 0px; margin-left: 0px;">
+	<img src="/blog/assets/images/gen_photo_crop.png" /> 	
+</figure>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>Recently, the field of machine learning has seen a surge in generative modeling - the ability to learn from data to generate complex outputs such as images or natural language. The best models have synthesized photo-realistic images of people who have never existed, Google Translate outputs impressive generative translations between hundreds of languages, and new waveform models are responding to your voice commands with voices of their own. Style transfer models answer the question of how Van Gogh would have painted the Golden Gate bridge. Generative models promise to enrich our world by modeling the complexities of data and bringing forth new patterns we could have never imagined.</p>
+
+<p>So what kinds of generative models are we using nowadays? And why? In this post, we explore these questions and many more answers.</p>
+
+<h2 id="models-we-explore-in-this-post">Models we explore in this post</h2>
+<ul>
+  <li>Discrete modeling</li>
+  <li>Recurrent Neural Networks</li>
+  <li>Generative Adversarial Networks</li>
+  <li>Normalizing Flows</li>
+  <li>Variational Autoencoders</li>
+  <li>Denoising Score Matching</li>
+</ul>
+
+<h2 id="what-do-we-mean-by-generative-modeling">What do we mean by generative modeling?</h2>
+
+<p>If we wish to classify whether that picture on your phone is a cat or a dog, we ask the question: which outcome is the most probable? The straightforward way to go about this is to estimate the probability of both outcomes (this is a cat, this is a dog) using a standard trained neural network and select the option with the highest probability. This is what we refer to as classification, or a discriminative model. We only care about the most probable outcome.</p>
+
+<p>In contrast, generative modeling wishes to sample different outcomes from the distribution. This is not so useful for dogs and cats, as generating random cat and dog labels according to their distribution is not useful or interesting when you look at your photo. There are clear right and wrong answers. But if we want to generate beautiful paintings, we don’t care about the “most probable” painting. We want a beautiful painting similar to what artists actually paint. This is the task: for a dataset of individual paintings x, we want to infer the distribution of all paintings p(x) and then generate new paintings from that distribution.</p>
+
+<h2 id="types-of-generative-models-and-their-benefits-costs">Types of generative models and their benefits costs</h2>
+
+<p>There are a number of properties we want from generative models, such as:</p>
+<ul>
+  <li>Stability - how easily can this model be trained?</li>
+  <li>Capacity - can this model generate complex data?</li>
+  <li>Density - can this model tell us the likelihood of different samples?</li>
+  <li>Non-constrained  - is the model constrained to a specific structure?</li>
+  <li>Speed - is this model slower during training or inference?</li>
+</ul>
+
+<h1 id="modeling-discrete-distributions">Modeling Discrete Distributions</h1>
+
+<p>Many classification models attempt to predict some discrete output <script type="math/tex">Y</script>. For example, a sentiment analysis system may be fed a fresh tweet and be tasked with predicting its emotion: positive, negative or neutral. This is typically done by learning to represent <script type="math/tex">P(Y)</script>, or the probability of different emotions <script type="math/tex">Y</script> for a given input tweet. The selected sentiment is then</p>
+
+<script type="math/tex; mode=display">y* = \underset{y}{\operatorname{argmax}} P(Y=y)</script>
+
+<p>But learning <script type="math/tex">P(Y)</script> can also be seen as a generative task, since we could generate different y’s for a given input tweet according to their probability. So how do we learn a generative model <script type="math/tex">Q(Y)=P(Y)</script> given samples from P (our dataset)? Throughout this post, <script type="math/tex">P</script> represents the true distribution of data while <script type="math/tex">Q</script> represents to model estimate of the distribution which we can sample from. We first represent <script type="math/tex">Q(Y)</script> by a neural network <script type="math/tex">Q(Y) = f(Y)</script> for some function <script type="math/tex">f</script>. Ideally, we would like to minimize some objective function which, at convergence, brings together the two distributions <script type="math/tex">Q</script> and <script type="math/tex">P</script>. For this we use the KL-divergence measure. KL-divergence is defined as follows for distributions <script type="math/tex">Q</script> and <script type="math/tex">P</script>.</p>
+
+<script type="math/tex; mode=display">D_{KL}(P\| Q)=\sum_{x} P(x) \log\dfrac{P(x)}{Q(x)}</script>
+
+<p>Most notably, as we minimize this KL-divergence measure toward zero, our model <script type="math/tex">Q</script> converges to the true distribution <script type="math/tex">P</script>. This is great news, we would have a generative model <script type="math/tex">Q(x)=P(x)</script> (at least theoretically) that could be sampled from. We formulate our objective as follows:</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{align*}
+    &L = D_{KL}(P \| Q) \\\\
+    &L = \sum_{x} P(x) \log\dfrac{P(x)}{Q(x)} \\\\
+    &L = \sum_{x} P(x) (\log P(x)-\log Q(x)) \\\\
+    &L = \sum_{x} P(x) \log P(x)- \sum_{x} P(x) \log Q(x)
+  \end{align*} %]]></script>
+
+<p>This loss function is minimized with respect to <script type="math/tex">Q</script>. Since the first term does not depend on Q, it is constant and can be removed:</p>
+
+<script type="math/tex; mode=display">L = -\sum_{x} P(x) \log Q(x) = -E_{x \sim P(x)}[\log Q(x)]</script>
+
+<p>And this is the standard cross entropy loss function! We can approximate this with batches of data for learning a distribution in both generation and classification settings. Since this is discrete data we are generating, we can select values according to our probabilities under $Q(x)$. This same objective function will be later used in the “normalizing flow” architecture in a similar way.</p>
+
+<h3 id="language-modeling">Language Modeling</h3>
+
+<p>One classic example of generating discrete distributions is the task of language modeling. Specifically, the goal is to generate a natural language sequence of words which is realistic; it sounds like something a human would write. We can model this as a probability distribution over all sequences <script type="math/tex">P(S)</script> according to how likely it is a human would write that sequence (we can add conditioning on input later). The problem is, there is an almost uncountable number of sequences (exponential in sequence length). It is imperative that we find a way to break down the problem. To do this, we take advantage of the fact that a sequence can be broken down into individual words:</p>
+
+<script type="math/tex; mode=display">P(S) = P(w_1, w_2, w_3, w_4) \\</script>
+
+<p>Notice that this is a joint distribution over multiple variables, we can factorize the distribution into a series of conditional probabilities to simplify the task:</p>
+
+<script type="math/tex; mode=display">P(S) = P(w_1)P(w_2|w_1)P(w_3|w_2,w_1)P(w_4|w_3,w_2,w_1)</script>
+
+<p>Thus, the task now becomes to predict each next word given the previous words. We can model all of these conditional probabilities with a single parameterized model <script type="math/tex">Q(w_i\vert w_1...w_{i-1})</script>, called a recurrent neural network (RNN). This RNN predicts each next word given the previous words, and is ubiquitous in the field of natural language processing (NLP) for applications such as document summarization, chatbots, and machine translation (e.g. Google Translate!). Since this setup is still a problem of discrete modeling, we again deploy the cross entropy loss function for training each next-word prediction. For more information on the structure of RNNs, I refer the reader to this wonderful blog post about Long Short-Term Memory networks <a href="https://colah.github.io/posts/2015-08-Understanding-LSTMs/">here</a> and this more recent post on the novel Transformer architecture <a href="https://towardsdatascience.com/transformers-141e32e69591">here</a>.</p>
+
+<figure>
+	<img src="/blog/assets/images/rnn.png" /> 			
+	<figcaption>Fig. 1. Recurrent neural network processing a sequence.
+	</figcaption>
+</figure>
+
+<h1 id="normalizing-flows">Normalizing Flows</h1>
+
+<p>Discrete modeling of probability distributions is vital to the generation of discrete categories and sequences, but how does this scheme apply to real values? Using the discrete setup above, we would require an infinite number of categories, as each real number in the data can take on an infinite number of values. That’s a lot of training data! A great example of this is images, where all pixels in an image have RGB pixels which take on values from 0 to 1 (depending on precision). We can then imagine a high-dimensional “space” of images we can move around in.</p>
+
+<p>Instead of modeling the probability of any discrete value <script type="math/tex">P(x)</script>, what if we could instead represent the continuous probability distribution of a real value <script type="math/tex">p(x)</script>? (lowercase letters for continuous distributions). Then, we could minimize the same KL-divergence measure above between our <script type="math/tex">q(x)</script> and <script type="math/tex">p(x)</script> to recover <script type="math/tex">q(x)=p(x)</script>. Once we learn the distribution, we should also be able to sample from it to produce new data!</p>
+
+<p>The problem: how do we represent the probability distribution <script type="math/tex">q(x)</script> for an infinite number of values? Here we introduce the normalizing flow <a class="citation" href="#dinh2016density">(Dinh, Sohl-Dickstein, &amp; Bengio, 2016)</a>, which satisfies this question by producing <script type="math/tex">q(x)</script> through a series of transformations on a known continuous distribution. Put simply, we bend a distribution we know into the distribution we desire! We start from say a (multivariate) gaussian distribution, and manipulate it step by step through multiple invertible neural network layers into the distribution of celebrities faces or whatever else we wish to generate. The magic of flows stems from the change of variables formula, which can be used to express one probability distribution in terms of another through a transformation:</p>
+
+<script type="math/tex; mode=display">p(x)=p(z) \bigg\rvert \det (\dfrac{\partial g(z)}{\partial z}) \bigg\rvert^{-1}</script>
+
+<p>for an invertible transformation <script type="math/tex">x = g(z)</script>. This can be interpreted as saying that the probability density of the output of some function $g(z)$ is determined by the input density and the “scale” of the transformation. Solving for the log probability of <script type="math/tex">x</script>:</p>
+
+<script type="math/tex; mode=display">\log p(x)= \log p(z) + \log \bigg\rvert \det (\dfrac{\partial g(z)}{\partial z}) \bigg\rvert^{-1}</script>
+
+<p>The formula above applies to not just one layer $g(z)$ but also to a stack of layers:</p>
+
+<script type="math/tex; mode=display">\log p(x)= \log p(z_0) + \sum_{i=0}^{N-1} \log \bigg\rvert \det (\dfrac{\partial f_i(z_i)}{\partial z_i}) \bigg\rvert^{-1}</script>
+
+<p>given a base gaussian distribution <script type="math/tex">p(z_0)</script>. The expression demonstrates that for a given input distribution of samples to a transformation f, we can compute the output distribution as the input density multiplied by the determinant of that transformation f. The determinant is a measure of how the output space is stretched or compressed in the local neighborhood of x. Normalizing flows then apply a series of layers to fully transform the input distribution into any output distribution of choice through the learning process.</p>
+
+<figure>
+	<img src="/blog/assets/images/flow.png" /> 			
+	<figcaption>Fig. 2. Flows are invertible transformations between a simple (gaussian) and complex (face) distribution.
+	</figcaption>
+</figure>
+
+<p>For non-zero determinant, all flow layers must be invertible, and the determinant must also be easy to calculate (this introduces a constraint on model layers). We have samples of the input data, so we calculate <script type="math/tex">q(x)</script> for each sample and minimize KL-divergence to converge to <script type="math/tex">p(x)</script>. We now have our shiny <script type="math/tex">q(x)</script> which models the distribution of samples from our data - how do we sample? Just sample from the known distribution $z$ (gaussian), and run that sample in reverse through the model layers, which are invertible! The output is a new sample from <script type="math/tex">q(x)</script>, which could be the beautiful face of a celebrity that doesn’t exist (CelebA dataset).</p>
+
+<p><a class="citation" href="#kingma2018glow">(Kingma &amp; Dhariwal, 2018)</a> attempt to generate celebrity images using a variant of this very model, the glow model. Their faces often look very realistic:</p>
+
+<figure>
+	<img src="/blog/assets/images/glow_faces.png" /> 			
+	<figcaption>Fig. 3. Faces generated from invertible Glow model after training. Some defects are observed.
+	</figcaption>
+</figure>
+
+<p>The glow model follows the same chain of formulas above, but combines a number of different layers designed for images, including invertible 1x1 convolutions, activation norm, and coupling layers <a class="citation" href="#dinh2016density">(Dinh, Sohl-Dickstein, &amp; Bengio, 2016)</a>. These layers are designed to increase the expressiveness of the flow model in the image domain. There are a number of other flow variants which approach learning these layers in diferent ways, such as neural spline flows <a class="citation" href="#durkan2019neural">(Durkan, Bekasov, Murray, &amp; Papamakarios, 2019)</a>, radial flows and planar flows <a class="citation" href="#rezende2015variational">(Rezende &amp; Mohamed, 2015)</a>. Flows have even found use in speeding up other trained models, such as Parallel Wavenet <a class="citation" href="#oord2018parallel">(Oord et al., 2018)</a> which has found use in speech generation systems.</p>
+
+<p>While normalizing flows involve a very exact and stable training procedure, they come with several downsides. First, all layers within a flow must be invertible and the log determinant must be easy to calculate for use of the change-of-variables formula. These conditions restrict flow layers and in practice, and can reduce their effectiveness. A second challenge of flows is that they cannot ignore infrequent modes of data in the training set. Later models like GANs can focus on more common data samples and increase their quality. If a flow assigns near zero probability to an infrequent example, the cross entropy loss value will be near infinity. This could potentially pose a challenge on multi-modal data distributions with outliers. <a class="citation" href="#kobyzev2019normalizing">(Kobyzev, Prince, &amp; Brubaker, 2019)</a> gives a more in-depth view of flows and their various forms.</p>
+
+<h1 id="variational-autoencoders">Variational Autoencoders</h1>
+
+<p>The normalizing flow above attempts to maximize the probability of data <script type="math/tex">x</script> produced from a latent vector <script type="math/tex">z</script>. This is an exact method of maximization. Variational Autoencoders (VAEs) do not attempt to maximize the probability of data <script type="math/tex">x</script> directly, rather they try to maximize a lower-bound of it <a class="citation" href="#kingma2013auto">(Kingma &amp; Welling, 2013)</a>. First, we imagine that from a datapoint <script type="math/tex">x</script> we can deduce some latent variable <script type="math/tex">z</script> with a known distribution (e.g. gaussian) which describes the data. This vector $z$ can be thought of as a summary of the data $x$, with a distribution we can sample from. So for images of faces it could encode pose, emotion, gender, etc.</p>
+
+<p>If only we knew the function <script type="math/tex">p(x\vert z)</script>, we could sample latent summary variables <script type="math/tex">z</script> and “decode” them to a new data point <script type="math/tex">x</script> - this would be our generative model. Even though our data points <script type="math/tex">x</script> may be complex, we have related them to a simpler <script type="math/tex">z</script>-space where we can represent probability distributions more easily. This is very similar to the normalizing flows approach. Variational autoencoders achieve this using a learned probabilistic encoder to convert from <script type="math/tex">x</script> to <script type="math/tex">z</script>-space, along with a learned deterministic decoder to convert from <script type="math/tex">z</script>-space back to <script type="math/tex">x</script>-space (reconstruction). Points within the $z$ space are regularized to be similar to a gaussian prior distribution to simplify the space and allow sampling. Thus, the diversity of the output generation is modeled in the $z$ domain, and the decoder deterministically maps each point $z$ to a point $x$ in the data domain. The pipeline looks as follows:</p>
+
+<figure>
+	<img src="/blog/assets/images/vae.png" /> 			
+	<!-- <figcaption>Fig. 7. VAE maps the data space x to a latent space z. This "posterior" latent space is forced toward a simple (gaussian) prior distribution.
+	</figcaption> -->
+</figure>
+
+<p>Assume that the conversion to these latent variables <script type="math/tex">z</script> can be described by some unknown distribution <script type="math/tex">p(z\vert x)</script> - we wish to model this “prior” distribution using our own “posterior” distribution <script type="math/tex">q(z\vert x)</script> which we parameterize and learn from the data. As with normalizing flows, we seek to maximize the log probability of the data. The (log) probability of data <script type="math/tex">x</script> can be expressed in terms of a lower bound <script type="math/tex">L</script> for a positive-valued KL-divergence (dissimilarity) between the prior <script type="math/tex">p(z\vert x)</script> and our posterior encoder <script type="math/tex">q(z\vert x)</script>.</p>
+
+<script type="math/tex; mode=display">\log q_\theta (x^{(i)}) = D_{KL}(q_\phi (z\vert x^{(i)}) \| p (z\vert x^{(i)})) + L(\theta, \phi, x^{(i)})</script>
+
+<p>Notice that if our model <script type="math/tex">q(z\vert x)</script> perfectly matches the selected prior distribution <script type="math/tex">p(z\vert x)</script>, then this lower-bound <script type="math/tex">L</script> is equal to the true log probability we wish to maximize. We set our known prior <script type="math/tex">p(z\vert x) = p(x)</script> to be independent of <script type="math/tex">x</script> and solve:</p>
+
+<script type="math/tex; mode=display">\log q_\theta (x^{(i)}) \geq L(\theta, \phi, x^{(i)}) = E_{\log q_\phi (z\vert x)}[-\log q_\phi (z\vert x) + \log q_\theta (x, z)]</script>
+
+<p>Solving for the lower bound:</p>
+
+<script type="math/tex; mode=display">L(\theta, \phi, x^{(i)}) = -D_{KL} (q_\phi (z\vert x^{(i)}) \|  p (z)) + E_{q_\phi (z\vert x^{(i)})}[\log q_\theta (x^{(i)} \vert  z)]</script>
+
+<p>The variational autoencoder seeks to minimize this objective for encoder <script type="math/tex">q(z\vert x)</script> and decoder <script type="math/tex">p(x\vert z)</script>. If the first term is minimized, then our encoder <script type="math/tex">q(z\vert x) = p(z)</script>. If the second term is minimized, our decoder <script type="math/tex">p(x\vert z)</script> has found a conversion between <script type="math/tex">z</script> and <script type="math/tex">x</script>. Thus the final result is a balance between the first term which simplifies <script type="math/tex">q(z\vert x)</script> and the second term which requires it to hold useful information for reconstruction of <script type="math/tex">x</script>. After training, we then sample a vector <script type="math/tex">z</script> from the prior <script type="math/tex">p(z)</script> and pass it through our decoder to produce a sample! We have a generative model.</p>
+
+<p>The <strong>reparameterization trick</strong> attempts to give a solid form to the prior <script type="math/tex">p(z)</script> and posterior <script type="math/tex">q(z\vert x)</script>. The authors choose a multivariate gaussian with mean zero and standard deviation one along each dimension as the prior. This is simple enough that we can sample when we want to decode an output data point <script type="math/tex">x</script>.</p>
+
+<script type="math/tex; mode=display">z \sim p(z\vert x) = \mathcal{N}(\mu,\sigma^2)</script>
+
+<p>Then, the posterior distribution <script type="math/tex">q(z\vert x)</script> is parameterized by learned mean and standard deviation vectors <script type="math/tex">\mu</script> and <script type="math/tex">\sigma</script> produced by the encoder. The output of the encoder which represents <script type="math/tex">q(z\vert x)</script> and is sampled as follows:</p>
+
+<script type="math/tex; mode=display">z = \mu + \sigma \epsilon</script>
+
+<p>where epsilon is drawn from a multivariate normal distribution \mathcal{N}(0,1). The purpose of this parameterization is to express the output of the encoder as a manipulation of a gaussian distribution which can be shaped using <script type="math/tex">\mu</script> and <script type="math/tex">\sigma</script> produced by the encoder, giving the VAE the ability to represent <script type="math/tex">z</script> as a latent distribution.</p>
+
+<p>We add an epsilon noise vector <script type="math/tex">\epsilon</script> used such that <script type="math/tex">q(z\vert x)</script> is not deterministic. While other forms can be chosen, many VAE works follow a similar format of matching means and standard deviations between prior and posterior gaussian distributions <a class="citation" href="#serban2017hierarchical">(Serban et al., 2017)</a>. These are simple enough that we can calculate the KL-divergence term analytically. Combining the lower bound discussed above and this reparameterization trick, we can derive the exact function we maximize:</p>
+
+<script type="math/tex; mode=display">L(\theta,\phi;x^{(i)}) \simeq \dfrac{1}{2}\sum_{j=1}^{J}(1+\log ((\sigma_j^{(i)})^2)) - (\mu_j^{(i)})^2 - (\sigma_j^{(i)})^2)+\dfrac{1}{L}\sum_{l=1}^L \log q_\theta (x^{(i)}\vert z^{(i,l)})</script>
+
+<p>for <script type="math/tex">z^{(i,l)}=\mu^{(i)}+\sigma^{(i)} \odot \epsilon^{(l)}</script> and <script type="math/tex">\epsilon^{(l)} \sim \mathcal{N}(0,I)</script>. The first term is the KL-loss objective, which converges <script type="math/tex">q(z\vert x)</script> to <script type="math/tex">p(z)</script>. Since the posterior distribution is just a transformed gaussian, this term can be solved by setting <script type="math/tex">\mu_j = 0</script> and <script type="math/tex">\sigma_j = 1</script>. The second term is a reconstruction loss which maximizes <script type="math/tex">p(x\vert z)</script>, or the ability to recover the sample <script type="math/tex">x</script> from latent <script type="math/tex">z</script>. It is important to remember here that our decoder is deterministic (in the image domain), and that the reconstruction term becomes a mean-squared error loss in this case. All variation in the output comes from the latent variable <script type="math/tex">z</script>. We sample from <script type="math/tex">p(z)</script> and run this through the decoder <script type="math/tex">p(x\vert z)</script> to produce a data point. Pretty neat!</p>
+
+<p>The variational autoencoder seems to have some downsides. First, in this formulation it seems to be impossible to maximize both the KL-loss term and the reconstruction loss at the same time for this prior. If we satisfy the KL-divergence loss (first term), then encoder <script type="math/tex">q(z\vert x) = p(z)</script> and our encoder has lost all information about <script type="math/tex">x</script>, effectively separating the relationship between <script type="math/tex">x</script> and <script type="math/tex">z</script> and forcing our decoder to maximize <script type="math/tex">p(x\vert z) = p(x)</script>. Since our decoder is a deterministic model, we do poorly and are back at the problem of representing <script type="math/tex">p(x)</script> without a random variable <script type="math/tex">z</script>. It is thus desirable to have a balance between the KL-divergence objective and the reconstruction loss, but this reduces reconstruction performance and can cause blurring effects in images or grammar errors in output sentences. Overall, this balance can reduce the capacity of the VAE to generate high quality images in certain cases. However, VAEs place no constraint on the generator architecture, a straight-forward to train, and can even perform approximate probability density estimation. <a class="citation" href="#higgins2017beta">(Higgins et al., 2017)</a> perform an extensive analysis on the weighting between KL-divergence and reconstruction objectives and the resulting images, feel free to take a look!</p>
+
+<p>Variational autoencoders have been used extensively in a variety of domains. They have found use in modeling semantic sentence spaces, allowing for interpolation between sentences <a class="citation" href="#bowman2015generating">(Bowman et al., 2015)</a>, video generation <a class="citation" href="#lee2018stochastic">(Lee et al., 2018)</a>, text planning <a class="citation" href="#yarats2018hierarchical">(Yarats &amp; Lewis, 2018)</a>, image generation <a class="citation" href="#razavi2019generating">(Razavi, van den Oord, &amp; Vinyals, 2019)</a> and more. Despite concerns of image blurring, <a class="citation" href="#razavi2019generating">(Razavi, van den Oord, &amp; Vinyals, 2019)</a> have recently been able to generate high-quality images that compete with the best Generative Adversarial Network architectures, which we discuss in the next section.</p>
+
+<h1 id="generative-adversarial-networks">Generative Adversarial Networks</h1>
+
+<p>Previous models attempt to maximize either the probability of the data distribution (as in normalizing flows), or a lower bound of it (as in VAEs). Generative Adversarial Networks <a class="citation" href="#goodfellow2014generative">(Goodfellow et al., 2014)</a> attempt to model the data distribution through a clever adversarial competitive game between two agents. We first form a model <script type="math/tex">G</script> which will attempt to generate samples of our data (such as pictures of cats). Similar to models above, it takes as input a noise variable (vector) which it manipulates into an output image, etc. In the beginning of training it is randomly initialized and is very bad at this task. Next, we forge a model <script type="math/tex">D</script> which will inform our generator <script type="math/tex">G</script> on how to generate proper samples. The game works as follows: The generator generates a sample <script type="math/tex">x_g</script>. We then draw a true sample (e.g. a cat photo) from the dataset we wish to learn from. We present each of these separately to the discriminator <script type="math/tex">D</script>, and ask it to properly classify which is the fake image.</p>
+
+<figure>
+	<img src="/blog/assets/images/gan_diagram.png" /> 			
+	<figcaption>Fig. 4. Discriminator receives real and fake data (images) from the dataset and the generator.
+	</figcaption>
+</figure>
+
+<p>Over time, the discriminator then begins to get very good at discriminating between these samples. Simultaneously, we ask the generator to confuse the discriminator by making generated samples more realistic, or closer to the true distribution. This game continues, with the generator producing higher quality images while the discriminator becomes better at telling them apart from real ones. Theoretically, at convergence the generator will have captured the true distribution of the data <script type="math/tex">p(x)</script> and we can generate new samples using G. This is intuitive; the only way for the discriminator to not be able to tell the difference between real and generated images is if they are identical (or close to it). This mini-max “game” can be formulated through the following objective:</p>
+
+<script type="math/tex; mode=display">(G,D)=\min_G \max_D V(D,G) = E_{x \sim p_{data}(x)}[log D(x)] + E_{z \sim p_z(z)}[log(1-D(G(z)))]</script>
+
+<p>This formula shows that the generator and discriminator maximize and minimize the same objective, which is cross entropy loss over classification of data samples as real or fake by the discriminator. Other GAN papers attempt to reformulate this objective for better stability such as the Wasserstein GAN <a class="citation" href="#arjovsky2017wasserstein">(Arjovsky, Chintala, &amp; Bottou, 2017)</a> and LSGAN <a class="citation" href="#mao2017least">(Mao et al., 2017)</a>. For a convergence analysis of different GANs, check out <a class="citation" href="#mescheder2018training">(Mescheder, Geiger, &amp; Nowozin, 2018)</a>. Currently, generative adversarial networks are seeing the widest use as generative models in the image domain.</p>
+
+<p>Through significant compute power, GANs have been trained to do some pretty cool things. NVidia has recently developed a style-based GAN <a class="citation" href="#karras2019style">(Karras, Laine, &amp; Aila, 2019)</a> capable of producing photo-realistic images. This model combines input style vectors at multiple hierarchies to change both high and low-level details of the output image. It is based on the progressively-growing GAN architecture <a class="citation" href="#karras2017progressive">(Karras, Aila, Laine, &amp; Lehtinen, 2017)</a> which generates an image at low-resolutions first for improved stability. Check these out:</p>
+
+<figure>
+	<img src="/blog/assets/images/stylegan_photos.png" /> 			
+	<figcaption>Fig. 5. These humans have never existed, but rather have been generated from scratch by a large GAN. Scary?
+	</figcaption>
+</figure>
+
+<p>Another interesting model is CycleGAN  <a class="citation" href="#zhu2017unpaired">(Zhu, Park, Isola, &amp; Efros, 2017)</a> which attempts to a learn a mapping between not one but two data distributions with no aligned data (no pairs, just stacks of two types of images). For example, they successfully learn a mapping from zebra photos to horse photos and between different seasons. However, this system is better at replacing textures than morphing object shapes, and so does not work as well with other objects such as apples and oranges.</p>
+
+<p>Overall, generative adversarial networks are the most popular model because they produce high-quality images in one pass and do not place any constraints on the architecture of the generator. However, it is often observed that GANs can be unstable for smaller batch sizes when not properly tuned, and can be prone to mode collapse <a class="citation" href="#kodali1705convergence">(Kodali, Abernethy, Hays, &amp; Kira, n.d.)</a>.</p>
+
+<figure>
+	<img src="/blog/assets/images/horse_zebra.png" /> 			
+	<figcaption>Fig. 6. A model that converts between pictures of horses and zebras! Notice that for the most part, only textures change.
+	</figcaption>
+</figure>
+
+<p>Overall, GANs are powerful because they do not place restrictions on the generator, they are conceptually simple, and they are fast during training and inference time. As for downsides, GANs do not tell you the estimated probability of samples you generate, unlike normalizing flows which give the exact density. Even more, they can be unstable to train for multi-modal data and smaller batches sizes. That being said, they are extremely popular in computer vision and have contributed impressive results to a variety of problem domains including style transfer <a class="citation" href="#xu2018learning">(Xu, Wilber, Fang, Hertzmann, &amp; Jin, 2018)</a> and video generation <a class="citation" href="#clark2019adversarial">(Clark, Donahue, &amp; Simonyan, 2019)</a>.</p>
+
+<h1 id="denoising-score-matching">Denoising Score Matching</h1>
+
+<p>Here we introduce a method of generation that is not as well known but still interesting as it takes a different perspective on generation. Denoising score matching (DSM) takes yet another approach to learning the data distribution <script type="math/tex">p(x)</script>. Instead of learning to represent the density of different samples, DSM attempts to learn the gradient of the probability distribution. Although this method has been used in the past to model distributions, recently <a class="citation" href="#song2019generative">(Song &amp; Ermon, 2019)</a> use DSM to generate natural images by learning the gradient of the distribution at multiple levels of noise. This gradient can be thought of as a compass in data/image space pointing in the direction of highest probability (toward the data manifold). This gradient can be learned using the denoising score matching objective:</p>
+
+<script type="math/tex; mode=display">L = \dfrac{1}{2}E_{q_\sigma (\tilde{x}\vert x)p_{data}(x)}[\vert s_\theta (\tilde{x}) - \nabla_{\tilde{x}}\log q_\sigma (\tilde{x}\vert x)\vert ^2_2]</script>
+
+<p>This objective can be loosely interpreted as taking an input data point $x$ and adding a bit of noise to it as <script type="math/tex">\tilde{x}</script> according to a noise distribution <script type="math/tex">q</script>, then asking the model to determine the direction the point came from and how far it traveled - this prediction will point toward the data distribution. It is proven that minimizing this equation satisfies</p>
+
+<script type="math/tex; mode=display">s_\theta (\tilde{x})=\nabla_{\tilde{x}} p_{data}(x)</script>
+
+<p>and your score function has modeled the gradient. Once the gradient is learned, the authors use a procedure called Langevin dynamics to iteratively converge to a data sample using the following iterative procedure. This procedure begins from a randomly initialized point of low probability and follows the gradient before settling on a point of higher probability. Starting from randomly sampled datapoint <script type="math/tex">x_{t-1}</script>, we compute the next time step:</p>
+
+<script type="math/tex; mode=display">x_t = x_{t-1}+\dfrac{\epsilon}{2}\nabla_{x}\log p(x_{t-1}) + \sqrt{\epsilon} z_t</script>
+
+<p>where <script type="math/tex">z_t</script> is sampled from a multivariate gaussian distribution <script type="math/tex">\mathcal{N}(0,I)</script>. As <script type="math/tex">t\rightarrow \infty</script>, the distribution of <script type="math/tex">x_t</script> approaches <script type="math/tex">p(x)</script> and so we are producing new samples from the data!</p>
+
+<figure>
+	<img src="/blog/assets/images/dsm_process.png" /> 			
+	<figcaption>Fig. 7. Process of Langevin dynamics recovering different faces from random noise.
+	</figcaption>
+</figure>
+
+<p>This sampling technique can be used to generate different samples, the authors of apply DSM to generate images of faces. This approach has the benefit that it does not require two separate models to learn the distribution (as in GANs and VAEs) and it does not place any constraints on the model architecture (as in normalizing flows). However, this model was only demonstrated to produce low-dimensional images, it is unclear if this scales to high-definition samples as GANs and normalizing flows have been proven to generate. In addition, this method is slow during inference because it requires running the model iteratively through the Langevin dynamics procedure. It would be interesting if this approach could be combined with another model to produce faster inference generation. Overall, this technique is interesting because score matching approaches the problem of learning probability distributions by learning the distribution implicitly instead of explicitly.</p>
+
+<h1 id="conclusion">Conclusion</h1>
+
+<p>In this article we introduced a variety of architectures for generating data samples in different domains such as images and language. Each model has different properties, costs and benefits to consider for your application. Good luck!</p>
+
+
+<!-- AddToAny BEGIN -->
+<script async src="https://static.addtoany.com/menu/page.js"></script>
+<div class="a2a_kit a2a_kit_size_32 a2a_default_style">
+<a class="a2a_button_twitter"></a>
+<a class="a2a_button_reddit"></a>
+<a class="a2a_button_facebook"></a>
+<a class="a2a_button_telegram"></a>
+<a class="a2a_button_hacker_news"></a>
+<a class="a2a_button_email"></a>
+<a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+
+<!-- LikeBtn.com BEGIN -->
+
+<span class="likebtn-wrapper" data-theme="custom" data-btn_size="40" data-f_size="14" data-icon_size="30" data-icon_l_c="#159031" data-icon_l_c_v="#1405fb" data-icon_d_c="#f40d20" data-icon_d_c_v="#1405fb" data-identifier="item_1" data-show_like_label="false" data-counter_frmt="km"></span>
+<script>(function(d,e,s){if(d.getElementById("likebtn_wjs"))return;a=d.createElement(e);m=d.getElementsByTagName(e)[0];a.async=1;a.id="likebtn_wjs";a.src=s;m.parentNode.insertBefore(a, m)})(document,"script","//w.likebtn.com/js/w/widget.js");</script>
+<!-- LikeBtn.com END -->
+
+</div>
+
+<script src="https://utteranc.es/client.js"
+        repo="text-machine-lab/blog"
+        issue-term="title"
+        label="Comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+
+<h2 id="refs"> References </h2>
+
+<ol class="bibliography"><li><div class="text-justify">
+    <span id="zhu2017unpaired">Zhu, J.-Y., Park, T., Isola, P., &amp; Efros, A. A. (2017). Unpaired image-to-image translation using cycle-consistent adversarial networks. <i>Proceedings of the IEEE international conference on computer vision</i>, 2223–2232.</span>
+
+    
+    
+    
+</div>
+</li>
+<li><div class="text-justify">
+    <span id="yarats2018hierarchical">Yarats, D., &amp; Lewis, M. (2018). Hierarchical text generation and planning for strategic dialogue. <i>International Conference on Machine Learning</i>, 5591–5599.</span>
+
+    
+    
+    
+</div>
+</li>
+<li><div class="text-justify">
+    <span id="xu2018learning">Xu, Z., Wilber, M., Fang, C., Hertzmann, A., &amp; Jin, H. (2018). Learning from multi-domain artistic images for arbitrary style transfer. <i>ArXiv Preprint ArXiv:1805.09987</i>.</span>
+
+    
+    
+    
+</div>
+</li>
+<li><div class="text-justify">
+    <span id="song2019generative">Song, Y., &amp; Ermon, S. (2019). Generative modeling by estimating gradients of the data distribution. <i>Advances in Neural Information Processing Systems</i>, 11895–11907.</span>
+
+    
+    
+    
+</div>
+</li>
+<li><div class="text-justify">
+    <span id="serban2017hierarchical">Serban, I. V., Sordoni, A., Lowe, R., Charlin, L., Pineau, J., Courville, A., &amp; Bengio, Y. (2017). A hierarchical latent variable encoder-decoder model for generating dialogues. <i>Thirty-First AAAI Conference on Artificial Intelligence</i>.</span>
+
+    
+    
+    
+</div>
+</li>
+<li><div class="text-justify">
+    <span id="rezende2015variational">Rezende, D. J., &amp; Mohamed, S. (2015). Variational inference with normalizing flows. <i>ArXiv Preprint ArXiv:1505.05770</i>.</span>
+
+    
+    
+    
+</div>
+</li>
+<li><div class="text-justify">
+    <span id="razavi2019generating">Razavi, A., van den Oord, A., &amp; Vinyals, O. (2019). Generating diverse high-fidelity images with vq-vae-2. <i>Advances in Neural Information Processing Systems</i>, 14866–14876.</span>
+
+    
+    
+    
+</div>
+</li>
+<li><div class="text-justify">
+    <span id="oord2018parallel">Oord, A., Li, Y., Babuschkin, I., Simonyan, K., Vinyals, O., Kavukcuoglu, K., … others. (2018). Parallel wavenet: Fast high-fidelity speech synthesis. <i>International conference on machine learning</i>, 3918–3926.</span>
+
+    
+    
+    
+</div>
+</li>
+<li><div class="text-justify">
+    <span id="mescheder2018training">Mescheder, L., Geiger, A., &amp; Nowozin, S. (2018). Which training methods for GANs do actually converge? <i>ArXiv Preprint ArXiv:1801.04406</i>.</span>
+
+    
+    
+    
+</div>
+</li>
+<li><div class="text-justify">
+    <span id="mao2017least">Mao, X., Li, Q., Xie, H., Lau, R. Y. K., Wang, Z., &amp; Paul Smolley, S. (2017). Least squares generative adversarial networks. <i>Proceedings of the IEEE International Conference on Computer Vision</i>, 2794–2802.</span>
+
+    
+    
+    
+</div>
+</li>
+<li><div class="text-justify">
+    <span id="lee2018stochastic">Lee, A. X., Zhang, R., Ebert, F., Abbeel, P., Finn, C., &amp; Levine, S. (2018). Stochastic adversarial video prediction. <i>ArXiv Preprint ArXiv:1804.01523</i>.</span>
+
+    
+    
+    
+</div>
+</li>
+<li><div class="text-justify">
+    <span id="kodali1705convergence">Kodali, N., Abernethy, J., Hays, J., &amp; Kira, Z. On Convergence and Stability of GANs. arXiv 2017. <i>ArXiv Preprint ArXiv:1705.07215</i>.</span>
+
+    
+    
+    
+</div>
+</li>
+<li><div class="text-justify">
+    <span id="kobyzev2019normalizing">Kobyzev, I., Prince, S., &amp; Brubaker, M. A. (2019). Normalizing flows: Introduction and ideas. <i>ArXiv Preprint ArXiv:1908.09257</i>.</span>
+
+    
+    
+    
+</div>
+</li>
+<li><div class="text-justify">
+    <span id="kingma2018glow">Kingma, D. P., &amp; Dhariwal, P. (2018). Glow: Generative flow with invertible 1x1 convolutions. <i>Advances in Neural Information Processing Systems</i>, 10215–10224.</span>
+
+    
+    
+    
+</div>
+</li>
+<li><div class="text-justify">
+    <span id="kingma2013auto">Kingma, D. P., &amp; Welling, M. (2013). Auto-encoding variational bayes. <i>ArXiv Preprint ArXiv:1312.6114</i>.</span>
+
+    
+    
+    
+</div>
+</li>
+<li><div class="text-justify">
+    <span id="karras2019style">Karras, T., Laine, S., &amp; Aila, T. (2019). A style-based generator architecture for generative adversarial networks. <i>Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition</i>, 4401–4410.</span>
+
+    
+    
+    
+</div>
+</li>
+<li><div class="text-justify">
+    <span id="karras2017progressive">Karras, T., Aila, T., Laine, S., &amp; Lehtinen, J. (2017). Progressive growing of gans for improved quality, stability, and variation. <i>ArXiv Preprint ArXiv:1710.10196</i>.</span>
+
+    
+    
+    
+</div>
+</li>
+<li><div class="text-justify">
+    <span id="higgins2017beta">Higgins, I., Matthey, L., Pal, A., Burgess, C., Glorot, X., Botvinick, M., … Lerchner, A. (2017). beta-VAE: Learning Basic Visual Concepts with a Constrained Variational Framework. <i>Iclr</i>, <i>2</i>(5), 6.</span>
+
+    
+    
+    
+</div>
+</li>
+<li><div class="text-justify">
+    <span id="goodfellow2014generative">Goodfellow, I., Pouget-Abadie, J., Mirza, M., Xu, B., Warde-Farley, D., Ozair, S., … Bengio, Y. (2014). Generative adversarial nets. <i>Advances in neural information processing systems</i>, 2672–2680.</span>
+
+    
+    
+    
+</div>
+</li>
+<li><div class="text-justify">
+    <span id="durkan2019neural">Durkan, C., Bekasov, A., Murray, I., &amp; Papamakarios, G. (2019). Neural spline flows. <i>Advances in Neural Information Processing Systems</i>, 7509–7520.</span>
+
+    
+    
+    
+</div>
+</li>
+<li><div class="text-justify">
+    <span id="dinh2016density">Dinh, L., Sohl-Dickstein, J., &amp; Bengio, S. (2016). Density estimation using real nvp. <i>ArXiv Preprint ArXiv:1605.08803</i>.</span>
+
+    
+    
+    
+</div>
+</li>
+<li><div class="text-justify">
+    <span id="clark2019adversarial">Clark, A., Donahue, J., &amp; Simonyan, K. (2019). Adversarial video generation on complex datasets. <i>ArXiv</i>, arXiv–1907.</span>
+
+    
+    
+    
+</div>
+</li>
+<li><div class="text-justify">
+    <span id="bowman2015generating">Bowman, S. R., Vilnis, L., Vinyals, O., Dai, A. M., Jozefowicz, R., &amp; Bengio, S. (2015). Generating sentences from a continuous space. <i>ArXiv Preprint ArXiv:1511.06349</i>.</span>
+
+    
+    
+    
+</div>
+</li>
+<li><div class="text-justify">
+    <span id="arjovsky2017wasserstein">Arjovsky, M., Chintala, S., &amp; Bottou, L. (2017). Wasserstein gan. <i>ArXiv Preprint ArXiv:1701.07875</i>.</span>
+
+    
+    
+    
+</div>
+</li></ol>
+<!-- AddToAny END -->
+
+
+        </section>
+
+        <aside id="sidebar">
+          
+            <ul class="toc">
+  <li><a href="#">What Types of Generative Models Are There?</a>
+    <ul>
+      <li><a href="#introduction">Introduction</a></li>
+      <li><a href="#models-we-explore-in-this-post">Models we explore in this post</a></li>
+      <li><a href="#what-do-we-mean-by-generative-modeling">What do we mean by generative modeling?</a></li>
+      <li><a href="#types-of-generative-models-and-their-benefits-costs">Types of generative models and their benefits costs</a></li>
+    </ul>
+  </li>
+  <li><a href="#modeling-discrete-distributions">Modeling Discrete Distributions</a>
+     -  <a href="#language-modeling">Language Modeling</a></li>
+  <li><a href="#normalizing-flows">Normalizing Flows</a></li>
+  <li><a href="#variational-autoencoders">Variational Autoencoders</a></li>
+  <li><a href="#generative-adversarial-networks">Generative Adversarial Networks</a></li>
+  <li><a href="#denoising-score-matching">Denoising Score Matching</a></li>
+  <li><a href="#conclusion">Conclusion</a>
+    <ul>
+      <li><a href="#refs"> References </a></li>
+    </ul>
+  </li>
+</ul>
+          
+        </aside>
+
+
+      </div>
+    </div>
+
+    
+  </body>
+</html>
