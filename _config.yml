@@ -9,7 +9,7 @@ encoding: "utf-8"
 markdown_ext: "markdown,mkdown,mkdn,mkd,md"
 repository: "text-machine-lab/blog"
 url: "https://text-machine-lab.github.io"
-
+destination: docs
 exclude:
   - .sass-cache
   - Gemfile
