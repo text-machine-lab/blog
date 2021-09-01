@@ -118,3 +118,8 @@ ul.toc li {
   font-size: initial;
   margin-top: 1em;
 }
+
+.myCell {
+    padding: 15px;
+    text-align: left;
+}

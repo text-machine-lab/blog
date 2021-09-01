@@ -1,1 +1,0 @@
-Sitemap: https://text-machine-lab.github.io/blog/sitemap.xml
