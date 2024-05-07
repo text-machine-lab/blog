@@ -52,11 +52,11 @@ alt="Web Analytics"></a></div></noscript>
 <!-- Begin Jekyll SEO tag v2.6.1 -->
 <title>Parameter Efficient Pre-Training: Comparing ReLoRA and GaLore | Text Machine Blog</title>
 <meta name="generator" content="Jekyll v3.7.4" />
-<meta property="og:title" content="BERT Busters: Outlier Dimensions that Disrupt Transformers" />
+<meta property="og:title" content="Parameter Efficient Pre-Training: Comparing ReLoRA and GaLore" />
 <meta name="author" content="Namrata Shivagunde" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Models of BERT family are overall robust to pruning, but they have an Achilles heel: the outlier dimensions, without which the quality of the model drops significantly." />
-<meta property="og:description" content="Models of BERT family are overall robust to pruning, but they have an Achilles heel: the outlier dimensions, without which the quality of the model drops significantly." />
+<meta name="description" content="This blog discusses two parameter efficient pre-training methods, ReLoRA and GaLore, explaining their core concepts, and key differences." />
+<meta property="og:description" content="This blog discusses two parameter efficient pre-training methods, ReLoRA and GaLore, explaining their core concepts, and key differences." />
 <link rel="canonical" href="https://text-machine-lab.github.io/blog/2024/pept_relora_n_galore" />
 <meta property="og:url" content="https://text-machine-lab.github.io/blog/2024/pept_relora_n_galore/" />
 <meta property="og:site_name" content="Text Machine Blog" />
@@ -99,9 +99,9 @@ alt="Web Analytics"></a></div></noscript>
         <section id="main-content">
           
 
-<h1>BERT Busters: Outlier Dimensions that Disrupt Transformers</h1>
+<h1>Parameter Efficient Pre-Training: Comparing ReLoRA and GaLore</h1>
 
-<span class="post-date">31 Aug 2021 • </span>
+<span class="post-date">06 May 2024 • </span>
 <img src="/blog/assets/images/time-button.jpg" class="read-time"></img>
 <span class="reading-time" title="Estimated read time">
   
@@ -132,18 +132,15 @@ alt="Web Analytics"></a></div></noscript>
             <img src="/blog/assets/images/aro.jpg" class="author-img">
         
     <div class="author-text">
-        <span class="author-name"> Anna Rogers &nbsp;</span>
+        <span class="author-name"> Namrata Shivagunde &nbsp;</span>
            
-              <a href="http://www.cs.uml.edu/~arogers/"><span class="label"><i class="fa fa-home"></i> Profile</span></a>
-           
-           
-              <a href="http://twitter.com/annargrs"><span class="label"><i class="fa fa-twitter"></i> Twitter</span></a>
-            
-           
-              <a href="http://hackingsemantics.xyz/" > <span class="label"> <i class="fa fa-pencil"></i> Blog</span></a>
+              <a href="https://text-machine.cs.uml.edu/lab2/people/nshivagunde/"><span class="label"><i class="fa fa-home"></i> Profile</span></a>
            
            
-           <br/> <i class="fa id-badge"></i> <i>Anna Rogers is a computational linguist working on meaning representations for NLP, social NLP, and question answering. She was a post-doctoral associate in the Text Machine Lab in 2017-2019.</i>
+              <a href="https://twitter.com/namshivagunde"><span class="label"><i class="fa fa-twitter"></i> Twitter</span></a>
+           
+           
+           <br/> <i class="fa id-badge"></i> <i>Namrata Shivagunde is a PhD student at Text Machine Lab, University of Massachusetts Lowell.</i>
            
     </div>
 </div>
@@ -151,7 +148,7 @@ alt="Web Analytics"></a></div></noscript>
 
   
 
-<h2 id="intro-meet-the-bert-busters">Intro: Meet the BERT Busters!</h2>
+<h2 id="intro">Parameter Efficient Pre-training (PEPT)</h2>
 
 <p>Multiple studies have shown that Transformers are remarkably robust to pruning. You can often afford to lose half the model parameters, both with removing architecture blocks such as heads and layers <a class="citation" href="#PrasannaRogersEtAl_2020_When_BERT_Plays_Lottery_All_Tickets_Are_Winning">(Prasanna, Rogers, &amp; Rumshisky, 2020)</a> and magnitude-based pruning <a class="citation" href="#ChenFrankleEtAl_2020_Lottery_Ticket_Hypothesis_for_Pre-trained_BERT_Networks">(Chen et al., 2020)</a>. Overparametrization makes these models easy to compress afterwards (see surveys on compressing Transformer-based LMs <a class="citation" href="#GaneshChenEtAl_2020_Compressing_Large-Scale_Transformer-Based_Models_Case_Study_on_BERT">(Ganesh et al., 2020; Rogers, Kovaleva, &amp; Rumshisky, 2020)</a>.</p>
 
