@@ -182,12 +182,12 @@ alt="Web Analytics"></a></div></noscript>
 	</figure>
 	
 <h2 id="galore">GaLore: Memory-Efficient LLM Training by Gradient Low-Rank Projection</h2>
-	<p>GaLore is a memory-efficient pre-training technique gradients of the weight matrices are projected into low-rank form, updated using an optimizer, and projected back to the original gradient shape which is used to update the model weights. This technique is based on lemmas and theorems mentioned in the paper. The main lemma and theorem are described below.</p>
+	<p>GaLore is a memory-efficient pre-training technique where gradients of the weight matrices are projected into low-rank form, updated using an optimizer, and projected back to the original gradient shape, which is then used to update the model weights. This technique is based on lemmas and theorems discussed in the paper. The main lemma and theorem are described below.</p>
 	<ul>
 		<li><b>Lemma: Gradient becomes low-rank during training</b><br /> 
 			If the gradient is of form G<sub>t</sub> = A - BW<sub>t</sub>C, with constant A and PSD matrices B and C, the gradient G converges to rank-1 exponentially, suggesting that the gradient of the given form becomes low rank during training.</li>
 		<li><b>Theorem: Gradient Form of reversible models</b><br />
-			A reversible network with L2 objective has the gradient of form G<sub>t</sub> = A - BW<sub>t</sub>C. The definition of reversible networks is mentioned in the paper. The paper proves that Feed Forward networks and softmax loss function are reversible networks thus having a gradient of the given form. The paper does not discuss if attention is a reversible network</li>
+			A reversible network with L2 objective has the gradient of form G<sub>t</sub> = A - BW<sub>t</sub>C. The definition and proof of reversible networks are discussed in the paper. It is shown that the Feed Forward networks and softmax loss function are reversible networks, thus having a gradient of the given form. Attention may or may not be a reversible network. </li>
 	</ul>
 	<p>As LLMs are made of feed-forward networks and activation functions, based on the above lemma and theorem and its proof, it is implied that LLMs have a gradient of form G<sub>t</sub> = A - BW<sub>t</sub>C and the gradient becomes low rank as training progresses.</p>
 
