@@ -213,8 +213,7 @@ alt="Web Analytics"></a></div></noscript>
 	</figure>
 
 <h2 id="comparison">Comparison between ReLoRA and GaLore</h2>
-
-	
+<p>The table below, summarizes the key differences between ReLoRA and GaLore, two parameter-efficient pre-training techniques discussed earlier. </p>
 	<table>
 	    <thead>
 	        <tr>
@@ -225,17 +224,14 @@ alt="Web Analytics"></a></div></noscript>
 	    </thead>
 	    <tbody>
 		<tr>
-	           <td>Decomposition</td>
+	           <td>Decomposition used</td>
 	            <td>LoRA</td>
 	            <td>SVD</td>
 	        </tr>
 	        <tr>
-	            <td>Perplexity difference Full rank v/s</td>
+	            <td>Perplexity difference: Full rank v/s</td>
 	            <td>0.44 (1.3B model)</td>
 	            <td>0.08 (1B model)</td>
-	            <td></td>
-	            <td></td>
-	            <td></td>
 	        </tr>
 	        <tr>
 	            <td>Tokens trained on</td>
@@ -275,20 +271,20 @@ alt="Web Analytics"></a></div></noscript>
 	        <tr>
 	            <td>Throughput</td>
 	            <td>7.4 ex/sec (given 1 RTX 3090, 25G)</td>
-	            <td>6.3 ex/sec (1 RTX 4090, 25G)</td>
+	            <td>6.3 ex/sec (given 1 RTX 4090, 25G)</td>
 	        </tr>
 		<tr>
-	            <td>Warmup required</td>
+	            <td>Warm-start required</td>
 	            <td>Yes</td>
 	            <td>No</td>
 	        </tr>
 	        <tr>
 	            <td>Rank (1B scale)</td>
 	            <td>128</td>
-	            <td>512<br \> (at 1024, GaLore is better than full training)</td>
+	            <td>512<br \> (at rank 1024, GaLore performs better than full training)</td>
 	        </tr>
 	        <tr>
-	            <td>Works with</td>
+	            <td>Compatible with</td>
 	            <td>-</td>
 	            <td>8-bit optimizers, Per-layer weight updates</td>
 	        </tr>
@@ -298,10 +294,7 @@ alt="Web Analytics"></a></div></noscript>
 	            <td>8-bit Adam, AdamW, Adafactor</td>
 	        </tr>
 	    </tbody>
-	</table>
-	
-<p>This table summarizes the key differences between ReLoRA and GaLore, two parameter-efficient pre-training techniques discussed earlier.  Here's a breakdown of the table:</p>
-
+	</table>	
 <ul>
 <li><b>Decomposition</b>: ReLoRA uses LoRA decomposition to approximate low rank updates, while GaLore uses Singular Value Decomposition (SVD).</li>
 <li><b>Perplexity difference (Full rank vs. Low rank)</b>: This metric measures how well the model predicts the next word in a sequence. Lower perplexity indicates better performance. The table shows the difference in perplexity achieved by each method when trained with a full-rank model compared to a lower-rank method. ReLoRA shows a larger difference (0.44) for a 1.3B parameter model, while GaLore shows a smaller difference (0.08) for a 1B parameter model.</li>
