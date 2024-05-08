@@ -197,8 +197,8 @@ alt="Web Analytics"></a></div></noscript>
 		<figcaption></figcaption>
 	</figure>
 	
-	<p>GaLore decomposes the gradient G<sup>⎯</sup> into P, low-rank gradient G, and Q matrices using SVD. P is m x r, Q is r x n projection matrices, where r is the rank. At every step, either P or Q is used depending on if m ≤ n. G<sup>⎯</sup> is updated using an optimizer (e.g. AdamW). The updated G<sup>⎯</sup> is then projected back to the original space using the transpose of projection matrices P or Q. </p>
-	<p>GaLore switches subspaces by reinitializing the projection matrices after a certain number of steps i.e. update frequency. The idea is the model learns in a subspace for a certain number of steps and then switches to another subspace using different initialization of the projection matrices. The projection matrices are re-initialized using the current gradient. Figure 2 shows a geometric interpretation of the low-rank subspace updates.</p>
+	<p>GaLore decomposes the gradient G<sup>⎯</sup> into P, a low-rank gradient G, and Q matrices using SVD. P (shape m x r) and Q (shape r x n) are projection matrices and r denotes the rank. During each training step, either P or Q is utilized based on whether m is less than or equal to n. The low-rank gradient G<sup>⎯</sup>, is updated using an optimizer (e.g. AdamW). Subsequently, the updated G<sup>⎯</sup> is projected back to the original space using the transpose of projection matrices P or Q. </p>
+	<p>To facilitate efficient learning, GaLore employs a strategy of subspace switching by reinitializing the projection matrices after a predefined number of steps, known as the update frequency. This approach allows the model to learn within a specific subspace for a set duration before transitioning to another subspace with different initialization parameters for the projection matrices. GaLore uses the current step gradient to re-initialize the projection matrices. Figure 2 shows a geometric interpretation of the low-rank subspace updates in GaLore.</p>
 	
 	<figure>
 		<img src="/blog/assets/images/galore-subspace.png" /> 	
