@@ -129,7 +129,7 @@ alt="Web Analytics"></a></div></noscript>
 
 <div class="author-container">
         
-            <img src="/blog/assets/images/aro.jpg" class="author-img">
+            <img src="/blog/assets/images/namrata.jpg" class="author-img">
         
     <div class="author-text">
         <span class="author-name"> Namrata Shivagunde &nbsp;</span>
@@ -150,22 +150,20 @@ alt="Web Analytics"></a></div></noscript>
 
 <h2 id="intro">Parameter Efficient Pre-training (PEPT)</h2>
 
-<p>Multiple studies have shown that Transformers are remarkably robust to pruning. You can often afford to lose half the model parameters, both with removing architecture blocks such as heads and layers <a class="citation" href="#PrasannaRogersEtAl_2020_When_BERT_Plays_Lottery_All_Tickets_Are_Winning">(Prasanna, Rogers, &amp; Rumshisky, 2020)</a> and magnitude-based pruning <a class="citation" href="#ChenFrankleEtAl_2020_Lottery_Ticket_Hypothesis_for_Pre-trained_BERT_Networks">(Chen et al., 2020)</a>. Overparametrization makes these models easy to compress afterwards (see surveys on compressing Transformer-based LMs <a class="citation" href="#GaneshChenEtAl_2020_Compressing_Large-Scale_Transformer-Based_Models_Case_Study_on_BERT">(Ganesh et al., 2020; Rogers, Kovaleva, &amp; Rumshisky, 2020)</a>.</p>
+	<p>Large language models (LLMs) have revolutionized various natural language processing (NLP) tasks, but their massive parameter count creates challenges such as high computational cost and limited accessibility. Parameter-efficient fine-tuning (PEFT) methods have addressed these problems by reducing the resources needed to fine-tune LLMs for specific tasks. This raises the question: can we use parameter-efficient training methods and achieve similar efficiency gains during the pre-training stage too?</p>
+	<p>Parameter-efficient pre-training (PEPT) is an emerging area of research that explores techniques for pre-training LLMs with fewer parameters. PEPT has the potential to significantly reduce the computational cost associated with pre-training large language models. Multiple studies suggest that neural network training is either low-rank or has multiple phrases with initially high-rank and subsequent low-rank training (Aghajanyan et al., 2021, Arora et al., 2019, Frankle et al., 2019).</p>  
+	<p>ReLoRA (Lialin et. al, 2023)  is the first parameter-efficient training method used to pre-train large language models. ReLoRA uses LoRA decomposition, merges and resets the values of the LoRA matrices multiple times during training, increasing the total rank of the update. Another recent advance in PEPT is GaLore (Zhao et. al, 2024). In GaLore, the gradient is projected into its lower rank form, updated using an optimizer, and projected back to its original shape, reducing the memory requirement for pre-training LLMs by a huge margin.</p>
+	<p>This blog discusses ReLoRA and GaLore, explaining their core concepts, and key differences.
 
-<p>Yet pre-trained Transformer encoders do have an Achilles’ heel. In our new paper  <a class="citation" href="#kovaleva-etal-2021-bert">(Kovaleva, Kulshreshtha, Rogers, &amp; Rumshisky, 2021)</a>, we found that they are surprisingly fragile to the removal of a very small number of features in the layer outputs (&lt;0.0001% of model weights). This effect is present in several BERT-family models and other popular pre-trained Transformer architectures, including BART, XLNet and ELECTRA, and we also found a similar phenomenon in GPT-2.</p>
+ReLoRA: High-Rank Training Through Low-Rank Updates
 
-<p>We find that across different architectures, the last operation of the Transformer layer has high-magnitude weights in <strong>the same position</strong> in different layers of the model. This results in high-magnitude values in that position in the embeddings computed by the model for 95% of the inputs. We call them outlier features.</p>
+<h2 id="relora">ReLoRA: High-Rank Training Through Low-Rank Updates</h2>
 
-<p>In case of BERT and other pre-trained encoder Transformers, the affected components are the scaling factors and biases in the output LayerNorm of unusually high magnitude. Here’s what the culprits look like in BERT-base:</p>
-
-<figure>
-	<img src="/blog/assets/images/bert-outliers.png" /> 	
-	<figcaption>Fig. 1. Outlier LayerNorm features 308, 381 in BERT-base-uncased (randomly sampled input). </figcaption>
+	<p>ReLoRA uses LoRA (Hu et al., 2022) decomposition technique where the pre-trained model weights are frozen and trainable rank decomposition matrices (WA, WB) are injected into each layer of the LLM. However in LoRA, the rank of the matrix is restricted by the rank r (given below), and the new trainable parameters (WA and WB) are merged back to the original matrices only after the end of the training. </p>
+	<figure>
+		<img src="/blog/assets/images/relora-rank-property.png" /> 	
+	<figcaption>Fig. 1. LORA rank is restricted by rank r. </figcaption>
 </figure>
-
-<h2 id="what-do-the-outlier-dimensions-do">What do the outlier dimensions do?</h2>
-
-<p>If we selectively disable these outlier dimensions, the model is severely disrupted. To see what it does to the masked language model, let’s ask RoBERTa to fill in some blanks for us. The text in the table below comes from Wikipedia, which the model is well familiar with, and so in line 2, RoBERTa doesn’t have any issues filling in the blanks with words that match the original words (light green), or differ from them, but are valid substitutions (brown). In line 3 we see that disabling the outlier features completely disrupts the model, which now mostly produces nonsensical candidates for the masked tokens. In line 4, as a sanity check we disable the same number of random features throughout the model as the number of outliers, but the output is not affected at all.</p>
 <table>
 <tbody>
 <tr>
