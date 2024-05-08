@@ -185,24 +185,18 @@ alt="Web Analytics"></a></div></noscript>
 	            <th></th>
 	            <th>ReLoRA</th>
 	            <th>GaLore</th>
-	            <th>Decomposition</th>
-	            <th>LoRA</th>
-	            <th>SVD</th>
 	        </tr>
 	    </thead>
 	    <tbody>
-	        <tr>
-	            <td>Perplexity difference</td>
-	            <td>0.44 (1.3B model)</td>
-	            <td>0.08 (1B model)</td>
-	            <td></td>
-	            <td></td>
-	            <td></td>
+		<tr>
+	           <td>Decomposition</td>
+	            <td>LoRA</td>
+	            <td>SVD</td>
 	        </tr>
 	        <tr>
-	            <td>Full rank v/s</td>
-	            <td></td>
-	            <td></td>
+	            <td>Perplexity difference Full rank v/s</td>
+	            <td>0.44 (1.3B model)</td>
+	            <td>0.08 (1B model)</td>
 	            <td></td>
 	            <td></td>
 	            <td></td>
@@ -211,22 +205,16 @@ alt="Web Analytics"></a></div></noscript>
 	            <td>Tokens trained on</td>
 	            <td>23.1B</td>
 	            <td>13.1B</td>
-	            <td></td>
-	            <td></td>
-	            <td></td>
 	        </tr>
 	        <tr>
 	            <td>Weight equation</td>
 	            <td>W = W + AB</td>
-	            <td>W = W + PtGP if m&lt;n</td>
-	            <td></td>
-	            <td></td>
-	            <td></td>
+	            <td>W = W + P_{t}GP if m<=n</td>
 	        </tr>
 	        <tr>
 	            <td>Gradient form</td>
 	            <td>No conditions</td>
-	            <td>Gt = A - BWtC, with constant A and PSD matrices B and C, Change of subspace</td>
+	            <td>G<sub>t</sub> = A - BW<sub>t</sub>C, with constant A and PSD matrices B and C, Change of subspace</td>
 	            <td>Using Optimizer reset</td>
 	            <td>Re-initialization of P</td>
 	            <td></td>
@@ -297,74 +285,6 @@ alt="Web Analytics"></a></div></noscript>
 </figure>
 
 	
-<table>
-<tbody>
-<tr>
-<td style="padding:10px;text-align:left">Original paragraph</td>
-  <td style="padding:10px;text-align:left">Ghostbusters was [<span style="color:blue;">released</span>] on June 8 , [<span style="color:blue;">1984</span>] , to critical [<span style="color:blue;">acclaim</span>] and became a cultural phenomenon . It was well [<span style="color:blue;">received</span>] for its deft blend of comedy, [<span style="color:blue;">action</span>] , and horror , and Murray ' s performance was [<span style="color:blue;">repeatedly</span>] singled out for praise .</td>
-</tr>
-<tr>
-<td style="padding:10px;text-align:left">RoBERTa (full model)</td>
-<td style="padding:10px;text-align:left">Ghostbusters was [<span style="color:green">released</span>] on June 8 , [<span style="color:#DA8128;">1986</span>] , to critical [<span style="color:green;">acclaim</span>] and became a cultural phenomenon . It was well [<span style="color:green;">received</span>] for its deft blend of comedy, [<span style="color:green;">action</span>] , and horror , and Murray ' s performance was [<span style="color:#DA8128;">often</span>] singled out for praise .</td>
-</tr>
-<tr>
-<td style="padding:10px;text-align:left">Roberta with outlier dimensions disabled</td>
-  <td style="padding:10px;text-align:left"><span style="color:red;">{ lock</span> was [<span style="color:red;">never</span>] on June 8 , [<span style="color:red;">&lt;/s&gt;</span>] , to <span style="color:red;">rely</span> [<span style="color:red;">,</span>] and . It was well [<span style="color:#DA8128;">known</span>] for its <span style="color:red;">acker</span> of comedy , [<span style="color:red;">dinner</span>], and horror , and Murray ' s was [<span style="color:red;">ever</span>] <span style="color:red;">, &lt;/s&gt; &lt;/s&gt; ) </span></td>
-</tr>
-<tr>
-<td style="padding:10px;text-align:left">Roberta with random dimensions disabled</td>
-<td style="padding:10px;text-align:left">Ghostbusters was [<span style="color:green">released</span>] on June 8 , [<span style="color:#DA8128;">1986</span>] , to critical [<span style="color:green;">acclaim</span>] and became a cultural phenomenon . It was well [<span style="color:green;">received</span>] for its deft blend of comedy,  [<span style="color:green;">action</span>] , and horror , and Murray ' s performance was [<span style="color:#DA8128;">particularly</span>] singled out for praise.</td>
-</tr>
-</tbody>
-</table>
-
-<p><br /></p>
-
-<p>The downstream tasks take a hit too. Here is what happens with BERT-base on GLUE when one outlier dimension is disabled at a time:</p>
-
-<figure>
-	<img src="/blog/assets/images/outliers-glue.png" /> 	
-	<figcaption>Fig. 2. Performance of BERT-base on GLUE benchmark tasks with output LayerNorm dimensions disabled one at a time. X-axis: which dimensions are disabled. Y-axis: performance metric: loss (blue), accuracy (green), correlation coefficients (purple, orange). </figcaption>
-</figure>
-
-<h2 id="is-this-a-bug-or-a-feature">Is this a bug or a feature?</h2>
-
-<p>To begin this, the outlier dimensions do not seem to be an artifact of a particular model instance. We found such dimensions in all six models of BERT family that we considered: BERT-small, BERT-medium, BERT-base, BERT-large, mBERT and RoBERTa. They are also found in ELECTRA, XLNet, and BART. A similar phenomenon is present in the output dense layer of GPT-2, (since there the output component is not LayerNorm). It seems that this is a normal effect of pre-training in these models.</p>
-
-<p>To find out when the outliers appear, we pre-train our own  BERT-medium model on BookCorpus <a class="citation" href="#ZhuKirosEtAl_2015_Aligning_Books_and_Movies_Towards_Story-Like_Visual_Explanations_by_Watching_Movies_and_Reading_Books">(Zhu et al., 2015)</a>. We started from a randomly initialized configuration with 8 layers and the hidden dimensionality of 512 units. We saved checkpoints of the model every 2000 steps, and we tracked the output LayerNorm weights across all of the model’s layers as the training progressed. Figure 3 shows that both scaling factors and biases begin to diverge from their initialization values quite early (after approximately 50k steps) in the training process. At roughly the same point, both training loss and evaluation perplexity begin to improve, which is in line with the drastic effect on model performance that we saw in the above pruning experiments.</p>
-
-<figure>
-	<img src="/blog/assets/images/outliers-pretraining.png" /> 	
-	<figcaption>Fig. 3. BERT-medium pre-training on the BookCorpus dataset. (left) Evaluation perplexity (brown) and train loss (blue) as the training progresses. (middle) The changes in the scaling factors and the biases of the output normalization layer. Each line corresponds to one of the 512 dimensions. We highlight (in orange) the 417-th dimension, for which both the scaling factor and the bias fall out of the three sigma range at the end of pretraining. (right) Token embeddings computed for an input sequence that was randomly sampled from the data. Each line corresponds to one input token. The outlier embedding values are marked at the same 417-th dimension. All the plots are presented for the middle Transformer layer (4). </figcaption>
-</figure>
-
-<h2 id="how-is-this-related-to-positional-embeddings">How is this related to positional embeddings?</h2>
-
-<p>In a concurrent work, <a class="citation" href="#luo-etal-2021-positional">(Luo, Kulmizev, &amp; Mao, 2021)</a> hypothesized that the outlier phenomenon is attributable to the positional embedding layer. We argue <a class="citation" href="#kovaleva2021transformer">(Kovaleva, 2021)</a> it is much more likely that this effect comes from the LayerNorm component of the embedding layer.</p>
-
-<p>The histogram in Fig 4. shows that it’s only the LayerNorm of the embedding layer that has unusual outlier values in the specified dimension. The distribution of weights in the other three components of the embedding layer – lexical, positional, and segment embeddings – is centered around zero and forms Gaussian-shaped curves with a small standard deviation.
-Compared to the other components, LayerNorm weights have a much higher variance of values, with the highest weight matching the outlier position <tt>308</tt>. We hypothesize that the learned weights of LayerNorm in the embedding layer are responsible for producing high-magnitude outlier features that are propagated through the rest of the network resulting in the consistent outlier effects across the Transformer layers.</p>
-
-<figure>
-	<img src="/blog/assets/images/embedding_weights_marked.png" /> 	
-<figcaption>Fig. 4. The normalized histograms of weight values extracted from different components of the embedding layer of BERT base. The blue histograms represent the entire set of extracted values within a given component, whereas the red ones refer to the weights that result in the outlier feature <tt>308</tt>. Most of the outlier-corresponding weights are centered around zero, while the LayerNorm weights fall out of the 3-𝜎 interval.
-</figcaption>
-</figure>
-
-<h2 id="where-do-we-go-from-here">Where do we go from here?</h2>
-
-<p>So… if BERT can be completely disrupted by disabling so few weights, how come this phenomenon hasn’t been seen in all the pruning studies so far? The catch is that it is not just about the weight magnitude. The outlier dimensions have to be pruned in the exact same position across the model, and neither magnitude pruning nor pruning attention heads based on their importance scores have that constraint. So, simply by not pruning the same positions across the model, the pruning studies have been avoiding the outlier iceberg. Just to avoid degenerate runs by chance, we would recommend that work on pruning/compressing Transformers explicitly puts in the constraint that the pruned weights should not be in the same position across the model.</p>
-
-<p>Now that we know about the outliers, they are an obvious security risk: if a malicious actor gains access to the weights of a model, they could easily identify such weights and modify them (e.g. in a federated learning context). It would look like the model is still running as expected, except that its output would turn into garbage.</p>
-
-<p>And, since the outlier dimensions seem to be a regular feature of Transformer-based models, this brings up a host of interesting questions for future work:</p>
-
-<ul>
-  <li>Is it possible to pre-train a Transformer that wouldn’t have such outliers?</li>
-  <li>If they are necessary, shall we save ourselves trouble and initialize the model that way?</li>
-  <li>Can their emergence in pre-training be used as an auxiliary signal for when the model training is completed?</li>
-  <li>Is 2-3 outlier features necessary sufficient, or will the model quality be improved by creating more of them?</li>
-</ul>
 
 
 
