@@ -306,13 +306,13 @@ alt="Web Analytics"></a></div></noscript>
 <li><b>Additional hyperparameters</b>: These are tuning knobs that control the training process. Both methods adds three additional hyperparameters.</li>
 <li><b>Memory required</b>: This shows the amount of memory needed to train the model with each method (for a 1 billion parameter model). GaLore requires less memory than ReLoRA.</li>
 <li><b>Throughput</b>: Throughput refers to the number of examples the model can process per second. This is measured on specific hardware (one RTX 3090 with 25G network bandwidth). ReLoRA shows higher throughput in this case.</li>
-<li><b>Warmup required</b>: Whether a full-rank training phase is needed before switching to low-rank training. ReLoRA requires a warmup, while GaLore does not.</li>
+<li><b>Warm-start required</b>: Whether a full-rank training phase is needed before switching to low-rank training. ReLoRA requires a warmup, while GaLore does not.</li>
 <li><b>Rank</b>: This is the target rank of the low-rank decomposition used by each method (for a 1 billion parameter model). GaLore can potentially use a higher rank and achieve better results (as shown at a rank of 1024).</li>
-<li><b>Works with</b>: This indicates additional features supported by each method. GaLore works with certain optimizers and weight update methods that ReLoRA does not.</li>
+<li><b>Compatible with</b>: This indicates additional features supported by each method. GaLore works with certain optimizers and weight update methods that ReLoRA does not.</li>
 <li><b>Optimizers</b>: These are the optimization algorithms used to train the models. GaLore offers a wider range of compatible optimizers.</li>
 </ul>
 
-<p>Both ReLoRA and GaLore offer advantages and disadvantages for pre-training LLMs. Overall, GaLore saves on memory whereas ReLoRA provides more speed up in pre-training LLMs.</p>
+<p>Both ReLoRA and GaLore offer advantages and disadvantages for pre-training LLMs. Overall, GaLore saves on memory whereas ReLoRA provides more throughput during pre-training LLMs.</p>
 
 <!-- AddToAny BEGIN -->
 <script async src="https://static.addtoany.com/menu/page.js"></script>
@@ -369,21 +369,18 @@ alt="Web Analytics"></a></div></noscript>
         <aside id="sidebar">
           
             <ul class="toc">
-  <li><a href="#">Parameter Efficient Pre-Training: Comparing ReLoRA and GaLore</a>
-    <ul>
-      <li><a href="#intro">Introduction</a></li>
-      <li><a href="#relora">ReLoRA: High-Rank Training Through Low-Rank Updates</a></li>
-      <li><a href="#galore">GaLore: Memory-Efficient LLM Training by Gradient Low-Rank Projection</a></li>
-      <li><a href="#comparison">Comparison between ReLoRA and GaLore</a></li>
-      <li><a href="#refs"> References </a></li>
-    </ul>
-  </li>
-</ul>
+		  <li><a href="#">Parameter Efficient Pre-Training: Comparing ReLoRA and GaLore</a>
+		    <ul>
+		      <li><a href="#intro">Introduction</a></li>
+		      <li><a href="#relora">ReLoRA: High-Rank Training Through Low-Rank Updates</a></li>
+		      <li><a href="#galore">GaLore: Memory-Efficient LLM Training by Gradient Low-Rank Projection</a></li>
+		      <li><a href="#comparison">Comparison between ReLoRA and GaLore</a></li>
+		      <li><a href="#refs"> References </a></li>
+		    </ul>
+		  </li>
+		</ul>
           
         </aside>
-
-
-      </div>
     </div>
 
     
