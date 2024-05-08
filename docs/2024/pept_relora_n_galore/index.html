@@ -189,7 +189,7 @@ alt="Web Analytics"></a></div></noscript>
 		<li><b>Theorem: Gradient Form of reversible models</b><br />
 			A reversible network with L2 objective has the gradient of form G<sub>t</sub> = A - BW<sub>t</sub>C. The definition and proof of reversible networks are discussed in the paper. It is shown that the Feed Forward networks and softmax loss function are reversible networks, thus having a gradient of the given form. Attention may or may not be a reversible network. </li>
 	</ul>
-	<p>As LLMs are made of feed-forward networks and activation functions, based on the above lemma and theorem and its proof, it is implied that LLMs have a gradient of form G<sub>t</sub> = A - BW<sub>t</sub>C and the gradient becomes low rank as training progresses.</p>
+	<p>As LLMs are made of feed-forward networks and activation functions, based on the above lemma and theorem and its proof, it is implied that LLMs have a gradient of form G<sub>t</sub> = A - BW<sub>t</sub>C. It is assumed the attention is also a reversible network. As the gradient is of the given form, the gradient becomes low rank as training progresses.</p>
 
 	<figure>
 		<img src="/blog/assets/images/galore-decomposition.png" /> 	
