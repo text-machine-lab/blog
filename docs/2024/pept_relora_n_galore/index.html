@@ -159,24 +159,28 @@ alt="Web Analytics"></a></div></noscript>
 	
 	<figure>
 		<img src="/blog/assets/images/relora-rank-property.png" /> 	
-		<figcaption>LoRA rank is restricted by rank r.</figcaption>. </figcaption>
+		<figcaption> </figcaption>
 	</figure>
 	
 	<p>To increase the total rank of the updates, ReLoRA uses the property of the rank of the sum of two matrices:  rank(A + B) ≤ rank(A) + rank(B). ReLoRA merges the LoRA matrices with the original matrices multiple times during training leading to the total rank of the update (&Delta;W).</p>
 	
 	<figure>
 		<img src="/blog/assets/images/relora-sum_of_updates.png" /> 	
-		<figcaption></figcaption>. </figcaption>
+		<figcaption> </figcaption>
 	</figure>
 	
 	<p>While ReLoRA's low-rank updates and merge-and-reinitialize approach offer efficiency gains and high-rank updates, there are a few challenges. Since the optimizer relies on ADAM, the updates are still highly correlated. ReLoRA performs a partial reset (>90%) of the optimizer state, focusing on pruning magnitudes. This helps break the correlation between updates and ensures the optimization process remains stable. However, this led to an exploding loss. A solution to this problem is to use a jagged learning rate scheduler where on every optimizer reset, the learning rate is set to zero and a quick (50-100 steps) learning rate warm-up is performed to bring it back to the cosine schedule (Figure 1). This prevents the loss function from diverging significantly after the optimizer reset. Additionally, ReLoRA uses a warm start to gain better performance. During warm start, the model begins with a full-rank training phase for a portion of the training process (typically around 25%) before switching to the low-rank training phase. </p>
 
 	<figure>
 		<img src="/blog/assets/images/relora-jagged lr.png" /> 	
-		<figcaption>Jagged learning rate scheduler.</figcaption>. </figcaption>
+		<figcaption>Figure 1: Jagged learning rate scheduler. </figcaption>
 	</figure>
 
 	<p>ReLoRA is described in Algorithm 1.</p>
+	<figure>
+		<img src="/blog/assets/images/relora_algo.png" /> 	
+		<figcaption>ReLoRA algorithm.</figcaption>
+	</figure>
 	
 <h2 id="galore">GaLore: Memory-Efficient LLM Training by Gradient Low-Rank Projection</h2>
 	<p>GaLore is a memory-efficient pre-training technique gradients of the weight matrices are projected into low-rank form, updated using an optimizer, and projected back to the original gradient shape which is used to update the model weights. This technique is based on lemmas and theorems mentioned in the paper. The main lemma and theorem are described below.</p>
@@ -187,9 +191,26 @@ alt="Web Analytics"></a></div></noscript>
 			A reversible network with L2 objective has the gradient of form G<sub>t</sub> = A - BW<sub>t</sub>C. The definition of reversible networks is mentioned in the paper. The paper proves that Feed Forward networks and softmax loss function are reversible networks thus having a gradient of the given form. The paper does not discuss if attention is a reversible network</li>
 	</ul>
 	<p>As LLMs are made of feed-forward networks and activation functions, based on the above lemma and theorem and its proof, it is implied that LLMs have a gradient of form G<sub>t</sub> = A - BW<sub>t</sub>C and the gradient becomes low rank and training progresses.</p>
+
+	<figure>
+		<img src="/blog/assets/images/galore-decomposition.png" /> 	
+		<figcaption></figcaption>
+	</figure>
+	
 	<p>GaLore decomposes the gradient G<sup>⎯</sup> into P, low-rank gradient G, and Q matrices using SVD. P is m x r, Q is r x n projection matrices, where r is the rank. At every step, either P or Q is used depending on if m ≤ n. G’ is updated using an optimizer (e.g. AdamW). The updated G’ is then projected back to the original space using the transpose of projection matrices P or Q. </p>
 	<p>GaLore switches subspaces by reinitializing the projection matrices after a certain number of steps i.e. update frequency. The idea is the model learns in a subspace for a certain number of steps and then switches to another subspace using different initialization of the projection matrices. The projection matrices are re-initialized using the current gradient. Figure 2 shows a geometric interpretation of the low-rank subspace updates.</p>
+	
+	<figure>
+		<img src="/blog/assets/images/galore-subspace.png" /> 	
+		<figcaption></figcaption>
+	</figure>
+	
 	<p>The algorithm is given here: </p>
+	
+	<figure>
+		<img src="/blog/assets/images/galore_algo.png" /> 	
+		<figcaption>GaLore algorithm.</figcaption>
+	</figure>
 
 <h2 id="comparison">Comparison between ReLoRA and GaLore</h2>
 
