@@ -213,38 +213,33 @@ alt="Web Analytics"></a></div></noscript>
 	            <td>Gradient form</td>
 	            <td>No conditions</td>
 	            <td>G<sub>t</sub> = A - BW<sub>t</sub>C, with constant A and PSD matrices B and C, Change of subspace</td>
+	        </tr>
+		<tr>
+	            <td>Changes subspace using</td>
 	            <td>Using Optimizer reset</td>
 	            <td>Re-initialization of P</td>
-	            <td></td>
 	        </tr>
 	        <tr>
 	            <td>Number of matrices trained</td>
 	            <td>2, A (m x r) and B (r x n)</td>
-	            <td>1, G (m x r) or (r x n)</td>
-	            <td>Able to use higher rank as only one matrix is being trained</td>
-	            <td></td>
-	            <td></td>
+	            <td>1, G (m x r) or (r x n) <be \>Able to use higher rank as only one matrix is being trained</td>
 	        </tr>
 	        <tr>
 	            <td>Additional hyperparameters</td>
 	            <td>3, optimizer state pruning percentage, reset frequency, rank</td>
 	            <td>3, rank, projection rate, update frequency</td>
-	            <td></td>
-	            <td></td>
-	            <td></td>
 	        </tr>
 	        <tr>
 	            <td>Memory required (1B scale)</td>
 	            <td>6.17 G</td>
 	            <td>4.38 G</td>
-	            <td>Throughout</td>
-	            <td></td>
-	            <td></td>
 	        </tr>
 	        <tr>
 	            <td>Throughput</td>
 	            <td>7.4 ex/sec (given 1 RTX 3090, 25G)</td>
 	            <td>6.3 ex/sec (1 RTX 4090, 25G)</td>
+	        </tr>
+		<tr>
 	            <td>Warmup required</td>
 	            <td>Yes</td>
 	            <td>No</td>
@@ -252,33 +247,24 @@ alt="Web Analytics"></a></div></noscript>
 	        <tr>
 	            <td>Rank (1B scale)</td>
 	            <td>128</td>
-	            <td>512</td>
-	            <td>(at 1024, GaLore is better than full training)</td>
-	            <td></td>
-	            <td></td>
+	            <td>512<br \> (at 1024, GaLore is better than full training)</td>
 	        </tr>
 	        <tr>
 	            <td>Works with</td>
 	            <td>-</td>
 	            <td>8-bit optimizers, Per-layer weight updates</td>
-	            <td></td>
-	            <td></td>
-	            <td></td>
 	        </tr>
 	        <tr>
 	            <td>Optimizers</td>
 	            <td>AdamW</td>
 	            <td>8-bit Adam, AdamW, Adafactor</td>
-	            <td></td>
-	            <td></td>
-	            <td></td>
 	        </tr>
 	    </tbody>
 	</table>
 
 	
 	<figure>
-		<img src="/blog/assets/images/relora-rank-property.png" width="400" height="50" /> 	
+		<img src="/blog/assets/images/relora-rank-property.png" width="100" height="20" /> 	
 	<figcaption>Fig. 1. LORA rank is restricted by rank r. </figcaption>
 </figure>
 
