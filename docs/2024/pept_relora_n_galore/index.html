@@ -156,6 +156,14 @@ alt="Web Analytics"></a></div></noscript>
 <h2 id="relora">ReLoRA: High-Rank Training Through Low-Rank Updates</h2>
 
 	<p>ReLoRA uses LoRA (Hu et al., 2022) decomposition technique where the pre-trained model weights are frozen and trainable rank decomposition matrices (WA, WB) are injected into each layer of the LLM. However in LoRA, the rank of the matrix is restricted by the rank r (given below), and the new trainable parameters (WA and WB) are merged back to the original matrices only after the end of the training. </p>
+	 <script type="math/tex">
+        	r = \text(max)W_{A}W_{B}\text{rank}(W_{A}W_{B})
+    	</script>
+	<p>To increase the total rank of the updates, ReLoRA uses the property of the rank of the sum of two matrices:  rank(A + B) ≤ rank(A) + rank(B). ReLoRA merges the LoRA matrices with the original matrices multiple times during training leading to the total rank of the update (delW).</p>
+	
+	
+	
+	
 	<figure>
 		<img src="/blog/assets/images/relora_algo.png" /> 	
 	<figcaption>Fig. 1. LORA rank is restricted by rank r. </figcaption>
