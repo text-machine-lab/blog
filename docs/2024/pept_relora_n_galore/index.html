@@ -160,14 +160,143 @@ alt="Web Analytics"></a></div></noscript>
         	r = \text{rank}(W_{A}W_{B})
     	</script>
 	<p>To increase the total rank of the updates, ReLoRA uses the property of the rank of the sum of two matrices:  rank(A + B) ≤ rank(A) + rank(B). ReLoRA merges the LoRA matrices with the original matrices multiple times during training leading to the total rank of the update (delW).</p>
+	<p>While ReLoRA's low-rank updates and merge-and-reinitialize approach offer efficiency gains and high-rank updates, there are a few challenges. Since the optimizer relies on ADAM, the updates are still highly correlated. ReLoRA performs a partial reset (>90%) of the optimizer state, focusing on pruning magnitudes. This helps break the correlation between updates and ensures the optimization process remains stable. However, this led to an exploding loss. A solution to this problem is to use a jagged learning rate scheduler where on every optimizer reset, the learning rate is set to zero and a quick (50-100 steps) learning rate warm-up is performed to bring it back to the cosine schedule (Fgure 1). This prevents the loss function from diverging significantly after the optimizer reset. Additionally, ReLoRA uses a warm start to gain better performance. In warm start, the model begins with a full-rank training phase for a portion of the training process (typically around 25%) before switching to the low-rank training phase. </p>
+
+	<p>ReLoRA is described in Algorithm 1.</p>
 	
-	
-	
+<h2 id="galore">GaLore: Memory-Efficient LLM Training by Gradient Low-Rank Projection</h2>
+	<p>GaLore is a memory-efficient pre-training technique gradients of the weight matrices are projected into low-rank form, updated using an optimizer, and projected back to the original gradient shape which is used to update the model weights. This technique is based on lemmas and theorems mentioned in the paper. The main lemma and theorem are described below.</p>
+	<ul>
+		<li><b>Lemma: Gradient becomes low-rank during training</b><be /> 
+			If the gradient is of form Gt = A - BWtC, with constant A and PSD matrices B and C, the G converges to rank-1 exponentially, suggesting that the gradient of the given form becomes low rank during training.</li>
+		<li><b>Theorem: Gradient Form of reversible models</b><be />
+			A reversible network with L2 objective has the gradient of form Gt = A - BWtC. The definition of reversible networks is mentioned in the paper. The paper proves that Feed Forward networks and softmax loss function are reversible networks thus having a gradient of the given form. The paper does not discuss if attention is a reversible network</li>
+	</ul>
+	<p>As LLMs are made of feed-forward networks and activation functions, based on the above lemma and theorem and its proof, it is implied that LLMs have a gradient of form Gt = A - BWtC and the gradient becomes low rank and training progresses.</p>
+	<p>GaLore decomposes the gradient G’ into P, low-rank gradient G, and Q matrices using SVD. P is m x r, Q is r x n projection matrices, where r is the rank. At every step, either P or Q is used depending on if m <= n. G’ is updated using an optimizer (e.g. AdamW). The updated G’ is then projected back to the original space using the transpose of projection matrices P or Q. </p>
+	<p>GaLore switches subspaces by reinitializing the projection matrices after a certain number of steps i.e. update frequency. The idea is the model learns in a subspace for a certain number of steps and then switches to another subspace using different initialization of the projection matrices. The projection matrices are re-initialized using the current gradient. Figure 2 shows a geometric interpretation of the low-rank subspace updates.</p>
+	<p>The algorithm is given here: </p>
+
+<h2 id="comparison">Comparison between ReLoRA and GaLore</h2>
+
+	<table>
+	    <thead>
+	        <tr>
+	            <th></th>
+	            <th>ReLoRA</th>
+	            <th>GaLore</th>
+	            <th>Decomposition</th>
+	            <th>LoRA</th>
+	            <th>SVD</th>
+	        </tr>
+	    </thead>
+	    <tbody>
+	        <tr>
+	            <td>Perplexity difference</td>
+	            <td>0.44 (1.3B model)</td>
+	            <td>0.08 (1B model)</td>
+	            <td></td>
+	            <td></td>
+	            <td></td>
+	        </tr>
+	        <tr>
+	            <td>Full rank v/s</td>
+	            <td></td>
+	            <td></td>
+	            <td></td>
+	            <td></td>
+	            <td></td>
+	        </tr>
+	        <tr>
+	            <td>Tokens trained on</td>
+	            <td>23.1B</td>
+	            <td>13.1B</td>
+	            <td></td>
+	            <td></td>
+	            <td></td>
+	        </tr>
+	        <tr>
+	            <td>Weight equation</td>
+	            <td>W = W + AB</td>
+	            <td>W = W + PtGP if m&lt;n</td>
+	            <td></td>
+	            <td></td>
+	            <td></td>
+	        </tr>
+	        <tr>
+	            <td>Gradient form</td>
+	            <td>No conditions</td>
+	            <td>Gt = A - BWtC, with constant A and PSD matrices B and C, Change of subspace</td>
+	            <td>Using Optimizer reset</td>
+	            <td>Re-initialization of P</td>
+	            <td></td>
+	        </tr>
+	        <tr>
+	            <td>Number of matrices trained</td>
+	            <td>2, A (m x r) and B (r x n)</td>
+	            <td>1, G (m x r) or (r x n)</td>
+	            <td>Able to use higher rank as only one matrix is being trained</td>
+	            <td></td>
+	            <td></td>
+	        </tr>
+	        <tr>
+	            <td>Additional hyperparameters</td>
+	            <td>3, optimizer state pruning percentage, reset frequency, rank</td>
+	            <td>3, rank, projection rate, update frequency</td>
+	            <td></td>
+	            <td></td>
+	            <td></td>
+	        </tr>
+	        <tr>
+	            <td>Memory required (1B scale)</td>
+	            <td>6.17 G</td>
+	            <td>4.38 G</td>
+	            <td>Throughout</td>
+	            <td></td>
+	            <td></td>
+	        </tr>
+	        <tr>
+	            <td>Throughput</td>
+	            <td>7.4 ex/sec (given 1 RTX 3090, 25G)</td>
+	            <td>6.3 ex/sec (1 RTX 4090, 25G)</td>
+	            <td>Warmup required</td>
+	            <td>Yes</td>
+	            <td>No</td>
+	        </tr>
+	        <tr>
+	            <td>Rank (1B scale)</td>
+	            <td>128</td>
+	            <td>512</td>
+	            <td>(at 1024, GaLore is better than full training)</td>
+	            <td></td>
+	            <td></td>
+	        </tr>
+	        <tr>
+	            <td>Works with</td>
+	            <td>-</td>
+	            <td>8-bit optimizers, Per-layer weight updates</td>
+	            <td></td>
+	            <td></td>
+	            <td></td>
+	        </tr>
+	        <tr>
+	            <td>Optimizers</td>
+	            <td>AdamW</td>
+	            <td>8-bit Adam, AdamW, Adafactor</td>
+	            <td></td>
+	            <td></td>
+	            <td></td>
+	        </tr>
+	    </tbody>
+	</table>
+
 	
 	<figure>
-		<img src="/blog/assets/images/relora-rank-property.png" width="300" height="100" /> 	
+		<img src="/blog/assets/images/relora-rank-property.png" width="400" height="50" /> 	
 	<figcaption>Fig. 1. LORA rank is restricted by rank r. </figcaption>
 </figure>
+
+	
 <table>
 <tbody>
 <tr>
