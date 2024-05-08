@@ -309,8 +309,7 @@ alt="Web Analytics"></a></div></noscript>
 <li><b>Compatible with</b>: This indicates additional features supported by each method. GaLore works with certain optimizers and weight update methods that ReLoRA does not.</li>
 <li><b>Optimizers</b>: These are the optimization algorithms used to train the models. GaLore offers a wider range of compatible optimizers.</li>
 </ul>
-
-<p>Both ReLoRA and GaLore offer advantages and disadvantages for pre-training LLMs. Overall, GaLore saves on memory whereas ReLoRA provides more throughput during pre-training LLMs.</p>
+<p>ReLoRA and GaLore represent distinct approaches to parameter-efficient pre-training for LLMs. ReLoRA employs LoRA decomposition along with the warm-start phase, speeding up the training but having a higher memory utilization. Conversely, GaLore relies on Singular Value Decomposition (SVD), offering reduced memory requirements and the potential for higher ranks but reduced throughput. These methods diverge in their requirement of gradient forms, subspace changes, and the number of matrices trained, providing different options for LLM pre-training.</p>
 
 <!-- AddToAny BEGIN -->
 <script async src="https://static.addtoany.com/menu/page.js"></script>
