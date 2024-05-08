@@ -299,7 +299,26 @@ alt="Web Analytics"></a></div></noscript>
 	    </tbody>
 	</table>
 	
+<p>This table summarizes the key differences between ReLoRA and GaLore, two parameter-efficient pre-training techniques discussed earlier.  Here's a breakdown of the table:</p>
 
+<ul>
+<li>Decomposition: ReLoRA uses LoRA decomposition, while GaLore uses Singular Value Decomposition (SVD).</li>
+<li>Perplexity difference (Full rank vs. Low rank): This metric measures how well the model predicts the next word in a sequence. Lower perplexity indicates better performance. The table shows the difference in perplexity achieved by each method when trained with a full-rank model compared to a lower-rank model. ReLoRA shows a larger difference (0.44) for a 1.3B parameter model, while GaLore shows a smaller difference (0.08) for a 1B parameter model.</li>
+<li>Tokens trained on: This indicates the number of words used to train the model. GaLore uses fewer tokens than ReLoRA in the examples shown.</li>
+<li>Weight equation: This shows how the model weights are updated during training.</li>
+<li>Gradient form: ReLoRA has no specific conditions on the gradient form, while GaLore requires the gradient to be in a specific form (Gt = A - BWtC).</li>
+<li>Changes subspace using: ReLoRA changes the subspace it focuses on by resetting the optimizer state, while GaLore does this by re-initializing a projection matrix (P).</li>
+<li>Number of matrices trained: ReLoRA trains two matrices (A and B), while GaLore trains one matrix (G). GaLore can potentially use a higher rank for this matrix since it only trains one.</li>
+<li>Additional hyperparameters: These are tuning knobs that control the training process. ReLoRA has three hyperparameters, while GaLore also has three.</li>
+<li>Memory required: This shows the amount of memory needed to train the model with each method (for a 1 billion parameter model). GaLore requires less memory than ReLoRA.</li>
+<li>Throughput: Throughput refers to the number of examples the model can process per second. This is measured on specific hardware (one RTX 3090 with 25G network bandwidth). ReLoRA shows higher throughput in this case.</li>
+<li>Warmup required: Whether a full-rank training phase is needed before switching to low-rank training. ReLoRA requires a warmup, while GaLore does not.</li>
+<li>Rank: This is the target rank of the low-rank decomposition used by each method (for a 1 billion parameter model). GaLore can potentially use a higher rank and achieve better results (as shown at a rank of 1024).</li>
+<li>Works with: This indicates additional features supported by each method. GaLore works with certain optimizers and weight update methods that ReLoRA does not.</li>
+<li>Optimizers: These are the optimization algorithms used to train the models. GaLore offers a wider range of compatible optimizers.</li>
+</ul>
+
+<p>As you can see, both ReLoRA and GaLore offer advantages and disadvantages. The best choice for a particular application may depend on factors such as the desired level of accuracy, memory constraints, and available hardware.</p>
 
 
 <!-- AddToAny BEGIN -->
